@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct TaskyApp: App {
+    @StateObject var persistentController = PersistentController.shared
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environment(\.managedObjectContext, persistentController.context)
         }
     }
 }
