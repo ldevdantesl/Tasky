@@ -51,23 +51,13 @@ struct AddTodoView: View {
                         .foregroundStyle(.secondary)
                         .padding(.horizontal,5)
                     
-                    TextField(text: $title, axis: .horizontal){
-                        Text("Title")
-                            .font(.system(.headline, design: .rounded, weight: .semibold))
-                    }
-                    .focused($focusedField, equals: .title)
-                    .onSubmit {
-                        focusedField = .description
-                    }
-                    .submitLabel(.next)
-                    .textInputAutocapitalization(.sentences)
-                    .autocorrectionDisabled()
-                    .keyboardType(.default)
-                    .scrollDismissesKeyboard(.immediately)
-                    .padding(10)
-                    .frame(maxWidth: Constants.screenWidth)
-                    .frame(minHeight: 40)
-                    .background(Constants.secondaryColor, in: Constants.circularShape)
+                    UIKitTextField(text: $title, placeholder: "Title")
+                        .focused($focusedField, equals: .title)
+                        .scrollDismissesKeyboard(.immediately)
+                        .padding(10)
+                        .frame(maxWidth: Constants.screenWidth)
+                        .frame(minHeight: 40)
+                        .background(Constants.secondaryColor, in: Constants.circularShape)
                 }
                 .padding(.vertical, 10)
                 
@@ -77,27 +67,13 @@ struct AddTodoView: View {
                         .font(.system(.subheadline, design: .rounded, weight: .semibold))
                         .foregroundStyle(.secondary)
                         .padding(.horizontal,5)
-                    TextField(text: $desc, axis: .vertical){
-                        Text("Description")
-                            .font(.system(.headline, design: .rounded, weight: .semibold))
-                    }
-                    .focused($focusedField, equals: .description)
-                    .submitLabel(.return)
-                    .textInputAutocapitalization(.sentences)
-                    .autocorrectionDisabled()
-                    .keyboardType(.default)
-                    .scrollDismissesKeyboard(.immediately)
-                    .padding(10)
-                    .frame(maxWidth: Constants.screenWidth)
-                    .frame(minHeight: 40)
-                    .background(Constants.secondaryColor, in: Constants.circularShape)
-                    .toolbar{
-                        ToolbarItem(placement: .keyboard) {
-                            Button(action:{ focusedField = nil }){
-                                Text("Done")
-                            }
-                        }
-                    }
+                    TextField("Description", text: $desc, axis: .vertical)
+                        .focused($focusedField, equals: .description)
+                        .textInputAutocapitalization(.sentences)
+                        .scrollDismissesKeyboard(.immediately)
+                        .padding(10)
+                        .frame(maxWidth: Constants.screenWidth - 30)
+                        .background(Constants.secondaryColor, in: Constants.circularShape)
                 }
                 .padding(.vertical,10)
                 
@@ -108,6 +84,13 @@ struct AddTodoView: View {
             .scrollIndicators(.never)
             .padding()
             .toolbar{
+                if focusedField == .description{
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action:{focusedField = nil}){
+                            Text("Done")
+                        }
+                    }
+                }
                 ToolbarItem(placement: .bottomBar) {
                     Button(action: addTodo) {
                         HStack{
