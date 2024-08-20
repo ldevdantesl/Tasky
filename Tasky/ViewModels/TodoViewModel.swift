@@ -20,7 +20,7 @@ class TodoViewModel: ObservableObject {
         fetchTodos()
     }
     
-    func createTodo(title: String, description: String, priority: Int16){
+    func createTodo(title: String, description: String?, priority: Int16){
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
         newTodo.title = title

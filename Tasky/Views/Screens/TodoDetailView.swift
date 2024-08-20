@@ -74,6 +74,7 @@ struct TodoDetailView: View {
             showPriority()
                 .padding(.vertical,10)
         }
+        .scrollIndicators(.never)
         .toolbarTitleDisplayMode(.inline)
         .padding(.horizontal)
         .alert("Delete To-Do? ", isPresented: $showAlert) {
