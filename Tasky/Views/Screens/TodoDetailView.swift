@@ -13,6 +13,7 @@ struct TodoDetailView: View {
     @ObservedObject private var todoVM = TodoViewModel()
     
     @State private var showAlert: Bool = false
+    @State private var showEditView: Bool = false
     
     let todo: Todo
     
@@ -26,7 +27,6 @@ struct TodoDetailView: View {
             return .red
         }
     }
-    
     var priorityName: String{
         switch todo.priority{
         case 1:
@@ -41,32 +41,18 @@ struct TodoDetailView: View {
     var body: some View {
         ScrollView{
             HStack{
-                Text("To-Do")
-                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
                 Image(systemName: "flag.fill")
                     .resizable()
                     .scaledToFill()
                     .frame(maxWidth: 25)
                     .frame(maxHeight: 25)
                     .foregroundStyle(priorityColor)
+                
+                Text(todo.title ?? "No title")
+                    .font(.system(.title3, design: .rounded, weight: .bold))
+                    .frame(maxWidth: Constants.screenWidth - 30, alignment: .leading)
                 Spacer()
-                
-                Button(action: {}){
-                    Text("Edit")
-                }
-                
-                Button(role:.destructive){
-                    showAlert.toggle()
-                } label: {
-                    Image(systemName: "trash")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 25)
-                        .frame(maxHeight: 25)
-                }
             }
-            showTodo(text: "Title", bindText: todo.title)
-                .padding(.vertical, 10)
             
             showTodo(text: "Description", bindText: todo.desc)
                 .padding(.vertical,10)
@@ -76,6 +62,22 @@ struct TodoDetailView: View {
         }
         .scrollIndicators(.never)
         .toolbarTitleDisplayMode(.inline)
+        .toolbar{
+            Button(action: {showEditView.toggle()}){
+                Text("Edit")
+            }
+            
+            Button{
+                showAlert.toggle()
+            } label: {
+                Image(systemName: "trash")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 25)
+                    .frame(maxHeight: 25)
+            }
+            .tint(.red)
+        }
         .padding(.horizontal)
         .alert("Delete To-Do? ", isPresented: $showAlert) {
             Button(role:.destructive){
@@ -91,7 +93,9 @@ struct TodoDetailView: View {
         } message: {
             Text("Do you really want to delete this Todo?")
         }
-
+        .sheet(isPresented: $showEditView){
+            
+        }
     }
     
     @ViewBuilder
@@ -138,5 +142,7 @@ struct TodoDetailView: View {
 }
 
 #Preview {
-    TodoDetailView(todo: TodoViewModel.mockToDo())
+    NavigationStack{
+        TodoDetailView(todo: TodoViewModel.mockToDo())
+    }
 }

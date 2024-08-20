@@ -120,10 +120,10 @@ struct AddTodoView: View {
                                 .frame(maxHeight: 30)
                         }
                         .foregroundColor(.white)
+                        .frame(width: Constants.screenWidth - 40)
+                        .frame(minHeight: 50)
+                        .background(Color.blue, in:.capsule)
                     }
-                    .frame(maxWidth: Constants.screenWidth)
-                    .frame(minHeight: 50)
-                    .background(Color.blue, in:.capsule)
                 }
             }
             .confirmationDialog("Leave Description?", isPresented: $toggleConfirmation, titleVisibility: .visible){
