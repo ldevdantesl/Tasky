@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */; };
+		DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */; };
 		DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */; };
 		DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D62C72FE4D004D8ACA /* MainView.swift */; };
 		DAF659D92C72FE4F004D8ACA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF659D82C72FE4F004D8ACA /* Assets.xcassets */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
+		DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTextField.swift; sourceTree = "<group>"; };
 		DAF659D12C72FE4D004D8ACA /* Tasky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskyApp.swift; sourceTree = "<group>"; };
 		DAF659D62C72FE4D004D8ACA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -48,6 +52,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA7837702C7469D90007ECC2 /* UIKitRepresentables */ = {
+			isa = PBXGroup;
+			children = (
+				DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */,
+			);
+			path = UIKitRepresentables;
+			sourceTree = "<group>";
+		};
 		DAF659C82C72FE4D004D8ACA = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +127,7 @@
 		DAF659E52C72FE93004D8ACA /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DA7837702C7469D90007ECC2 /* UIKitRepresentables */,
 				DAF659F72C730DFF004D8ACA /* Constants.swift */,
 			);
 			path = Utilities;
@@ -151,6 +164,7 @@
 				DAF659EF2C7302F8004D8ACA /* TodoView.swift */,
 				DAF659F52C730CFE004D8ACA /* AddTodoView.swift */,
 				DAF659FF2C732950004D8ACA /* TodoDetailView.swift */,
+				DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -229,11 +243,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */,
 				DAF659F42C730707004D8ACA /* TodoViewModel.swift in Sources */,
 				DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */,
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
 				DAF659F62C730CFE004D8ACA /* AddTodoView.swift in Sources */,
 				DAF659EE2C730284004D8ACA /* TodoModel.xcdatamodeld in Sources */,
+				DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */,
 				DAF65A002C732950004D8ACA /* TodoDetailView.swift in Sources */,
 				DAF659F02C7302F8004D8ACA /* TodoView.swift in Sources */,
 				DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */,

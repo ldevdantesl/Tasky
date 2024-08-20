@@ -42,7 +42,7 @@ class TodoViewModel: ObservableObject {
         }
     }
     
-    func editTodos(_ todo: Todo, newTitle: String, newDesc: String, newIsDone: Bool, newPriority: Int16){
+    func editTodos(_ todo: Todo, newTitle: String, newDesc: String?, newIsDone: Bool, newPriority: Int16){
         todo.title = newTitle
         todo.desc = newDesc
         todo.isDone = newIsDone

@@ -93,8 +93,9 @@ struct TodoDetailView: View {
         } message: {
             Text("Do you really want to delete this Todo?")
         }
-        .sheet(isPresented: $showEditView){
-            
+        .sheet(isPresented: $showEditView, onDismiss: todoVM.fetchTodos){
+            ToDoEditView(todo: todo)
+                .presentationDetents([.medium, .large])
         }
     }
     

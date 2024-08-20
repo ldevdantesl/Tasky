@@ -60,7 +60,7 @@ struct AddTodoView: View {
                         focusedField = .description
                     }
                     .submitLabel(.next)
-                    .textInputAutocapitalization(.words)
+                    .textInputAutocapitalization(.sentences)
                     .autocorrectionDisabled()
                     .keyboardType(.default)
                     .scrollDismissesKeyboard(.immediately)
@@ -83,7 +83,7 @@ struct AddTodoView: View {
                     }
                     .focused($focusedField, equals: .description)
                     .submitLabel(.return)
-                    .textInputAutocapitalization(.words)
+                    .textInputAutocapitalization(.sentences)
                     .autocorrectionDisabled()
                     .keyboardType(.default)
                     .scrollDismissesKeyboard(.immediately)
@@ -156,7 +156,7 @@ struct AddTodoView: View {
     }
     
     func checkDescription() -> Bool {
-        if desc.isEmpty || desc.count < 3{
+        if desc.isEmpty{
             return false
         }
         return true
