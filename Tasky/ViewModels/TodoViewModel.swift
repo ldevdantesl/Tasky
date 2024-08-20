@@ -49,19 +49,16 @@ class TodoViewModel: ObservableObject {
         todo.priority = newPriority
         
         saveContext()
-        fetchTodos()
     }
     
     func toggleCompletion(_ todo: Todo){
         todo.isDone.toggle()
         saveContext()
-        fetchTodos()
     }
     
     func deleteTodo(_ todo: Todo){
         context.delete(todo)
         saveContext()
-        fetchTodos()
     }
     
     func deleteTodoByIndex(at offsets: IndexSet){
@@ -70,7 +67,6 @@ class TodoViewModel: ObservableObject {
             context.delete(todo)
         }
         saveContext()
-        fetchTodos()
     }
     
     func deleteAllTodos(){
@@ -88,6 +84,7 @@ class TodoViewModel: ObservableObject {
     
     private func saveContext(){
         PersistentController.shared.saveContext()
+        fetchTodos()
     }
     
 }

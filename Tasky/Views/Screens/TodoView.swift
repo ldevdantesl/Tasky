@@ -34,6 +34,7 @@ struct TodoView: View {
                     }
                 }
             }
+            .onAppear(perform: todoVM.fetchTodos)
             .fullScreenCover(isPresented: $onAddSheet, onDismiss: todoVM.fetchTodos) {
                 AddTodoView(toggleView: $onAddSheet)
             }

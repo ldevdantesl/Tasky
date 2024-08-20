@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct TodoDetailView: View {
-    let todo: Todo
     @Environment(\.dismiss) var dismiss
+    
+    @ObservedObject private var todoVM = TodoViewModel()
+    
+    @State private var showAlert: Bool = false
+    
+    let todo: Todo
     
     var priorityColor: Color{
         switch todo.priority{
@@ -34,7 +39,7 @@ struct TodoDetailView: View {
     }
     
     var body: some View {
-        VStack(spacing:20){
+        ScrollView{
             HStack{
                 Text("To-Do")
                     .font(.system(.largeTitle, design: .rounded, weight: .bold))
@@ -45,8 +50,14 @@ struct TodoDetailView: View {
                     .frame(maxHeight: 25)
                     .foregroundStyle(priorityColor)
                 Spacer()
-            
-                Button(role:.destructive, action:{}) {
+                
+                Button(action: {}){
+                    Text("Edit")
+                }
+                
+                Button(role:.destructive){
+                    showAlert.toggle()
+                } label: {
                     Image(systemName: "trash")
                         .resizable()
                         .scaledToFit()
@@ -55,23 +66,31 @@ struct TodoDetailView: View {
                 }
             }
             showTodo(text: "Title", bindText: todo.title)
+                .padding(.vertical, 10)
             
             showTodo(text: "Description", bindText: todo.desc)
+                .padding(.vertical,10)
             
             showPriority()
-            
-            Spacer()
-            
-            Button(action:{dismiss()}) {
-                Text("Done")
-                    .font(.system(.title2, design: .rounded, weight: .bold))
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: Constants.screenWidth - 20)
-                    .frame(maxHeight: 50)
-                    .background(Color.blue, in:.capsule)
-            }
+                .padding(.vertical,10)
         }
+        .toolbarTitleDisplayMode(.inline)
         .padding(.horizontal)
+        .alert("Delete To-Do? ", isPresented: $showAlert) {
+            Button(role:.destructive){
+                todoVM.deleteTodo(todo)
+                todoVM.fetchTodos()
+                dismiss()
+            } label: {
+                Text("Delete")
+            }
+            Button(role:.cancel, action: {}){
+                Text("Cancel")
+            }
+        } message: {
+            Text("Do you really want to delete this Todo?")
+        }
+
     }
     
     @ViewBuilder
@@ -99,7 +118,7 @@ struct TodoDetailView: View {
                     .foregroundStyle(.secondary)
                 HStack{
                     Text(priorityName)
-                        .font(.system(.title2, design: .rounded, weight: .semibold))
+                        .font(.system(.title3, design: .rounded, weight: .semibold))
                         .foregroundStyle(.white)
                     Image(systemName: "exclamationmark.circle.fill")
                         .resizable()
@@ -108,8 +127,8 @@ struct TodoDetailView: View {
                         .frame(maxHeight: 20)
                         .foregroundStyle(.white)
                 }
-                .frame(maxWidth: Constants.screenWidth / 3 - 20)
-                .frame(maxHeight: 40)
+                .frame(maxWidth: Constants.screenWidth / 3)
+                .frame(minHeight: 40)
                 .background(priorityColor, in:.capsule)
             }
             Spacer()

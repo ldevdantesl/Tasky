@@ -65,6 +65,7 @@ struct PriorityCapsuleView: View {
                     .font(.system(.headline, design: .rounded, weight: .semibold))
                     .foregroundStyle(.white)
                     .frame(width: Constants.screenWidth / 3 - 20)
+                    .frame(minHeight: 40)
                     .frame(maxHeight: 40)
                     .background(color, in: .capsule)
                 if selectedPriority == priority{

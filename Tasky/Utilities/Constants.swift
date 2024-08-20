@@ -19,5 +19,3 @@ public enum Constants{
 public func log(_ message: String){
     print(message)
 }
-
-

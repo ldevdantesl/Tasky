@@ -171,6 +171,8 @@
 			dependencies = (
 			);
 			name = Tasky;
+			packageProductDependencies = (
+			);
 			productName = Tasky;
 			productReference = DAF659D12C72FE4D004D8ACA /* Tasky.app */;
 			productType = "com.apple.product-type.application";
@@ -199,6 +201,8 @@
 				Base,
 			);
 			mainGroup = DAF659C82C72FE4D004D8ACA;
+			packageReferences = (
+			);
 			productRefGroup = DAF659D22C72FE4D004D8ACA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
