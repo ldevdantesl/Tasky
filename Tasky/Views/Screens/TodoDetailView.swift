@@ -17,27 +17,6 @@ struct TodoDetailView: View {
     
     let todo: Todo
     
-    var priorityColor: Color{
-        switch todo.priority{
-        case 1:
-            return .green
-        case 2:
-            return .blue
-        default:
-            return .red
-        }
-    }
-    var priorityName: String{
-        switch todo.priority{
-        case 1:
-            return "Trivial"
-        case 2:
-            return "Fair"
-        default:
-            return "Principal"
-        }
-    }
-    
     var body: some View {
         ScrollView{
             HStack{
@@ -46,7 +25,7 @@ struct TodoDetailView: View {
                     .scaledToFill()
                     .frame(maxWidth: 25)
                     .frame(maxHeight: 25)
-                    .foregroundStyle(priorityColor)
+                    .foregroundStyle(TodoViewHelpers(todo: todo).priorityColor)
                 
                 Text(todo.title ?? "No title")
                     .font(.system(.title3, design: .rounded, weight: .bold))
@@ -61,6 +40,10 @@ struct TodoDetailView: View {
             
             showPriority()
                 .padding(.vertical,10)
+            
+            showStatus()
+                .padding(.vertical, 10)
+    
         }
         .scrollIndicators(.never)
         .toolbarTitleDisplayMode(.inline)
@@ -125,7 +108,7 @@ struct TodoDetailView: View {
                     .font(.system(.callout, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
                 HStack{
-                    Text(priorityName)
+                    Text(TodoViewHelpers(todo: todo).priorityName)
                         .font(.system(.title3, design: .rounded, weight: .semibold))
                         .foregroundStyle(.white)
                     Image(systemName: "exclamationmark.circle.fill")
@@ -137,7 +120,38 @@ struct TodoDetailView: View {
                 }
                 .frame(maxWidth: Constants.screenWidth / 3)
                 .frame(minHeight: 40)
-                .background(priorityColor, in:.capsule)
+                .background(TodoViewHelpers(todo: todo).priorityColor, in:.capsule)
+            }
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    func showStatus() -> some View {
+        HStack{
+            VStack(alignment:.leading){
+                Text("Status")
+                    .font(.system(.callout, design: .rounded, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                HStack{
+                    Text(TodoViewHelpers(todo: todo).statusName)
+                        .font(.system(.title3, design: .rounded, weight: .semibold))
+                        .foregroundStyle(.white)
+                    Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 20)
+                        .frame(maxHeight: 20)
+                        .foregroundStyle(.white)
+                }
+                .frame(maxWidth: Constants.screenWidth / 3)
+                .frame(minHeight: 40)
+                .background(TodoViewHelpers(todo: todo).statusColor, in:.capsule)
+                .onTapGesture {
+                    withAnimation {
+                        todoVM.toggleCompletion(todo)
+                    }
+                }
             }
             Spacer()
         }

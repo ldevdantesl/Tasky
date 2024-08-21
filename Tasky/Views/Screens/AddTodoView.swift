@@ -55,7 +55,7 @@ struct AddTodoView: View {
                         .focused($focusedField, equals: .title)
                         .scrollDismissesKeyboard(.immediately)
                         .padding(10)
-                        .frame(maxWidth: Constants.screenWidth)
+                        .frame(maxWidth: Constants.screenWidth - 30)
                         .frame(minHeight: 40)
                         .background(Constants.secondaryColor, in: Constants.circularShape)
                 }

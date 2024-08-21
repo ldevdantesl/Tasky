@@ -28,6 +28,20 @@ struct TodoView: View {
                 ForEach(filteredTodos, id: \.id){ todo in
                     NavigationLink(value: todo) {
                         Text(todo.title ?? "Uknown title")
+                            .strikethrough(todo.isDone)
+                    }
+                    .swipeActions(edge:.leading, allowsFullSwipe: true){
+                        if !todo.isDone{
+                            Button("Done", systemImage: "checkmark.circle"){
+                                todoVM.toggleCompletion(todo)
+                            }
+                            .tint(.green)
+                        } else {
+                            Button("Undone", systemImage: "xmark.circle"){
+                                todoVM.toggleCompletion(todo)
+                            }
+                            .tint(.gray)
+                        }
                     }
                 }
                 .onDelete(perform: todoVM.deleteTodoByIndex)
@@ -41,15 +55,21 @@ struct TodoView: View {
             .toolbar{
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Menu("Sort", systemImage: "arrow.up.and.down.text.horizontal"){
-                        Text("Sort")
-                        Button("By priority"){
+                        Text("Sort By")
+                        Button("Priority"){
                             sortBy(sortKey: "priority", ascending: false)
                         }
-                        Button("By title"){
-                            sortBy(sortKey: "title", ascending: true)
+                        Button("First Done"){
+                            sortBy(sortKey: "isDone", ascending: false)
                         }
-                        Button("By time added"){
+                        Button("First Undone"){
+                            sortBy(sortKey: "isDone", ascending: true)
+                        }
+                        Button("Time added"){
                             sortBy(sortKey: "addedOn", ascending: true)
+                        }
+                        Button("Title"){
+                            sortBy(sortKey: "title", ascending: true)
                         }
                     }
                     

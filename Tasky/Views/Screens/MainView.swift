@@ -9,12 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     var body: some View {
-        TabView{
-            TodoView()
-                .tabItem { Label("Tasks", systemImage: "tray.full") }
-            Text("Settings")
-                .tabItem { Label("Settings", systemImage: "gear") }
-        }
+        TodoView()
     }
 }
 
