@@ -51,6 +51,8 @@ struct TodoDetailView: View {
                 Text(todo.title ?? "No title")
                     .font(.system(.title3, design: .rounded, weight: .bold))
                     .frame(maxWidth: Constants.screenWidth - 30, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(1)
                 Spacer()
             }
             
