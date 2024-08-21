@@ -68,6 +68,9 @@ struct TodoView: View {
                         Button("Time added"){
                             sortBy(sortKey: "addedOn", ascending: true)
                         }
+                        Button("Due date"){
+                            sortBy(sortKey: "dueDate", ascending: true)
+                        }
                         Button("Title"){
                             sortBy(sortKey: "title", ascending: true)
                         }
