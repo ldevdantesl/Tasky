@@ -11,6 +11,7 @@ import SwiftUI
 
 class TodoViewModel: ObservableObject {
     @Published var todos: [Todo] = []
+    @Published var sortDescriptor: NSSortDescriptor?
     
     static let shared = TodoViewModel()
     
@@ -26,15 +27,17 @@ class TodoViewModel: ObservableObject {
         newTodo.title = title
         newTodo.desc = description
         newTodo.priority = priority
+        newTodo.addedOn = .now
         
         saveContext()
-        fetchTodos()
+        
     }
     
     func fetchTodos(){
         let request: NSFetchRequest<Todo> = Todo.fetchRequest()
-        request.sortDescriptors = []
-        
+        if let sortDescriptor{
+            request.sortDescriptors = [sortDescriptor]
+        } else { request.sortDescriptors = []}
         do {
             todos = try context.fetch(request)
         } catch {
@@ -76,7 +79,6 @@ class TodoViewModel: ObservableObject {
         do {
             try context.execute(deleteRequest)
             saveContext()
-            fetchTodos()
         } catch {
             log("Error deleting all todos: \(error.localizedDescription)")
         }
