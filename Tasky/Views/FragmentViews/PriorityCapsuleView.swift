@@ -17,16 +17,9 @@ struct PriorityCapsuleView: View {
                 .padding(.horizontal,5)
                 .padding(.vertical,10)
             HStack{
-                Button(action:{}){
-                    filterButton(text: "Trivial")
-                }
-                Button(action:{}){
-                    filterButton(text: "Fair")
-                }
-                Button(action:{}){
-                    filterButton(text: "Principal")
-                }
-                
+                filterButton(text: "Trivial")
+                filterButton(text: "Fair")
+                filterButton(text: "Principal")
             }
         }
     }

@@ -17,6 +17,8 @@ struct ToDoEditView: View {
     @State var todoTitle: String = ""
     @State var todoDesc: String = ""
     @State var todoPriority: Int16 = 1
+    @State var todoDueDate: Date = .now
+    @State var addDueDate: Bool = false
     @State private var alertMessage: String = ""
     @State private var toggleAlert: Bool = false
     @State private var toggleConfirmation: Bool = false
@@ -28,6 +30,7 @@ struct ToDoEditView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
+                // MARK: - TITLE
                 VStack(alignment:.leading){
                     Text("Title of your task")
                         .font(.system(.subheadline, design: .rounded, weight: .semibold))
@@ -41,6 +44,8 @@ struct ToDoEditView: View {
                         .background(Constants.secondaryColor, in: Constants.circularShape)
                 }
                 .padding(.vertical,10)
+                
+                // MARK: - DESCRIPTION
                 VStack(alignment:.leading){
                     Text("Description of your task")
                         .font(.system(.subheadline, design: .rounded, weight: .semibold))
@@ -55,6 +60,12 @@ struct ToDoEditView: View {
                         .background(Constants.secondaryColor, in: Constants.circularShape)
                 }
                 .padding(.vertical,10)
+                
+                // MARK: - DUE DATE
+                DueDateFragmentView(dueDate: $todoDueDate, addDueDate: $addDueDate)
+                    .padding(.vertical, 10)
+                
+                // MARK: - PRIORITY
                 PriorityCapsuleView(selectedPriority: $todoPriority)
                     .padding(.vertical,10)
             }
@@ -63,15 +74,17 @@ struct ToDoEditView: View {
                 todoTitle = todo.title ?? ""
                 todoDesc = todo.desc ?? ""
                 todoPriority = todo.priority
+                todoDueDate = todo.dueDate ?? .now
+                addDueDate = (todo.dueDate != nil) ? true : false
             }
             .padding()
             .alert("Save changes?", isPresented: $saveAlert) {
                 Button("Yes"){
                     if checkDescription(){
-                        todoVM.editTodos(todo, newTitle: todoTitle, newDesc: todoDesc, newIsDone: false, newPriority: todoPriority)
+                        todoVM.editTodos(todo, newTitle: todoTitle, newDesc: todoDesc, newIsDone: false, newPriority: todoPriority, newDueDate: addDueDate ? todoDueDate : nil)
                         dismiss()
                     } else {
-                        todoVM.editTodos(todo, newTitle: todoTitle, newDesc: nil, newIsDone: false, newPriority: todoPriority)
+                        todoVM.editTodos(todo, newTitle: todoTitle, newDesc: nil, newIsDone: false, newPriority: todoPriority, newDueDate: addDueDate ? todoDueDate : nil)
                         dismiss()
                     }
                 }
@@ -119,7 +132,8 @@ struct ToDoEditView: View {
     }
     
     func checkTitle() -> Bool{
-        if todoTitle.isEmpty || todoTitle.count < 3 {
+        let trimmedTitle = todoTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || trimmedTitle.count < 3 {
             alertMessage = "Accurate title will be your best navigator. It should be more than 3 characters!"
             return false
         }
@@ -127,14 +141,19 @@ struct ToDoEditView: View {
     }
     
     func checkDescription() -> Bool {
-        if todoDesc.isEmpty{
+        let trimmedDesc = todoDesc.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedDesc.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty{
             return false
         }
         return true
     }
     
+    func checkTime() -> Bool{
+        todoDueDate.formatted(date: .omitted, time: .shortened) == Date.now.formatted(date: .omitted, time: .shortened)
+    }
+    
     func hasChanges() -> Bool {
-        if todoTitle == todo.title && todoDesc == todo.desc && todoPriority == todo.priority{
+        if todoTitle == todo.title && todoDesc == todo.desc && todoPriority == todo.priority && checkTime() {
             return false
         }
         return true

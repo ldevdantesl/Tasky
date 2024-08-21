@@ -35,18 +35,20 @@ struct TodoDetailView: View {
                 Spacer()
             }
             
-            showTodo(text: "Description", bindText: todo.desc)
+            showTodo()
                 .padding(.vertical,10)
+            
+            showDueDate()
+                .padding(.vertical, 10)
             
             showPriority()
                 .padding(.vertical,10)
             
             showStatus()
                 .padding(.vertical, 10)
-    
         }
         .scrollIndicators(.never)
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             Button(action: {showEditView.toggle()}){
                 Text("Edit")
@@ -85,14 +87,14 @@ struct TodoDetailView: View {
     }
     
     @ViewBuilder
-    func showTodo(text: String, bindText: String?) -> some View {
+    func showTodo() -> some View {
         HStack{
             VStack(alignment:.leading){
-                Text(text)
+                Text("Description:")
                     .font(.system(.callout, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
                 
-                Text(bindText ?? "No Description")
+                Text(todo.desc ?? "No description")
                     .font(.system(.title2, design: .rounded, weight: .semibold))
                     .frame(maxWidth: Constants.screenWidth - 10, alignment: .leading)
             }
@@ -104,7 +106,7 @@ struct TodoDetailView: View {
     func showPriority() -> some View {
         HStack{
             VStack(alignment:.leading){
-                Text("Priority")
+                Text("Priority:")
                     .font(.system(.callout, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
                 HStack{
@@ -130,8 +132,11 @@ struct TodoDetailView: View {
     func showStatus() -> some View {
         HStack{
             VStack(alignment:.leading){
-                Text("Status")
+                Text("Status: ")
                     .font(.system(.callout, design: .rounded, weight: .semibold))
+                    .foregroundStyle(.secondary) +
+                Text("Click to change the status")
+                    .font(.system(.caption, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
                 HStack{
                     Text(TodoViewHelpers(todo: todo).statusName)
@@ -152,6 +157,22 @@ struct TodoDetailView: View {
                         todoVM.toggleCompletion(todo)
                     }
                 }
+            }
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    func showDueDate() -> some View {
+        HStack{
+            VStack(alignment:.leading){
+                Text("Due Date:")
+                    .font(.system(.callout, design: .rounded, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                
+                Text(TodoViewHelpers(todo: todo).formatDate())
+                    .font(.system(.title2, design: .rounded, weight: .semibold))
+                    .frame(maxWidth: Constants.screenWidth - 10, alignment: .leading)
             }
             Spacer()
         }

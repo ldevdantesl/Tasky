@@ -44,4 +44,14 @@ struct TodoViewHelpers {
     var statusColor: Color {
         todo.isDone ? .green : .secondary
     }
+    
+    func formatDate() -> String {
+        if let date = todo.dueDate {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd MMM, HH:mm"
+            return formatter.string(from: date)
+        } else {
+            return "Due date is not specified"
+        }
+    }
 }

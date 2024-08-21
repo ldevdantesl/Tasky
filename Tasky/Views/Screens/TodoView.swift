@@ -75,6 +75,11 @@ struct TodoView: View {
                     
                     EditButton()
                 }
+                ToolbarItem(placement:.topBarLeading){
+                    Button("Settings", systemImage: "gear"){
+                        
+                    }
+                }
             }
             .overlay(alignment: .bottomTrailing){
                 Button(action: {onAddSheet.toggle()}){
@@ -91,7 +96,7 @@ struct TodoView: View {
                 .padding()
             }
             .fullScreenCover(isPresented: $onAddSheet, onDismiss: todoVM.fetchTodos) {
-                AddTodoView(toggleView: $onAddSheet)
+                AddTodoView()
             }
         }
     }

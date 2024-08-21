@@ -10,15 +10,16 @@ import SwiftUI
 struct AddTodoView: View {
     @ObservedObject var todoVM = TodoViewModel()
     @FocusState var focusedField: Field?
+    @Environment(\.dismiss) var dismiss
     
     @State private var title: String = ""
     @State private var desc: String = ""
     @State private var priority: Int16 = 2
+    @State private var dueDate: Date = .now
+    @State private var addDueDate: Bool = false
     @State private var alertMessage: String = ""
     @State private var toggleAlert: Bool = false
     @State private var toggleConfirmation: Bool = false
-    
-    @Binding var toggleView: Bool
     
     enum Field: Hashable{
         case title
@@ -33,7 +34,7 @@ struct AddTodoView: View {
                     Text("New Todo")
                         .font(.system(.title, design: .rounded, weight: .semibold))
                     Spacer()
-                    Button(role:.destructive,action: {toggleView.toggle()}){
+                    Button(role:.destructive,action: {dismiss()}){
                         Image(systemName: "xmark")
                             .resizable()
                             .scaledToFit()
@@ -77,9 +78,14 @@ struct AddTodoView: View {
                 }
                 .padding(.vertical,10)
                 
+                // MARK: - DUE DATE
+                DueDateFragmentView(dueDate: $dueDate, addDueDate: $addDueDate)
+                .padding(.vertical, 10)
+                
                 // MARK: - PRIORITY
                 PriorityCapsuleView(selectedPriority: $priority)
-                    .padding(.vertical,10)
+                .padding(.vertical,10)
+                
             }
             .scrollIndicators(.never)
             .padding()
@@ -111,9 +117,9 @@ struct AddTodoView: View {
             }
             .confirmationDialog("Leave Description?", isPresented: $toggleConfirmation, titleVisibility: .visible){
                 Button(role:.destructive){
-                    todoVM.createTodo(title: title, description: nil, priority: priority)
+                    todoVM.createTodo(title: title, description: nil, priority: priority, dueDate: addDueDate ? dueDate : nil)
                     todoVM.fetchTodos()
-                    toggleView.toggle()
+                    dismiss()
                 } label: {
                     Text("Yes")
                 }
@@ -131,7 +137,8 @@ struct AddTodoView: View {
     }
     
     func checkTitle() -> Bool{
-        if title.isEmpty || title.count < 3 {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || trimmedTitle.count < 3 {
             alertMessage = "Accurate title will be your best navigator."
             return false
         }
@@ -139,7 +146,8 @@ struct AddTodoView: View {
     }
     
     func checkDescription() -> Bool {
-        if desc.isEmpty{
+        let trimmedDesc = desc.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedDesc.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty{
             return false
         }
         return true
@@ -148,9 +156,9 @@ struct AddTodoView: View {
     func addTodo() {
         if checkTitle(){
             if checkDescription(){
-                todoVM.createTodo(title: title, description: desc, priority: priority)
+                todoVM.createTodo(title: title, description: desc, priority: priority, dueDate: addDueDate ? dueDate : nil)
                 todoVM.fetchTodos()
-                toggleView.toggle()
+                dismiss()
             } else {
                 toggleConfirmation.toggle()
             }
@@ -163,6 +171,6 @@ struct AddTodoView: View {
 
 #Preview {
     NavigationStack{
-        AddTodoView(toggleView: .constant(true))
+        AddTodoView()
     }
 }

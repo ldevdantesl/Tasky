@@ -21,12 +21,13 @@ class TodoViewModel: ObservableObject {
         fetchTodos()
     }
     
-    func createTodo(title: String, description: String?, priority: Int16){
+    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?){
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
         newTodo.title = title
         newTodo.desc = description
         newTodo.priority = priority
+        newTodo.dueDate = dueDate
         newTodo.addedOn = .now
         
         saveContext()
@@ -45,11 +46,12 @@ class TodoViewModel: ObservableObject {
         }
     }
     
-    func editTodos(_ todo: Todo, newTitle: String, newDesc: String?, newIsDone: Bool, newPriority: Int16){
+    func editTodos(_ todo: Todo, newTitle: String, newDesc: String?, newIsDone: Bool, newPriority: Int16, newDueDate: Date?){
         todo.title = newTitle
         todo.desc = newDesc
         todo.isDone = newIsDone
         todo.priority = newPriority
+        todo.dueDate = newDueDate
         
         saveContext()
     }
@@ -99,6 +101,7 @@ extension TodoViewModel{
         mocktodo.title = "Make a coffee"
         mocktodo.desc = "Make a cofee for my friend which comes tomorrow"
         mocktodo.priority = 2
+        mocktodo.dueDate = Date.now
         
         return mocktodo
     }
