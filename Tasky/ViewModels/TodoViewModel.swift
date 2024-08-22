@@ -13,8 +13,6 @@ class TodoViewModel: ObservableObject {
     @Published var todos: [Todo] = []
     @Published var sortDescriptor: NSSortDescriptor?
     
-    static let shared = TodoViewModel()
-    
     let context = PersistentController.shared.context
     
     init() {

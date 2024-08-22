@@ -12,6 +12,7 @@
 		DA38A34B2C75B17F007C3FB4 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */; };
 		DA38A34D2C76B78C007C3FB4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34C2C76B78C007C3FB4 /* SettingsView.swift */; };
 		DA38A3502C76D009007C3FB4 /* NotificationAndSoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */; };
+		DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */; };
 		DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */; };
 		DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */; };
 		DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */; };
@@ -34,6 +35,7 @@
 		DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		DA38A34C2C76B78C007C3FB4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAndSoundsView.swift; sourceTree = "<group>"; };
+		DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAndStorageView.swift; sourceTree = "<group>"; };
 		DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
 		DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTextField.swift; sourceTree = "<group>"; };
 		DAF659D12C72FE4D004D8ACA /* Tasky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasky.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */,
+				DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */,
 			);
 			path = SettingsViewFragments;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */,
 				DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */,
 				DA38A34B2C75B17F007C3FB4 /* NotificationManager.swift in Sources */,
+				DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */,
 				DAF659EB2C72FFE5004D8ACA /* PersistentController.swift in Sources */,
 				DA38A3502C76D009007C3FB4 /* NotificationAndSoundsView.swift in Sources */,
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
