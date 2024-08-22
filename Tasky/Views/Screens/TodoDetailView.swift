@@ -82,7 +82,7 @@ struct TodoDetailView: View {
         }
         .sheet(isPresented: $showEditView, onDismiss: todoVM.fetchTodos){
             ToDoEditView(todo: todo)
-                .presentationDetents([.medium, .large])
+                .presentationDetents([.fraction(1/1.3), .large])
         }
     }
     
