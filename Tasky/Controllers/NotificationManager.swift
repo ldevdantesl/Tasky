@@ -9,12 +9,42 @@ import Foundation
 import SwiftUI
 import UserNotifications
 
-class NotificationManager{
-    
+class NotificationManager: ObservableObject {
     static let shared = NotificationManager()
     let notificationCenter = UNUserNotificationCenter.current()
     
+    @Published var pauseNotificationsEnabled: Bool {
+        didSet{
+            UserDefaults.standard.set(pauseNotificationsEnabled, forKey: "pauseNotifications")
+        }
+    }
+    @Published var dailyReminderEnabled: Bool {
+        didSet{
+            UserDefaults.standard.set(dailyReminderEnabled, forKey: "dailyReminderEnabled")
+        }
+    }
+    
+    @Published var reminderHoursBefore: Int{
+        didSet{
+            UserDefaults.standard.set(reminderHoursBefore, forKey: "reminderHoursBefore")
+        }
+    }
+    
+    private init() {
+        self.pauseNotificationsEnabled = UserDefaults.standard.object(forKey: "pauseNotificationsEnabled") as? Bool ?? false
+        self.dailyReminderEnabled = UserDefaults.standard.object(forKey: "dailyReminderEnabled") as? Bool ?? true
+        self.reminderHoursBefore = UserDefaults.standard.object(forKey: "reminderHoursBefore") as? Int ?? 2
+    }
+    
+    func resetSettings() {
+        self.pauseNotificationsEnabled = false
+        self.dailyReminderEnabled = true
+        self.reminderHoursBefore = 2
+    }
+    
     func scheduleNotificationIfNeeded(for todos: [Todo]){
+        guard !pauseNotificationsEnabled else { return }
+        
         let calendar = Calendar.current
         let today = Date()
         
@@ -32,6 +62,7 @@ class NotificationManager{
     }
     
     private func scheduleDailyNotification(totalTodos: Int){
+        guard !pauseNotificationsEnabled else { return }
         let content = UNMutableNotificationContent()
         content.title = "Today's To-Dos"
         content.body = "You have totally \(totalTodos) tasks scheduled for today, Don't forget to check them!"

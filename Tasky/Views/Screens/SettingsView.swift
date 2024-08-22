@@ -11,10 +11,6 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     var body: some View {
         Form{
-            header()
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets.init(top: -10, leading: 10, bottom: 10, trailing: 10))
-        
             Section{
                 rowSettings(name: "Tags", imageName: "number", color: .green) {
                     Text("Tags")
@@ -26,7 +22,7 @@ struct SettingsView: View {
                     Text("Data Management")
                 }
                 rowSettings(name: "Notification and Sounds", imageName: "bell.badge.fill", color: .red){
-                    Text("Notification Settings")
+                    NotificationAndSoundsView()
                 }
                 rowSettings(name: "Privacy and Security", imageName: "lock.shield.fill", color: .gray){
                     Text("Notification Settings")
@@ -46,6 +42,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .navigationTitle("Settings")
     }
     
     @ViewBuilder

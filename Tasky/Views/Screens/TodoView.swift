@@ -60,7 +60,6 @@ struct TodoView: View {
                 ToolbarItem(placement:.topBarLeading){
                     NavigationLink{
                         SettingsView()
-                            .toolbar(.hidden, for: .navigationBar)
                     } label: {
                         Image(systemName: "gear")
                     }
