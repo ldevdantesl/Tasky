@@ -31,7 +31,6 @@ class TodoViewModel: ObservableObject {
         newTodo.addedOn = .now
         
         saveContext()
-        
     }
     
     func fetchTodos(){
