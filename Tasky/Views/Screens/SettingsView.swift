@@ -11,12 +11,14 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     var body: some View {
         Form{
+            // MARK: - TAGS
             Section{
                 rowSettings(name: "Tags", imageName: "number", color: .green) {
                     Text("Tags")
                 }
             }
             
+            // MARK: - DATA, NOTIFICATION AND PRIVACY
             Section{
                 rowSettings(name: "Data and Storage", imageName: "folder.fill.badge.gearshape", color: .mint){
                     Text("Data Management")
@@ -28,6 +30,8 @@ struct SettingsView: View {
                     Text("Notification Settings")
                 }
             }
+            
+            // MARK: - LANGUAGE AND APPEARANCE
             Section{
                 rowSettings(name: "Language", imageName: "globe", color: .purple){
                     Text("Notification Settings")
@@ -36,6 +40,8 @@ struct SettingsView: View {
                     Text("Notification Settings")
                 }
             }
+            
+            // MARK: - FAQ
             Section{
                 rowSettings(name: "FAQ", imageName: "questionmark.circle", color: .teal) {
                     Text("")
