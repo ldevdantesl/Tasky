@@ -14,7 +14,6 @@ struct PriorityCapsuleView: View {
             Text("Priority of your task")
                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 .foregroundStyle(.secondary)
-                .padding(.horizontal,5)
                 .padding(.vertical,10)
             HStack{
                 filterButton(text: "Trivial")

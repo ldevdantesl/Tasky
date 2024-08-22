@@ -21,7 +21,7 @@ class TodoViewModel: ObservableObject {
         fetchTodos()
     }
     
-    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?){
+    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag]){
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
         newTodo.title = title
@@ -29,6 +29,10 @@ class TodoViewModel: ObservableObject {
         newTodo.priority = priority
         newTodo.dueDate = dueDate
         newTodo.addedOn = .now
+        
+        if !tags.isEmpty{
+            newTodo.tags = NSSet(array: tags)
+        }
         
         saveContext()
     }

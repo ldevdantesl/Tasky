@@ -9,22 +9,19 @@ import SwiftUI
 
 struct AddTodoView: View {
     @ObservedObject var todoVM = TodoViewModel()
-    @FocusState var focusedField: Field?
+    @ObservedObject var tagVM = TagViewModel()
+    @FocusState var focusedField: Bool
     @Environment(\.dismiss) var dismiss
     
     @State private var title: String = ""
     @State private var desc: String = ""
     @State private var priority: Int16 = 2
     @State private var dueDate: Date = .now
+    @State private var selectedTags: [Tag] = []
     @State private var addDueDate: Bool = false
     @State private var alertMessage: String = ""
     @State private var toggleAlert: Bool = false
     @State private var toggleConfirmation: Bool = false
-    
-    enum Field: Hashable{
-        case title
-        case description
-    }
     
     var body: some View {
         NavigationStack{
@@ -53,7 +50,6 @@ struct AddTodoView: View {
                         .padding(.horizontal,5)
                     
                     UIKitTextField(text: $title, placeholder: "Title")
-                        .focused($focusedField, equals: .title)
                         .scrollDismissesKeyboard(.immediately)
                         .padding(10)
                         .frame(maxWidth: Constants.screenWidth - 30)
@@ -69,7 +65,7 @@ struct AddTodoView: View {
                         .foregroundStyle(.secondary)
                         .padding(.horizontal,5)
                     TextField("Description", text: $desc, axis: .vertical)
-                        .focused($focusedField, equals: .description)
+                        .focused($focusedField)
                         .textInputAutocapitalization(.sentences)
                         .scrollDismissesKeyboard(.immediately)
                         .padding(10)
@@ -81,18 +77,23 @@ struct AddTodoView: View {
                 // MARK: - DUE DATE
                 DueDateFragmentView(dueDate: $dueDate, addDueDate: $addDueDate)
                 .padding(.vertical, 10)
+                .padding(.horizontal, -5)
                 
                 // MARK: - PRIORITY
                 PriorityCapsuleView(selectedPriority: $priority)
                 .padding(.vertical,10)
                 
+                // MARK: - TAGS
+                TagLazyFragmentView(selectedTags: $selectedTags)
+                    .padding(.vertical, 10)
+                
             }
             .scrollIndicators(.never)
             .padding()
             .toolbar{
-                if focusedField == .description{
+                if focusedField{
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(action:{focusedField = nil}){
+                        Button(action:{focusedField = false}){
                             Text("Done")
                         }
                     }
@@ -117,7 +118,7 @@ struct AddTodoView: View {
             }
             .confirmationDialog("Leave Description?", isPresented: $toggleConfirmation, titleVisibility: .visible){
                 Button(role:.destructive){
-                    todoVM.createTodo(title: title, description: nil, priority: priority, dueDate: addDueDate ? dueDate : nil)
+                    todoVM.createTodo(title: title, description: nil, priority: priority, dueDate: addDueDate ? dueDate : nil, tags: selectedTags)
                     todoVM.fetchTodos()
                     dismiss()
                 } label: {
@@ -156,8 +157,7 @@ struct AddTodoView: View {
     func addTodo() {
         if checkTitle(){
             if checkDescription(){
-                todoVM.createTodo(title: title, description: desc, priority: priority, dueDate: addDueDate ? dueDate : nil)
-                todoVM.fetchTodos()
+                todoVM.createTodo(title: title, description: desc, priority: priority, dueDate: addDueDate ? dueDate : nil, tags: selectedTags)
                 dismiss()
             } else {
                 toggleConfirmation.toggle()
@@ -165,7 +165,6 @@ struct AddTodoView: View {
         } else {
             toggleAlert.toggle()
         }
-        
     }
 }
 

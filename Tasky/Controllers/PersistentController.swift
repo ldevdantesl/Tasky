@@ -18,7 +18,7 @@ class PersistentController: ObservableObject {
         container.viewContext
     }
     
-    init(){
+    private init(){
         self.container = NSPersistentContainer(name: "TodoModel")
         container.loadPersistentStores { description, error in
             if let error = error {
