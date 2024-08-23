@@ -36,9 +36,19 @@ extension Color {
     }
 }
 
-func getColor(from tag: Tag) -> Color? {
-    guard let colorData = tag.color else { return nil }
-    return Color.fromData(colorData)
+extension UIColor {
+    func toData() -> Data? {
+        return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+    }
+}
+
+extension UIColor {
+    static func fromData(_ data: Data) -> Color? {
+        if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
+            return Color(uiColor)
+        }
+        return nil
+    }
 }
 
 func areColorsEqual(color1: Color?, color2: Color) -> Bool {

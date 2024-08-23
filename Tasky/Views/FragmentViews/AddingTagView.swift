@@ -16,52 +16,53 @@ struct AddingTagView: View {
     @State private var alertMessage: String = ""
     @State private var showAlert: Bool = false
     var body: some View {
-        ScrollView{
-            VStack(alignment: .leading){
-                Text("Name of tag")
-                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal,5)
-                UIKitTextField(text: $name, placeholder: "Name")
-                    .padding()
-                    .frame(maxWidth: Constants.screenWidth - 20)
-                    .frame(maxHeight: 40)
-                    .background(Color.secondary.opacity(0.2), in:Constants.circularShape)
+        NavigationStack{
+            ScrollView{
+                VStack(alignment: .leading){
+                    Text("Name of tag")
+                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal,5)
+                    UIKitTextField(text: $name, placeholder: "Name")
+                        .padding()
+                        .frame(maxWidth: Constants.screenWidth - 20)
+                        .frame(maxHeight: 40)
+                        .background(Color.secondary.opacity(0.2), in:Constants.circularShape)
+                }
+                .padding(.vertical, 10)
+                VStack(alignment: .leading){
+                    Text("Color of tag")
+                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal,15)
+                    showAllColors()
+                        .padding(.horizontal,10)
+                    
+                }
+                .padding(.vertical, 10)
             }
-            .padding(.vertical, 10)
-            VStack(alignment: .leading){
-                Text("Color of tag")
-                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal,15)
-                showAllColors()
-                    .padding(.horizontal,10)
-                
-            }
-            .padding(.vertical, 10)
-        }
-        .toolbar{
-            ToolbarItem(placement: .bottomBar) {
-                Button(action: checkName){
-                    Text("+ Tag")
-                        .font(.system(.title2, design: .rounded, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .frame(width: Constants.screenWidth - 20)
-                        .frame(height: 50)
-                        .background(Color.blue, in:.capsule)
+            .toolbar{
+                ToolbarItem(placement: .bottomBar) {
+                    Button(action: checkName){
+                        Text("+ Tag")
+                            .font(.system(.title2, design: .rounded, weight: .semibold))
+                            .foregroundStyle(.white)
+                            .frame(width: Constants.screenWidth - 20)
+                            .frame(height: 50)
+                            .background(Color.blue, in:.capsule)
+                    }
                 }
             }
-        }
-        .alert("Invalid name", isPresented: $showAlert) {
-            Button(action: {alertMessage = ""}){
-                Text("OK")
+            .alert("Invalid name", isPresented: $showAlert) {
+                Button(action: {alertMessage = ""}){
+                    Text("OK")
+                }
+            } message: {
+                Text(alertMessage)
             }
-        } message: {
-            Text(alertMessage)
+            .navigationTitle("New Tag")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .navigationTitle("New Tag")
-        .navigationBarTitleDisplayMode(.inline)
-
     }
     
     @ViewBuilder

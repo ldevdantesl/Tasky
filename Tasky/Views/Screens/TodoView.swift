@@ -9,7 +9,8 @@ import SwiftUI
 
 struct TodoView: View {
     @StateObject var todoVM = TodoViewModel()
-    @State private var onAddSheet = false
+    @State private var onAddTodo = false
+    @State private var onAddTag = false
     @State private var searchText: String = ""
     
     var filteredTodos: [Todo]{
@@ -27,8 +28,10 @@ struct TodoView: View {
             List {
                 ForEach(filteredTodos, id: \.id){ todo in
                     NavigationLink(value: todo) {
-                        Text(todo.title ?? "Uknown title")
-                            .strikethrough(todo.isDone)
+                        VStack(alignment:.leading){
+                            Text(todo.title ?? "Uknown title")
+                                .strikethrough(todo.isDone)
+                        }
                     }
                     .swipeActions(edge:.leading, allowsFullSwipe: true){
                         if !todo.isDone{
@@ -85,7 +88,14 @@ struct TodoView: View {
                 }
             }
             .overlay(alignment: .bottomTrailing){
-                Button(action: {onAddSheet.toggle()}){
+                Menu{
+                    Button(action: {onAddTodo.toggle()}) {
+                        Text("Todo")
+                    }
+                    Button(action: {onAddTag.toggle()}) {
+                        Text("Tag")
+                    }
+                } label:{
                     Image(systemName: "plus")
                         .resizable()
                         .scaledToFit()
@@ -94,12 +104,16 @@ struct TodoView: View {
                         .frame(height: 30)
                         .padding(20)
                         .background(Color.blue, in:.circle)
+                        .shadow(radius: 5)
+                        .padding()
                 }
-                .shadow(radius: 5)
-                .padding()
             }
-            .fullScreenCover(isPresented: $onAddSheet, onDismiss: todoVM.fetchTodos) {
+            .fullScreenCover(isPresented: $onAddTodo, onDismiss: todoVM.fetchTodos) {
                 AddTodoView()
+            }
+            .sheet(isPresented: $onAddTag) {
+                AddingTagView()
+                    .presentationDetents([.medium, .large])
             }
         }
     }

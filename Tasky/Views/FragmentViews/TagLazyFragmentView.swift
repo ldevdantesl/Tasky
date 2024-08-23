@@ -20,7 +20,7 @@ struct TagLazyFragmentView: View {
                 Text("Tags")
                     .font(.system(.subheadline, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
-                    .padding(.horizontal,5)
+                    .padding(.horizontal)
             }
             ScrollView(.horizontal) {
                 LazyHStack {
@@ -38,7 +38,19 @@ struct TagLazyFragmentView: View {
                                 }
                             }
                             .padding(10)
-                            .background(getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
+                            .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
+                        }
+                        .contextMenu {
+                            if selectedTags.contains(where: { $0 == tag }) {
+                                Text("Can't remove it is used")
+                                    .font(.system(.caption, design: .rounded, weight: .semibold))
+                            }
+                            
+                            Button(role:.destructive, action: {tagVM.deleteTag(tag: tag)}){
+                                    Text("Remove tag")
+                            }
+                            .disabled(selectedTags.contains(where: { $0 == tag }))
+                            
                         }
                     }
                     Button(action: {isAddingTag.toggle()}){
@@ -58,10 +70,8 @@ struct TagLazyFragmentView: View {
             .scrollIndicators(.hidden)
         }
         .sheet(isPresented: $isAddingTag, onDismiss: tagVM.fetchTags) {
-            NavigationStack{
-                AddingTagView()
-            }
-            .presentationDetents([.medium, .large])
+            AddingTagView()
+                .presentationDetents([.medium, .large])
         }
     }
     
@@ -74,7 +84,7 @@ struct TagLazyFragmentView: View {
     }
     
     func foregroundForTagColor(tag: Tag) -> Color {
-        if areColorsEqual(color1: getColor(from: tag), color2: .gray.opacity(0.3)){
+        if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
             return .black
         } else {
             return .white

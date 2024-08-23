@@ -63,6 +63,21 @@ class TagViewModel: ObservableObject {
     }
 }
 
+extension Tag{
+    static func areTagsEqual(nsset: NSSet, array: [Tag]) -> Bool {
+        let nssetSet = Set(nsset as! Set<Tag>)
+        let arraySet = Set(array)
+        return nssetSet == arraySet
+    }
+}
+
+extension Tag{
+    static func getColor(from tag: Tag) -> Color? {
+        guard let colorData = tag.color else { return nil }
+        return Color.fromData(colorData)
+    }
+}
+
 #if DEBUG
 extension TagViewModel{
     static func mockTags() -> [Tag]{

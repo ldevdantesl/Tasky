@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */; };
 		DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */; };
 		DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */; };
 		DA38A34B2C75B17F007C3FB4 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTagsFragmentView.swift; sourceTree = "<group>"; };
 		DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewHelpers.swift; sourceTree = "<group>"; };
 		DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateFragmentView.swift; sourceTree = "<group>"; };
 		DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */,
 				DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */,
 				DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */,
+				DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */,
 			);
 			path = FragmentViews;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */,
 				DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */,
 				DA38A34B2C75B17F007C3FB4 /* NotificationManager.swift in Sources */,
+				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
 				DAF659EB2C72FFE5004D8ACA /* PersistentController.swift in Sources */,
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
 			);

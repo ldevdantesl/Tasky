@@ -99,7 +99,7 @@ struct AddTodoView: View {
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
-                    Button(action: addTodo) {
+                    Button(action: finalCheck) {
                         HStack{
                             Text("Todo")
                                 .font(.title3)
@@ -139,32 +139,32 @@ struct AddTodoView: View {
     
     func checkTitle() -> Bool{
         let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmedTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || trimmedTitle.count < 3 {
-            alertMessage = "Accurate title will be your best navigator."
-            return false
-        }
-        return true
+        let result = trimmedTitle.isEmpty || trimmedTitle.count < 3
+        alertMessage = result ? "Accurate title will be your best navigator." : ""
+        return result
     }
     
     func checkDescription() -> Bool {
         let trimmedDesc = desc.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmedDesc.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty{
-            return false
-        }
-        return true
+        let result = trimmedDesc.isEmpty
+        return result
     }
     
-    func addTodo() {
-        if checkTitle(){
-            if checkDescription(){
-                todoVM.createTodo(title: title, description: desc, priority: priority, dueDate: addDueDate ? dueDate : nil, tags: selectedTags)
-                dismiss()
+    func finalCheck() {
+        if !checkTitle(){
+            if !checkDescription(){
+                addTodo()
             } else {
                 toggleConfirmation.toggle()
             }
         } else {
             toggleAlert.toggle()
         }
+    }
+    
+    func addTodo() {
+        todoVM.createTodo(title: title, description: desc, priority: priority, dueDate: addDueDate ? dueDate : nil, tags: selectedTags)
+        dismiss()
     }
 }
 

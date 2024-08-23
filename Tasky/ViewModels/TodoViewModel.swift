@@ -49,12 +49,19 @@ class TodoViewModel: ObservableObject {
         }
     }
     
-    func editTodos(_ todo: Todo, newTitle: String, newDesc: String?, newIsDone: Bool, newPriority: Int16, newDueDate: Date?){
+    func editTodos(_ todo: Todo, newTitle: String, newDesc: String?, newIsDone: Bool? = nil, newPriority: Int16, newDueDate: Date?, newTags: [Tag]?){
         todo.title = newTitle
-        todo.desc = newDesc
-        todo.isDone = newIsDone
+        if let newDesc{
+            todo.desc = newDesc
+        }
+        if let newIsDone{
+            todo.isDone = newIsDone
+        }
         todo.priority = newPriority
         todo.dueDate = newDueDate
+        if let newTags{
+            todo.tags = NSSet(array: newTags)
+        }
         
         saveContext()
     }
@@ -105,6 +112,7 @@ extension TodoViewModel{
         mocktodo.desc = "Make a cofee for my friend which comes tomorrow"
         mocktodo.priority = 2
         mocktodo.dueDate = Date.now
+        mocktodo.tags = NSSet(array: TagViewModel.mockTags())
         
         return mocktodo
     }
