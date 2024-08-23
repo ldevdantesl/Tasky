@@ -53,33 +53,14 @@ struct TodoView: View {
             .searchable(text: $searchText)
             .toolbar{
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Menu("Sort", systemImage: "arrow.up.and.down.text.horizontal"){
-                        Text("Sort By")
-                        Button("Priority"){
-                            sortBy(sortKey: "priority", ascending: false)
-                        }
-                        Button("First Done"){
-                            sortBy(sortKey: "isDone", ascending: false)
-                        }
-                        Button("First Undone"){
-                            sortBy(sortKey: "isDone", ascending: true)
-                        }
-                        Button("Time added"){
-                            sortBy(sortKey: "addedOn", ascending: true)
-                        }
-                        Button("Due date"){
-                            sortBy(sortKey: "dueDate", ascending: true)
-                        }
-                        Button("Title"){
-                            sortBy(sortKey: "title", ascending: true)
-                        }
-                    }
-                    
+                    toolbarSortButton()
                     EditButton()
                 }
                 ToolbarItem(placement:.topBarLeading){
-                    Button("Settings", systemImage: "gear"){
-                        
+                    NavigationLink{
+                        SettingsView()
+                    } label: {
+                        Image(systemName: "gear")
                     }
                 }
             }
@@ -145,6 +126,29 @@ struct TodoView: View {
             return .black
         } else {
             return .white
+        }
+    }
+    func toolbarSortButton() -> some View{
+        Menu("Sort", systemImage: "arrow.up.and.down.text.horizontal"){
+            Text("Sort By")
+            Button("Priority"){
+                sortBy(sortKey: "priority", ascending: false)
+            }
+            Button("First Done"){
+                sortBy(sortKey: "isDone", ascending: false)
+            }
+            Button("First Undone"){
+                sortBy(sortKey: "isDone", ascending: true)
+            }
+            Button("Time added"){
+                sortBy(sortKey: "addedOn", ascending: true)
+            }
+            Button("Due date"){
+                sortBy(sortKey: "dueDate", ascending: true)
+            }
+            Button("Title"){
+                sortBy(sortKey: "title", ascending: true)
+            }
         }
     }
     

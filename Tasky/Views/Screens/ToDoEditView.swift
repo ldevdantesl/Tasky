@@ -117,6 +117,7 @@ struct ToDoEditView: View {
                             .frame(minWidth: Constants.screenWidth - 40)
                             .frame(height: 50)
                             .background(Color.blue, in:.capsule)
+                            .padding(.bottom, 15)
                     }
                 }
             }
