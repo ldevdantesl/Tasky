@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AllTagsFragmentView: View {
-    @State var todo: Todo
+    @ObservedObject var todo: Todo
     
     var todosTags: [Tag] {
         todo.tags?.allObjects as? [Tag] ?? []
@@ -29,9 +29,10 @@ struct AllTagsFragmentView: View {
                                 .foregroundStyle(foregroundForTagColor(tag: tag))
                                 .padding(10)
                                 .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
-                                .padding(.leading, 10)
+                                
                         }
                     }
+                    .padding(.horizontal, 5)
                 }
                 .scrollIndicators(.hidden)
                 .frame(height: 50)

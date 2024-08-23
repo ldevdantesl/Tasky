@@ -64,7 +64,7 @@ struct TagLazyFragmentView: View {
                             .shadow(radius: 5)
                     }
                 }
-                .padding()
+                .padding(.horizontal, 5)
             }
             .frame(maxHeight: 70)
             .scrollIndicators(.hidden)

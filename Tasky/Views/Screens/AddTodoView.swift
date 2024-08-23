@@ -26,70 +26,71 @@ struct AddTodoView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
-                // MARK: - TITLE
-                HStack{
-                    Text("New Todo")
-                        .font(.system(.title, design: .rounded, weight: .semibold))
-                    Spacer()
-                    Button(role:.destructive,action: {dismiss()}){
-                        Image(systemName: "xmark")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: 15)
-                            .frame(maxHeight: 15)
-                            .bold()
+                Group{
+                    // MARK: - TITLE
+                    HStack{
+                        Text("New Todo")
+                            .font(.system(.title, design: .rounded, weight: .semibold))
+                        Spacer()
+                        Button(role:.destructive,action: {dismiss()}){
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: 15)
+                                .frame(maxHeight: 15)
+                                .bold()
+                        }
+                        .padding(.trailing, 5)
                     }
-                    .padding(.trailing, 5)
-                }
-                
-                // MARK: - TODO TITLE
-                VStack(alignment:.leading){
-                    Text("Title of your task")
-                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                        .padding(.horizontal,5)
                     
-                    UIKitTextField(text: $title, placeholder: "Title")
-                        .scrollDismissesKeyboard(.immediately)
-                        .padding(10)
-                        .frame(maxWidth: Constants.screenWidth - 30)
-                        .frame(minHeight: 40)
-                        .background(Constants.secondaryColor, in: Constants.circularShape)
+                    // MARK: - TODO TITLE
+                    VStack(alignment:.leading){
+                        Text("Title of your task")
+                            .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal,5)
+                        
+                        UIKitTextField(text: $title, placeholder: "Title")
+                            .scrollDismissesKeyboard(.immediately)
+                            .padding(10)
+                            .frame(maxWidth: Constants.screenWidth - 30)
+                            .frame(minHeight: 40)
+                            .background(Constants.secondaryColor, in: Constants.circularShape)
+                    }
+                    .padding(.vertical, 10)
+                    
+                    // MARK: - TODO DESCRIPTION
+                    VStack(alignment:.leading){
+                        Text("Description of your task")
+                            .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal,5)
+                        TextField("Description", text: $desc, axis: .vertical)
+                            .focused($focusedField)
+                            .textInputAutocapitalization(.sentences)
+                            .scrollDismissesKeyboard(.immediately)
+                            .padding(10)
+                            .frame(maxWidth: Constants.screenWidth - 30)
+                            .background(Constants.secondaryColor, in: Constants.circularShape)
+                    }
+                    .padding(.vertical,10)
+                    
+                    // MARK: - DUE DATE
+                    DueDateFragmentView(dueDate: $dueDate, addDueDate: $addDueDate)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, -5)
+                    
+                    // MARK: - PRIORITY
+                    PriorityCapsuleView(selectedPriority: $priority)
+                        .padding(.vertical,10)
                 }
-                .padding(.vertical, 10)
-                
-                // MARK: - TODO DESCRIPTION
-                VStack(alignment:.leading){
-                    Text("Description of your task")
-                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                        .padding(.horizontal,5)
-                    TextField("Description", text: $desc, axis: .vertical)
-                        .focused($focusedField)
-                        .textInputAutocapitalization(.sentences)
-                        .scrollDismissesKeyboard(.immediately)
-                        .padding(10)
-                        .frame(maxWidth: Constants.screenWidth - 30)
-                        .background(Constants.secondaryColor, in: Constants.circularShape)
-                }
-                .padding(.vertical,10)
-                
-                // MARK: - DUE DATE
-                DueDateFragmentView(dueDate: $dueDate, addDueDate: $addDueDate)
-                .padding(.vertical, 10)
-                .padding(.horizontal, -5)
-                
-                // MARK: - PRIORITY
-                PriorityCapsuleView(selectedPriority: $priority)
-                .padding(.vertical,10)
-                
+                .padding(.horizontal)
                 // MARK: - TAGS
                 TagLazyFragmentView(selectedTags: $selectedTags)
                     .padding(.vertical, 10)
                 
             }
             .scrollIndicators(.never)
-            .padding()
             .toolbar{
                 if focusedField{
                     ToolbarItem(placement: .topBarTrailing) {

@@ -12,7 +12,7 @@ struct ToDoEditView: View {
     @Environment(\.dismiss) var dismiss
     @FocusState private var isFocus: Bool
     
-    let todo: Todo
+    @ObservedObject var todo: Todo
     
     @State var todoTitle: String = ""
     @State var todoDesc: String = ""

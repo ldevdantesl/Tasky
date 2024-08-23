@@ -28,10 +28,7 @@ struct TodoView: View {
             List {
                 ForEach(filteredTodos, id: \.id){ todo in
                     NavigationLink(value: todo) {
-                        VStack(alignment:.leading){
-                            Text(todo.title ?? "Uknown title")
-                                .strikethrough(todo.isDone)
-                        }
+                        rowForTodo(todo)
                     }
                     .swipeActions(edge:.leading, allowsFullSwipe: true){
                         if !todo.isDone{
@@ -50,9 +47,8 @@ struct TodoView: View {
                 .onDelete(perform: todoVM.deleteTodoByIndex)
             }
             .navigationDestination(for: Todo.self){ todo in
-                TodoDetailView(todo: todo)
+                TodoDetailView(observedTodo: todo)
             }
-            .onAppear(perform: todoVM.fetchTodos)
             .navigationTitle("To-Do")
             .searchable(text: $searchText)
             .toolbar{
@@ -108,7 +104,7 @@ struct TodoView: View {
                         .padding()
                 }
             }
-            .fullScreenCover(isPresented: $onAddTodo, onDismiss: todoVM.fetchTodos) {
+            .fullScreenCover(isPresented: $onAddTodo) {
                 AddTodoView()
             }
             .sheet(isPresented: $onAddTag) {
@@ -121,6 +117,35 @@ struct TodoView: View {
     func sortBy(sortKey: String, ascending: Bool){
         todoVM.sortDescriptor = NSSortDescriptor(key: sortKey, ascending: ascending)
         todoVM.fetchTodos()
+    }
+    
+    @ViewBuilder
+    func rowForTodo(_ todo: Todo) -> some View {
+        let tagsArray = todo.tags?.allObjects as? [Tag] ?? []
+        VStack(alignment:.leading, spacing:5){
+            Text(todo.title ?? "Uknown title")
+                .strikethrough(todo.isDone)
+            if !tagsArray.isEmpty{
+                HStack{
+                    ForEach(tagsArray, id:\.hashValue) { tag in
+                        Text("#\(tag.name ?? "")")
+                            .font(.system(.caption, design: .rounded, weight: .light))
+                            .padding(3)
+                            .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
+                            .foregroundStyle(foregroundForTagColor(tag: tag))
+                    }
+                }
+                .frame(maxWidth: Constants.screenWidth - 40, maxHeight: 15, alignment:.leading)
+            }
+        }
+    }
+    
+    func foregroundForTagColor(tag: Tag) -> Color {
+        if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
+            return .black
+        } else {
+            return .white
+        }
     }
     
 }

@@ -11,11 +11,11 @@
 		DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */; };
 		DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */; };
 		DA38A34B2C75B17F007C3FB4 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */; };
-		DA38A3542C76FD58007C3FB4 /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3532C76FD58007C3FB4 /* TagViewModel.swift */; };
 		DA38A3562C770C16007C3FB4 /* TagLazyFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */; };
 		DA38A3582C771E8E007C3FB4 /* AddingTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */; };
 		DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */; };
 		DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */; };
+		DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409DB2C78471C004D054E /* TagViewModel.swift */; };
 		DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */; };
 		DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D62C72FE4D004D8ACA /* MainView.swift */; };
 		DAF659D92C72FE4F004D8ACA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF659D82C72FE4F004D8ACA /* Assets.xcassets */; };
@@ -35,11 +35,11 @@
 		DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewHelpers.swift; sourceTree = "<group>"; };
 		DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateFragmentView.swift; sourceTree = "<group>"; };
 		DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		DA38A3532C76FD58007C3FB4 /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
 		DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLazyFragmentView.swift; sourceTree = "<group>"; };
 		DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTagView.swift; sourceTree = "<group>"; };
 		DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
 		DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTextField.swift; sourceTree = "<group>"; };
+		DA9409DB2C78471C004D054E /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
 		DAF659D12C72FE4D004D8ACA /* Tasky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskyApp.swift; sourceTree = "<group>"; };
 		DAF659D62C72FE4D004D8ACA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				DAF659F32C730707004D8ACA /* TodoViewModel.swift */,
-				DA38A3532C76FD58007C3FB4 /* TagViewModel.swift */,
+				DA9409DB2C78471C004D054E /* TagViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -270,7 +270,6 @@
 				DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */,
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
 				DAF659F62C730CFE004D8ACA /* AddTodoView.swift in Sources */,
-				DA38A3542C76FD58007C3FB4 /* TagViewModel.swift in Sources */,
 				DAF659EE2C730284004D8ACA /* TodoModel.xcdatamodeld in Sources */,
 				DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */,
 				DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */,
@@ -283,6 +282,7 @@
 				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
 				DAF659EB2C72FFE5004D8ACA /* PersistentController.swift in Sources */,
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
+				DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

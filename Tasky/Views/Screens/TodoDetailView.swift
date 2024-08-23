@@ -16,7 +16,11 @@ struct TodoDetailView: View {
     @State private var showAlert: Bool = false
     @State private var showEditView: Bool = false
     
-    let todo: Todo
+    @ObservedObject var todo: Todo
+    
+    init(observedTodo: Todo){
+        _todo = ObservedObject(wrappedValue: observedTodo)
+    }
     
     var body: some View {
         ScrollView{
@@ -72,6 +76,9 @@ struct TodoDetailView: View {
             }
             .tint(.red)
         }
+        .onAppear{
+            todoVM.context.refresh(todo, mergeChanges: true)
+        }
         .alert("Delete To-Do? ", isPresented: $showAlert) {
             Button(role:.destructive){
                 todoVM.deleteTodo(todo)
@@ -86,7 +93,7 @@ struct TodoDetailView: View {
         } message: {
             Text("Do you really want to delete this Todo?")
         }
-        .sheet(isPresented: $showEditView, onDismiss: {todoVM.fetchTodos(); tagVM.fetchTags()}){
+        .sheet(isPresented: $showEditView){
             ToDoEditView(todo: todo)
                 .presentationDetents([.medium, .large])
         }
@@ -187,6 +194,6 @@ struct TodoDetailView: View {
 
 #Preview {
     NavigationStack{
-        TodoDetailView(todo: TodoViewModel.mockToDo())
+        TodoDetailView(observedTodo: TodoViewModel.mockToDo())
     }
 }
