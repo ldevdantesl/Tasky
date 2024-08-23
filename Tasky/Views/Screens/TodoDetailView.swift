@@ -11,40 +11,51 @@ struct TodoDetailView: View {
     @Environment(\.dismiss) var dismiss
     
     @ObservedObject private var todoVM = TodoViewModel()
+    @ObservedObject private var tagVM = TagViewModel()
     
     @State private var showAlert: Bool = false
     @State private var showEditView: Bool = false
     
-    let todo: Todo
+    @ObservedObject var todo: Todo
+    
+    init(observedTodo: Todo){
+        _todo = ObservedObject(wrappedValue: observedTodo)
+    }
     
     var body: some View {
         ScrollView{
-            HStack{
-                Image(systemName: "flag.fill")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: 25)
-                    .frame(maxHeight: 25)
-                    .foregroundStyle(TodoViewHelpers(todo: todo).priorityColor)
+            Group{
+                HStack{
+                    Image(systemName: "flag.fill")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: 25)
+                        .frame(maxHeight: 25)
+                        .foregroundStyle(TodoViewHelpers(todo: todo).priorityColor)
+                    
+                    Text(todo.title ?? "No title")
+                        .font(.system(.title3, design: .rounded, weight: .bold))
+                        .frame(maxWidth: Constants.screenWidth - 30, alignment: .leading)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(1)
+                    Spacer()
+                }
                 
-                Text(todo.title ?? "No title")
-                    .font(.system(.title3, design: .rounded, weight: .bold))
-                    .frame(maxWidth: Constants.screenWidth - 30, alignment: .leading)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(1)
-                Spacer()
+                showTodo()
+                    .padding(.vertical,10)
+                
+                showDueDate()
+                    .padding(.vertical, 10)
+                
+                showPriority()
+                    .padding(.vertical,10)
+                
+                showStatus()
+                    .padding(.vertical, 10)
             }
+            .padding(.horizontal)
             
-            showTodo()
-                .padding(.vertical,10)
-            
-            showDueDate()
-                .padding(.vertical, 10)
-            
-            showPriority()
-                .padding(.vertical,10)
-            
-            showStatus()
+            AllTagsFragmentView(todo: todo)
                 .padding(.vertical, 10)
         }
         .scrollIndicators(.never)
@@ -65,7 +76,9 @@ struct TodoDetailView: View {
             }
             .tint(.red)
         }
-        .padding(.horizontal)
+        .onAppear{
+            todoVM.context.refresh(todo, mergeChanges: true)
+        }
         .alert("Delete To-Do? ", isPresented: $showAlert) {
             Button(role:.destructive){
                 todoVM.deleteTodo(todo)
@@ -80,7 +93,7 @@ struct TodoDetailView: View {
         } message: {
             Text("Do you really want to delete this Todo?")
         }
-        .sheet(isPresented: $showEditView, onDismiss: todoVM.fetchTodos){
+        .sheet(isPresented: $showEditView){
             ToDoEditView(todo: todo)
                 .presentationDetents([.fraction(1/1.3), .large])
         }
@@ -181,6 +194,6 @@ struct TodoDetailView: View {
 
 #Preview {
     NavigationStack{
-        TodoDetailView(todo: TodoViewModel.mockToDo())
+        TodoDetailView(observedTodo: TodoViewModel.mockToDo())
     }
 }

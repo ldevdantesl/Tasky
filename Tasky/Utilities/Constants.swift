@@ -19,3 +19,49 @@ public enum Constants{
 public func log(_ message: String){
     print(message)
 }
+
+extension Color {
+    func toData() -> Data? {
+        let uiColor = UIColor(self)  // Convert Color to UIColor
+        return try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
+    }
+}
+
+extension Color {
+    static func fromData(_ data: Data) -> Color? {
+        if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
+            return Color(uiColor)
+        }
+        return nil
+    }
+}
+
+extension UIColor {
+    func toData() -> Data? {
+        return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+    }
+}
+
+extension UIColor {
+    static func fromData(_ data: Data) -> Color? {
+        if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
+            return Color(uiColor)
+        }
+        return nil
+    }
+}
+
+func areColorsEqual(color1: Color?, color2: Color) -> Bool {
+    guard let color1 = color1 else { return false }
+    
+    let uiColor1 = UIColor(color1)
+    let uiColor2 = UIColor(color2)
+    
+    var r1: CGFloat = 0, g1: CGFloat = 0, b1: CGFloat = 0, a1: CGFloat = 0
+    var r2: CGFloat = 0, g2: CGFloat = 0, b2: CGFloat = 0, a2: CGFloat = 0
+    
+    uiColor1.getRed(&r1, green: &g1, blue: &b1, alpha: &a1)
+    uiColor2.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
+    
+    return r1 == r2 && g1 == g2 && b1 == b2 && a1 == a2
+}
