@@ -10,15 +10,25 @@
 		DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */; };
 		DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */; };
 		DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */; };
-		DA38A34B2C75B17F007C3FB4 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */; };
-		DA38A3562C770C16007C3FB4 /* TagLazyFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */; };
-		DA38A3582C771E8E007C3FB4 /* AddingTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */; };
 		DA38A34D2C76B78C007C3FB4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34C2C76B78C007C3FB4 /* SettingsView.swift */; };
 		DA38A3502C76D009007C3FB4 /* NotificationAndSoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */; };
 		DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */; };
+		DA38A3562C770C16007C3FB4 /* TagLazyFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */; };
+		DA38A3582C771E8E007C3FB4 /* AddingTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */; };
 		DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */; };
 		DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */; };
 		DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409DB2C78471C004D054E /* TagViewModel.swift */; };
+		DA9409E32C7872E5004D054E /* NotificationSettingsManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */; };
+		DA9409E52C78748A004D054E /* NotificationSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */; };
+		DA9409E72C78772F004D054E /* SettingsManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E62C78772F004D054E /* SettingsManaging.swift */; };
+		DA9409E92C7877C4004D054E /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E82C7877C4004D054E /* SettingsManager.swift */; };
+		DA9409EB2C787810004D054E /* SettingsManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409EA2C787810004D054E /* SettingsManagerViewModel.swift */; };
+		DA9409EE2C787981004D054E /* MockSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409ED2C787981004D054E /* MockSettingsManager.swift */; };
+		DA9409F02C7879BE004D054E /* MockNotificationSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409EF2C7879BE004D054E /* MockNotificationSettingsManager.swift */; };
+		DA9409F22C787BA8004D054E /* MockPreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F12C787BA8004D054E /* MockPreviews.swift */; };
+		DA9409F42C787C4C004D054E /* DataStorageManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F32C787C4C004D054E /* DataStorageManaging.swift */; };
+		DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */; };
+		DA9409F82C78822A004D054E /* MockDataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */; };
 		DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */; };
 		DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D62C72FE4D004D8ACA /* MainView.swift */; };
 		DAF659D92C72FE4F004D8ACA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF659D82C72FE4F004D8ACA /* Assets.xcassets */; };
@@ -37,15 +47,25 @@
 		DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTagsFragmentView.swift; sourceTree = "<group>"; };
 		DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewHelpers.swift; sourceTree = "<group>"; };
 		DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateFragmentView.swift; sourceTree = "<group>"; };
-		DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLazyFragmentView.swift; sourceTree = "<group>"; };
-		DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTagView.swift; sourceTree = "<group>"; };
 		DA38A34C2C76B78C007C3FB4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAndSoundsView.swift; sourceTree = "<group>"; };
 		DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAndStorageView.swift; sourceTree = "<group>"; };
+		DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLazyFragmentView.swift; sourceTree = "<group>"; };
+		DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTagView.swift; sourceTree = "<group>"; };
 		DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
 		DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTextField.swift; sourceTree = "<group>"; };
 		DA9409DB2C78471C004D054E /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
+		DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsManaging.swift; sourceTree = "<group>"; };
+		DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsManager.swift; sourceTree = "<group>"; };
+		DA9409E62C78772F004D054E /* SettingsManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManaging.swift; sourceTree = "<group>"; };
+		DA9409E82C7877C4004D054E /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		DA9409EA2C787810004D054E /* SettingsManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManagerViewModel.swift; sourceTree = "<group>"; };
+		DA9409ED2C787981004D054E /* MockSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSettingsManager.swift; sourceTree = "<group>"; };
+		DA9409EF2C7879BE004D054E /* MockNotificationSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNotificationSettingsManager.swift; sourceTree = "<group>"; };
+		DA9409F12C787BA8004D054E /* MockPreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPreviews.swift; sourceTree = "<group>"; };
+		DA9409F32C787C4C004D054E /* DataStorageManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageManaging.swift; sourceTree = "<group>"; };
+		DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAndStorageManager.swift; sourceTree = "<group>"; };
+		DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataAndStorageManager.swift; sourceTree = "<group>"; };
 		DAF659D12C72FE4D004D8ACA /* Tasky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskyApp.swift; sourceTree = "<group>"; };
 		DAF659D62C72FE4D004D8ACA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -72,13 +92,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DA38A34E2C76CFF0007C3FB4 /* SettingsViewFragments */ = {
+		DA38A34E2C76CFF0007C3FB4 /* SettingsViews */ = {
 			isa = PBXGroup;
 			children = (
 				DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */,
 				DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */,
 			);
-			path = SettingsViewFragments;
+			path = SettingsViews;
 			sourceTree = "<group>";
 		};
 		DA7837702C7469D90007ECC2 /* UIKitRepresentables */ = {
@@ -87,6 +107,46 @@
 				DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */,
 			);
 			path = UIKitRepresentables;
+			sourceTree = "<group>";
+		};
+		DA9409DF2C7872AD004D054E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DA9409E02C7872BA004D054E /* Protocols */,
+				DA9409E12C7872C1004D054E /* Managers */,
+				DA9409E82C7877C4004D054E /* SettingsManager.swift */,
+				DA9409EA2C787810004D054E /* SettingsManagerViewModel.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		DA9409E02C7872BA004D054E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */,
+				DA9409E62C78772F004D054E /* SettingsManaging.swift */,
+				DA9409F32C787C4C004D054E /* DataStorageManaging.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		DA9409E12C7872C1004D054E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */,
+				DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		DA9409EC2C787976004D054E /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				DA9409ED2C787981004D054E /* MockSettingsManager.swift */,
+				DA9409EF2C7879BE004D054E /* MockNotificationSettingsManager.swift */,
+				DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		DAF659C82C72FE4D004D8ACA = {
@@ -108,7 +168,9 @@
 		DAF659D32C72FE4D004D8ACA /* Tasky */ = {
 			isa = PBXGroup;
 			children = (
+				DA9409EC2C787976004D054E /* Mocks */,
 				DAF659E62C72FEE7004D8ACA /* App */,
+				DA9409DF2C7872AD004D054E /* Settings */,
 				DAF659F22C7306D2004D8ACA /* ViewModels */,
 				DAF659E52C72FE93004D8ACA /* Utilities */,
 				DAF659E42C72FE8C004D8ACA /* Views */,
@@ -132,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				DAF659EA2C72FFE5004D8ACA /* PersistentController.swift */,
-				DA38A34A2C75B17F007C3FB4 /* NotificationManager.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -160,6 +221,7 @@
 				DA7837702C7469D90007ECC2 /* UIKitRepresentables */,
 				DAF659F72C730DFF004D8ACA /* Constants.swift */,
 				DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */,
+				DA9409F12C787BA8004D054E /* MockPreviews.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -184,7 +246,7 @@
 		DAF659F92C731859004D8ACA /* FragmentViews */ = {
 			isa = PBXGroup;
 			children = (
-				DA38A34E2C76CFF0007C3FB4 /* SettingsViewFragments */,
+				DA38A34E2C76CFF0007C3FB4 /* SettingsViews */,
 				DAF659FA2C731878004D8ACA /* PriorityCapsuleView.swift */,
 				DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */,
 				DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */,
@@ -282,27 +344,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */,
+				DA9409F82C78822A004D054E /* MockDataAndStorageManager.swift in Sources */,
 				DAF659F42C730707004D8ACA /* TodoViewModel.swift in Sources */,
 				DA38A3582C771E8E007C3FB4 /* AddingTagView.swift in Sources */,
+				DA9409E32C7872E5004D054E /* NotificationSettingsManaging.swift in Sources */,
 				DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */,
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
+				DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */,
 				DAF659F62C730CFE004D8ACA /* AddTodoView.swift in Sources */,
 				DAF659EE2C730284004D8ACA /* TodoModel.xcdatamodeld in Sources */,
 				DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */,
 				DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */,
+				DA9409EE2C787981004D054E /* MockSettingsManager.swift in Sources */,
 				DAF65A002C732950004D8ACA /* TodoDetailView.swift in Sources */,
+				DA9409E72C78772F004D054E /* SettingsManaging.swift in Sources */,
 				DA38A3562C770C16007C3FB4 /* TagLazyFragmentView.swift in Sources */,
+				DA9409EB2C787810004D054E /* SettingsManagerViewModel.swift in Sources */,
 				DA38A34D2C76B78C007C3FB4 /* SettingsView.swift in Sources */,
 				DAF659F02C7302F8004D8ACA /* TodoView.swift in Sources */,
 				DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */,
+				DA9409E92C7877C4004D054E /* SettingsManager.swift in Sources */,
 				DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */,
-				DA38A34B2C75B17F007C3FB4 /* NotificationManager.swift in Sources */,
 				DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */,
 				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
 				DAF659EB2C72FFE5004D8ACA /* PersistentController.swift in Sources */,
 				DA38A3502C76D009007C3FB4 /* NotificationAndSoundsView.swift in Sources */,
+				DA9409F42C787C4C004D054E /* DataStorageManaging.swift in Sources */,
+				DA9409E52C78748A004D054E /* NotificationSettingsManager.swift in Sources */,
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
 				DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */,
+				DA9409F22C787BA8004D054E /* MockPreviews.swift in Sources */,
+				DA9409F02C7879BE004D054E /* MockNotificationSettingsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,6 @@ struct TaskyApp: App {
         WindowGroup {
             MainView()
                 .environment(\.managedObjectContext, persistentController.context)
-                .onAppear(perform: NotificationManager.shared.requestPermission)
         }
     }
 }

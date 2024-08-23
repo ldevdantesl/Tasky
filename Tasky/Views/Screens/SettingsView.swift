@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
+    @StateObject private var settingsMgrVM = SettingsManagerViewModel(settingsManager: SettingsManager(notificationSettingsManager: NotificationSettingsManager(), dataAndStorageManager: DataAndStorageManager()))
+    
     var body: some View {
         Form{
             // MARK: - TAGS
@@ -21,10 +23,10 @@ struct SettingsView: View {
             // MARK: - DATA, NOTIFICATION AND PRIVACY
             Section{
                 rowSettings(name: "Data and Storage", imageName: "folder.fill.badge.gearshape", color: .mint){
-                    DataAndStorageView()
+                    DataAndStorageView(settingsManagerVM: settingsMgrVM)
                 }
                 rowSettings(name: "Notification and Sounds", imageName: "bell.badge.fill", color: .red){
-                    NotificationAndSoundsView()
+                    NotificationAndSoundsView(settingsMgrVM: settingsMgrVM)
                 }
                 rowSettings(name: "Privacy and Security", imageName: "lock.shield.fill", color: .gray){
                     Text("Notification Settings")
