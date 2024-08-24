@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct DataAndStorageView: View {
-    @StateObject var settingsManagerVM: SettingsManagerViewModel
+    @ObservedObject var settingsManagerVM: SettingsManagerViewModel
+    @ObservedObject var todoVM: TodoViewModel
     @State private var archiveAllTodosAlert: Bool = false
     @State private var deleteAllTodosAlert: Bool = false
     @State private var clearCacheAlert: Bool = false
@@ -16,14 +17,10 @@ struct DataAndStorageView: View {
     var body: some View {
         Form{
             Section{
-                NavigationLink{
-                
-                } label: {
+                NavigationLink(destination: ArchivedTodosView(todoVM: todoVM)) {
                     rowLabel(imageName: "archivebox", title: "Archived Todos", headline: "All todos that have been archived", color: .purple)
                 }
-                NavigationLink{
-                
-                } label: {
+                NavigationLink(destination: RemovedTodosView(todoVM: todoVM)){
                     rowLabel(imageName: "trash", title: "Removed Todos", headline: "All todos that have been removed", color: .red)
                 }
             }
@@ -98,6 +95,6 @@ struct DataAndStorageView: View {
 
 #Preview {
     NavigationStack{
-        DataAndStorageView(settingsManagerVM: MockPreviews.viewModel)
+        DataAndStorageView(settingsManagerVM: MockPreviews.viewModel, todoVM: TodoViewModel())
     }
 }

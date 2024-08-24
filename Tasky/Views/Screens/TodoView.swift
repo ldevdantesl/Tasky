@@ -43,6 +43,8 @@ struct TodoView: View {
                             }
                             .tint(.gray)
                         }
+                        Button("Archive", systemImage: "archivebox", action: {todoVM.archive(todo)})
+                            .tint(.purple)
                     }
                 }
                 .onDelete(perform: todoVM.removeTodoByIndex)

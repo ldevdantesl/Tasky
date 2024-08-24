@@ -41,7 +41,10 @@ class DataAndStorageManager: DataStorageManaging {
     
     func archiveTodos() {
         let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
+        let predicate1 = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
+        let predicate2 = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
         
         do {
             let todos = try context.fetch(request)
@@ -58,7 +61,10 @@ class DataAndStorageManager: DataStorageManaging {
     
     func deleteTodos() {
         let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
+        let predicate1 = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
+        let predicate2 = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
         
         do {
             let todos = try context.fetch(request)

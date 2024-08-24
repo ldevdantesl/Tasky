@@ -30,7 +30,7 @@ struct SettingsView: View {
             // MARK: - DATA, NOTIFICATION AND PRIVACY
             Section{
                 rowSettings(name: "Data and Storage", imageName: "folder.fill.badge.gearshape", color: .mint){
-                    DataAndStorageView(settingsManagerVM: settingsMgrVM)
+                    DataAndStorageView(settingsManagerVM: settingsMgrVM, todoVM: todoVM)
                 }
                 rowSettings(name: "Notification and Sounds", imageName: "bell.badge.fill", color: .red){
                     NotificationAndSoundsView(settingsMgrVM: settingsMgrVM)
