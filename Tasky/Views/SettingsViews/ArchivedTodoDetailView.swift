@@ -1,27 +1,26 @@
 //
-//  TodoDetailView.swift
+//  ArchivedTodoDetailView.swift
 //  Tasky
 //
-//  Created by Buzurg Rakhimzoda on 19.08.2024.
+//  Created by Buzurg Rakhimzoda on 24.08.2024.
 //
 
 import SwiftUI
 
-struct TodoDetailView: View {
+struct ArchivedOrRemovedTodoDetailView: View {
     @Environment(\.dismiss) var dismiss
     
     @ObservedObject private var todoVM: TodoViewModel
-    @ObservedObject private var tagVM: TagViewModel
-    
-    @State private var showAlert: Bool = false
-    @State private var showEditView: Bool = false
-    
     @ObservedObject var todo: Todo
     
-    init(observedTodo: Todo, todoVM: TodoViewModel, tagVM: TagViewModel){
+    @State private var showAlert: Bool = false
+    
+    let isArchive: Bool
+    
+    init(observedTodo: Todo, todoVM: TodoViewModel, isArchive: Bool){
         _todo = ObservedObject(wrappedValue: observedTodo)
         self.todoVM = todoVM
-        self.tagVM = tagVM
+        self.isArchive = isArchive
     }
     
     var body: some View {
@@ -63,19 +62,23 @@ struct TodoDetailView: View {
         .scrollIndicators(.never)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
-            Button("Edit", action: {showEditView.toggle()})
-            
-            Button("Remove Todo", systemImage: "trash", action:{showAlert.toggle()})
+            if isArchive{
+                Button("Unarchive", action:{showAlert.toggle()})
+            } else {
+                Menu("Menu", systemImage: "ellipsis.circle"){
+                    Button("Delete Todo", systemImage: "trash", action: {showAlert.toggle()})
+                    Button("Unremove Todo", systemImage: "square.and.arrow.down", action:{todoVM.unRemoveTodo(todo); dismiss()})
+                }
                 .tint(.red)
+            }
         }
-        .alert("Remove To-Do? ", isPresented: $showAlert) {
-            Button("Remove", role:.destructive, action:{todoVM.deleteTodo(todo); dismiss()})
+        .alert(isArchive ? "Unarchive To-Do":"Delete To-Do", isPresented: $showAlert) {
+            Button(isArchive ? "Unarchive" : "Delete", role:.destructive){
+                isArchive ? todoVM.unArchive(todo) : todoVM.deleteTodo(todo)
+                dismiss()
+            }
         } message: {
-            Text("Do you really want to remove this Todo?")
-        }
-        .sheet(isPresented: $showEditView){
-            ToDoEditView(todo: todo, todoVM: todoVM, tagVM: tagVM)
-                .presentationDetents([.fraction(1/1.3), .large])
+            Text("Do you really want to \(isArchive ? "unarchive" : "delete") this Todo?")
         }
     }
     
@@ -125,11 +128,8 @@ struct TodoDetailView: View {
     func showStatus() -> some View {
         HStack{
             VStack(alignment:.leading){
-                Text("Status: ")
+                Text("Status:")
                     .font(.system(.callout, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.secondary) +
-                Text("Click to change the status")
-                    .font(.system(.caption, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
                 HStack{
                     Text(TodoViewHelpers(todo: todo).statusName)
@@ -145,11 +145,6 @@ struct TodoDetailView: View {
                 .frame(maxWidth: Constants.screenWidth / 3)
                 .frame(minHeight: 40)
                 .background(TodoViewHelpers(todo: todo).statusColor, in:.capsule)
-                .onTapGesture {
-                    withAnimation {
-                        todoVM.toggleCompletion(todo)
-                    }
-                }
             }
             Spacer()
         }
@@ -170,10 +165,11 @@ struct TodoDetailView: View {
             Spacer()
         }
     }
+
 }
 
 #Preview {
     NavigationStack{
-        TodoDetailView(observedTodo: TodoViewModel.mockToDo(), todoVM: TodoViewModel(), tagVM: TagViewModel())
+        ArchivedOrRemovedTodoDetailView(observedTodo: TodoViewModel.mockToDo(), todoVM: TodoViewModel(), isArchive: true)
     }
 }

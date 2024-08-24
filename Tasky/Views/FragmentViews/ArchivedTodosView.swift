@@ -10,17 +10,30 @@ import SwiftUI
 struct ArchivedTodosView: View {
     @ObservedObject var todoVM: TodoViewModel
     @State private var alertToggle: Bool = false
+    @State private var searchText: String = ""
+    
+    
+    var filteredTodos: [Todo] {
+        if searchText.isEmpty{
+            return todoVM.archivedTodos
+        } else {
+            return todoVM.archivedTodos.filter { $0.title!.localizedStandardContains(searchText) }
+        }
+    }
     
     var body: some View {
         List{
-            ForEach(todoVM.archivedTodos){ todo in
-                rowForTodo(todo)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button("Unarchive", systemImage: "archivebox", action: {todoVM.unArchive(todo)})
-                            .tint(.secondary)
-                    }
+            ForEach(filteredTodos){ todo in
+                NavigationLink(destination: ArchivedOrRemovedTodoDetailView(observedTodo: todo, todoVM: todoVM, isArchive: true)) {
+                    rowForTodo(todo)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button("Unarchive", systemImage: "archivebox", action: {todoVM.unArchive(todo)})
+                                .tint(.secondary)
+                        }
+                }
             }
         }
+        .searchable(text: $searchText, prompt: "Archived Search")
         .alert("Unarchive All", isPresented: $alertToggle){
             Button("Unarchive", role:.destructive, action: todoVM.unArchiveAll)
         } message: {

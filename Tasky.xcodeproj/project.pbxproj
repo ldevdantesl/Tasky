@@ -19,6 +19,7 @@
 		DA4B197B2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B197A2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift */; };
 		DA4B197D2C7999F900899303 /* ArchivedTodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */; };
 		DA4B197F2C79AC8300899303 /* RemovedTodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */; };
+		DA4B19812C79C46400899303 /* ArchivedTodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19802C79C46400899303 /* ArchivedTodoDetailView.swift */; };
 		DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */; };
 		DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */; };
 		DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409DB2C78471C004D054E /* TagViewModel.swift */; };
@@ -60,6 +61,7 @@
 		DA4B197A2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyAndSecuritySettingsManager.swift; sourceTree = "<group>"; };
 		DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedTodosView.swift; sourceTree = "<group>"; };
 		DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovedTodosView.swift; sourceTree = "<group>"; };
+		DA4B19802C79C46400899303 /* ArchivedTodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedTodoDetailView.swift; sourceTree = "<group>"; };
 		DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
 		DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTextField.swift; sourceTree = "<group>"; };
 		DA9409DB2C78471C004D054E /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			children = (
 				DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */,
 				DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */,
+				DA4B19802C79C46400899303 /* ArchivedTodoDetailView.swift */,
 			);
 			path = SettingsViews;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				DA9409E52C78748A004D054E /* NotificationSettingsManager.swift in Sources */,
 				DA4B197F2C79AC8300899303 /* RemovedTodosView.swift in Sources */,
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
+				DA4B19812C79C46400899303 /* ArchivedTodoDetailView.swift in Sources */,
 				DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */,
 				DA9409F22C787BA8004D054E /* MockPreviews.swift in Sources */,
 				DA9409F02C7879BE004D054E /* MockNotificationSettingsManager.swift in Sources */,
