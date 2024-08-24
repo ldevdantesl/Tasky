@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TagLazyFragmentView: View {
-    @ObservedObject var tagVM = TagViewModel()
+    @ObservedObject var tagVM: TagViewModel
     
     @Binding var selectedTags: [Tag]
     
@@ -70,7 +70,7 @@ struct TagLazyFragmentView: View {
             .scrollIndicators(.hidden)
         }
         .sheet(isPresented: $isAddingTag, onDismiss: tagVM.fetchTags) {
-            AddingTagView()
+            AddingTagView(tagVM: tagVM)
                 .presentationDetents([.medium, .large])
         }
     }
@@ -101,5 +101,5 @@ struct TagLazyFragmentView: View {
 }
 
 #Preview {
-    TagLazyFragmentView(selectedTags: .constant([]))
+    TagLazyFragmentView(tagVM: TagViewModel(), selectedTags: .constant([]))
 }

@@ -10,16 +10,18 @@ import SwiftUI
 struct TodoDetailView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedObject private var todoVM = TodoViewModel()
-    @ObservedObject private var tagVM = TagViewModel()
+    @ObservedObject private var todoVM: TodoViewModel
+    @ObservedObject private var tagVM: TagViewModel
     
     @State private var showAlert: Bool = false
     @State private var showEditView: Bool = false
     
     @ObservedObject var todo: Todo
     
-    init(observedTodo: Todo){
+    init(observedTodo: Todo, todoVM: TodoViewModel, tagVM: TagViewModel){
         _todo = ObservedObject(wrappedValue: observedTodo)
+        self.todoVM = todoVM
+        self.tagVM = tagVM
     }
     
     var body: some View {
@@ -82,7 +84,6 @@ struct TodoDetailView: View {
         .alert("Delete To-Do? ", isPresented: $showAlert) {
             Button(role:.destructive){
                 todoVM.deleteTodo(todo)
-                todoVM.fetchTodos()
                 dismiss()
             } label: {
                 Text("Delete")
@@ -94,7 +95,7 @@ struct TodoDetailView: View {
             Text("Do you really want to delete this Todo?")
         }
         .sheet(isPresented: $showEditView){
-            ToDoEditView(todo: todo)
+            ToDoEditView(todo: todo, todoVM: todoVM, tagVM: tagVM)
                 .presentationDetents([.fraction(1/1.3), .large])
         }
     }
@@ -194,6 +195,6 @@ struct TodoDetailView: View {
 
 #Preview {
     NavigationStack{
-        TodoDetailView(observedTodo: TodoViewModel.mockToDo())
+        TodoDetailView(observedTodo: TodoViewModel.mockToDo(), todoVM: TodoViewModel(), tagVM: TagViewModel())
     }
 }

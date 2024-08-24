@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct AddTodoView: View {
-    @ObservedObject var todoVM = TodoViewModel()
-    @ObservedObject var tagVM = TagViewModel()
+    @ObservedObject var todoVM: TodoViewModel
+    @ObservedObject var tagVM: TagViewModel
     @FocusState var focusedField: Bool
     @Environment(\.dismiss) var dismiss
+    
+    init(todoVM: TodoViewModel, tagVM: TagViewModel){
+        self.todoVM = todoVM
+        self.tagVM = tagVM
+    }
     
     @State private var title: String = ""
     @State private var desc: String = ""
@@ -86,7 +91,7 @@ struct AddTodoView: View {
                 }
                 .padding(.horizontal)
                 // MARK: - TAGS
-                TagLazyFragmentView(selectedTags: $selectedTags)
+                TagLazyFragmentView(tagVM: tagVM, selectedTags: $selectedTags)
                     .padding(.vertical, 10)
                 
             }
@@ -121,7 +126,6 @@ struct AddTodoView: View {
             .confirmationDialog("Leave Description?", isPresented: $toggleConfirmation, titleVisibility: .visible){
                 Button(role:.destructive){
                     todoVM.createTodo(title: title, description: nil, priority: priority, dueDate: addDueDate ? dueDate : nil, tags: selectedTags)
-                    todoVM.fetchTodos()
                     dismiss()
                 } label: {
                     Text("Yes")
@@ -172,6 +176,6 @@ struct AddTodoView: View {
 
 #Preview {
     NavigationStack{
-        AddTodoView()
+        AddTodoView(todoVM: TodoViewModel(), tagVM: TagViewModel())
     }
 }

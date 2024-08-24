@@ -9,7 +9,14 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject private var settingsMgrVM = SettingsManagerViewModel(settingsManager: SettingsManager(notificationSettingsManager: NotificationSettingsManager(), dataAndStorageManager: DataAndStorageManager()))
+    @ObservedObject var todoVM: TodoViewModel
+    @StateObject private var settingsMgrVM: SettingsManagerViewModel
+    
+    init(todoVM: TodoViewModel){
+        self.todoVM = todoVM
+        let tempSettingsViewModel = SettingsManagerViewModel(settingsManager: SettingsManager(notificationSettingsManager: NotificationSettingsManager(), dataAndStorageManager: DataAndStorageManager(todoVM: todoVM)))
+        _settingsMgrVM = StateObject(wrappedValue: tempSettingsViewModel)
+    }
     
     var body: some View {
         Form{
@@ -93,6 +100,6 @@ struct SettingsView: View {
 
 #Preview {
     NavigationStack{
-        SettingsView()
+        SettingsView(todoVM: TodoViewModel())
     }
 }

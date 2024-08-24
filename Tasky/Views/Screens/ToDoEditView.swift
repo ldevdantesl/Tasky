@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ToDoEditView: View {
-    
     @Environment(\.dismiss) var dismiss
     @FocusState private var isFocus: Bool
     
@@ -24,8 +23,8 @@ struct ToDoEditView: View {
     @State private var toggleAlert: Bool = false
     @State private var toggleConfirmation: Bool = false
     
-    @StateObject var todoVM = TodoViewModel()
-    @StateObject var tagVM = TagViewModel()
+    @StateObject var todoVM: TodoViewModel
+    @StateObject var tagVM: TagViewModel
     
     @State private var saveAlert: Bool = false
     
@@ -74,7 +73,7 @@ struct ToDoEditView: View {
                 }
                 .padding(.horizontal)
                 // MARK: - TAGS
-                TagLazyFragmentView(selectedTags: $todoTags)
+                TagLazyFragmentView(tagVM: tagVM, selectedTags: $todoTags)
                     .padding(.vertical, 10)
             }
             .scrollIndicators(.hidden)
@@ -166,5 +165,5 @@ struct ToDoEditView: View {
 }
 
 #Preview {
-    ToDoEditView(todo: TodoViewModel.mockToDo())
+    ToDoEditView(todo: TodoViewModel.mockToDo(), todoVM: TodoViewModel(), tagVM: TagViewModel())
 }

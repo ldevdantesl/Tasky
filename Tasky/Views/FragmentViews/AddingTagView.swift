@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddingTagView: View {
-    @ObservedObject var tagVM = TagViewModel()
+    @ObservedObject var tagVM: TagViewModel
     @Environment(\.dismiss) var dismiss
     
     @State var name: String = ""
@@ -116,7 +116,5 @@ struct AddingTagView: View {
 }
 
 #Preview {
-    NavigationStack{
-        AddingTagView()
-    }
+    AddingTagView(tagVM: TagViewModel())
 }

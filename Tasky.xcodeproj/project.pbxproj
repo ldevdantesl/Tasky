@@ -168,13 +168,13 @@
 		DAF659D32C72FE4D004D8ACA /* Tasky */ = {
 			isa = PBXGroup;
 			children = (
-				DA9409EC2C787976004D054E /* Mocks */,
 				DAF659E62C72FEE7004D8ACA /* App */,
 				DA9409DF2C7872AD004D054E /* Settings */,
-				DAF659F22C7306D2004D8ACA /* ViewModels */,
-				DAF659E52C72FE93004D8ACA /* Utilities */,
-				DAF659E42C72FE8C004D8ACA /* Views */,
 				DAF659E32C72FE87004D8ACA /* Models */,
+				DAF659E42C72FE8C004D8ACA /* Views */,
+				DAF659F22C7306D2004D8ACA /* ViewModels */,
+				DA9409EC2C787976004D054E /* Mocks */,
+				DAF659E52C72FE93004D8ACA /* Utilities */,
 				DAF659E22C72FE7E004D8ACA /* Controllers */,
 				DAF659DA2C72FE4F004D8ACA /* Preview Content */,
 			);
@@ -210,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				DAF659FE2C73293E004D8ACA /* Screens */,
+				DA38A34E2C76CFF0007C3FB4 /* SettingsViews */,
 				DAF659F92C731859004D8ACA /* FragmentViews */,
 			);
 			path = Views;
@@ -246,7 +247,6 @@
 		DAF659F92C731859004D8ACA /* FragmentViews */ = {
 			isa = PBXGroup;
 			children = (
-				DA38A34E2C76CFF0007C3FB4 /* SettingsViews */,
 				DAF659FA2C731878004D8ACA /* PriorityCapsuleView.swift */,
 				DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */,
 				DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */,

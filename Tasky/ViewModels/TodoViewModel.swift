@@ -11,12 +11,14 @@ import SwiftUI
 
 class TodoViewModel: ObservableObject {
     @Published var todos: [Todo] = []
+    @Published var removedTodos: [Todo] = []
+    @Published var archivedTodos: [Todo] = []
     @Published var sortDescriptor: NSSortDescriptor?
     
     let context = PersistentController.shared.context
     
     init() {
-        fetchTodos()
+        fetchAllTodos()
     }
     
     func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag]){
@@ -27,6 +29,9 @@ class TodoViewModel: ObservableObject {
         newTodo.priority = priority
         newTodo.dueDate = dueDate
         newTodo.addedOn = .now
+        newTodo.isDone = false
+        newTodo.isArchived = false
+        newTodo.isRemoved = false
         
         if !tags.isEmpty{
             newTodo.tags = NSSet(array: tags)
@@ -35,16 +40,57 @@ class TodoViewModel: ObservableObject {
         saveContext()
     }
     
-    func fetchTodos(){
-        let request: NSFetchRequest<Todo> = Todo.fetchRequest()
-        if let sortDescriptor{
+    func fetchAllTodos(){
+        fetchStandardTodos()
+        fetchArchivedTodos()
+        fetchRemovedTodos()
+    }
+    
+    func fetchStandardTodos() {
+        let request: NSFetchRequest = Todo.fetchRequest()
+        let archivePredicate = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
+        let removedPredicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [archivePredicate, removedPredicate])
+        
+        if let sortDescriptor {
             request.sortDescriptors = [sortDescriptor]
-        } else { request.sortDescriptors = []}
+        }
+        
         do {
             todos = try context.fetch(request)
         } catch {
-            print("Error fetching todos: \(error.localizedDescription)")
+            print("Error fetching removed Todos: \(error.localizedDescription)")
         }
+    }
+    
+    func fetchRemovedTodos() {
+        let request: NSFetchRequest = Todo.fetchRequest()
+        request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: true))
+        
+        do {
+            removedTodos = try context.fetch(request)
+        } catch {
+            print("Error fetching removed Todos: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchArchivedTodos() {
+        let request: NSFetchRequest = Todo.fetchRequest()
+        request.predicate = NSPredicate(format: "isArchived == %@", NSNumber(value: true))
+        
+        do {
+            archivedTodos = try context.fetch(request)
+        } catch {
+            print("Error fetching removed Todos: \(error.localizedDescription)")
+        }
+    }
+    
+    func archive(_ todo: Todo) {
+        todo.isArchived = true
+    }
+    
+    func unArchive(_ todo: Todo){
+        todo.isArchived = false
     }
     
     func editTodos(_ todo: Todo, newTitle: String, newDesc: String?, newIsDone: Bool? = nil, newPriority: Int16, newDueDate: Date?, newTags: [Tag]?){
@@ -69,7 +115,12 @@ class TodoViewModel: ObservableObject {
         saveContext()
     }
     
-    func deleteTodo(_ todo: Todo){
+    func removeTodo(_ todo: Todo){
+        todo.isRemoved = true
+        saveContext()
+    }
+    
+    func deleteTodo(_ todo: Todo) {
         context.delete(todo)
         saveContext()
     }
@@ -80,6 +131,13 @@ class TodoViewModel: ObservableObject {
             context.delete(todo)
         }
         saveContext()
+    }
+    
+    func removeTodoByIndex(at offsets: IndexSet) {
+        offsets.forEach { index in
+            let todo = todos[index]
+            removeTodo(todo)
+        }
     }
     
     func deleteAllTodos(){
@@ -96,7 +154,7 @@ class TodoViewModel: ObservableObject {
     
     private func saveContext(){
         PersistentController.shared.saveContext()
-        fetchTodos()
+        fetchAllTodos()
     }
     
 }

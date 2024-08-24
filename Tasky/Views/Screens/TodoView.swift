@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TodoView: View {
     @StateObject var todoVM = TodoViewModel()
+    @StateObject var tagVM = TagViewModel()
     @State private var onAddTodo = false
     @State private var onAddTag = false
     @State private var searchText: String = ""
@@ -44,10 +45,10 @@ struct TodoView: View {
                         }
                     }
                 }
-                .onDelete(perform: todoVM.deleteTodoByIndex)
+                .onDelete(perform: todoVM.removeTodoByIndex)
             }
             .navigationDestination(for: Todo.self){ todo in
-                TodoDetailView(observedTodo: todo)
+                TodoDetailView(observedTodo: todo, todoVM: todoVM, tagVM: tagVM)
             }
             .navigationTitle("To-Do")
             .searchable(text: $searchText)
@@ -58,7 +59,7 @@ struct TodoView: View {
                 }
                 ToolbarItem(placement:.topBarLeading){
                     NavigationLink{
-                        SettingsView()
+                        SettingsView(todoVM: todoVM)
                     } label: {
                         Image(systemName: "gear")
                     }
@@ -86,10 +87,10 @@ struct TodoView: View {
                 }
             }
             .fullScreenCover(isPresented: $onAddTodo) {
-                AddTodoView()
+                AddTodoView(todoVM: todoVM, tagVM: tagVM)
             }
             .sheet(isPresented: $onAddTag) {
-                AddingTagView()
+                AddingTagView(tagVM: tagVM)
                     .presentationDetents([.medium, .large])
             }
         }
@@ -97,7 +98,7 @@ struct TodoView: View {
     
     func sortBy(sortKey: String, ascending: Bool){
         todoVM.sortDescriptor = NSSortDescriptor(key: sortKey, ascending: ascending)
-        todoVM.fetchTodos()
+        todoVM.fetchAllTodos()
     }
     
     @ViewBuilder
@@ -128,6 +129,7 @@ struct TodoView: View {
             return .white
         }
     }
+    
     func toolbarSortButton() -> some View{
         Menu("Sort", systemImage: "arrow.up.and.down.text.horizontal"){
             Text("Sort By")

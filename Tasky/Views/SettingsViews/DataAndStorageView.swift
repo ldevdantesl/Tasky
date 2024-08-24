@@ -9,48 +9,69 @@ import SwiftUI
 
 struct DataAndStorageView: View {
     @StateObject var settingsManagerVM: SettingsManagerViewModel
+    @State private var archiveAllTodosAlert: Bool = false
+    @State private var deleteAllTodosAlert: Bool = false
+    @State private var clearCacheAlert: Bool = false
 
     var body: some View {
         Form{
             Section{
                 NavigationLink{
-                    List{
-                        ForEach(settingsManagerVM.settingsManager.dataAndStorageManager.fetchArchivedTodos(), id: \.self){ todo in
-                            Text(todo.title ?? "No title")
-                        }
-                    }
+                
                 } label: {
                     rowLabel(imageName: "archivebox", title: "Archived Todos", headline: "All todos that have been archived", color: .purple)
                 }
                 NavigationLink{
-                    List{
-                        ForEach(settingsManagerVM.settingsManager.dataAndStorageManager.fetchDeletedTodos(), id: \.self){ todo in
-                            Text(todo.title ?? "No title")
-                        }
-                    }
+                
                 } label: {
                     rowLabel(imageName: "trash", title: "Removed Todos", headline: "All todos that have been removed", color: .red)
                 }
             }
+            
             Section {
-                Button(action: settingsManagerVM.settingsManager.dataAndStorageManager.clearCache){
+                Button(action: {clearCacheAlert.toggle()}){
                     rowLabel(imageName: "doc.zipper", title: "Clear Cache", headline: "Clean up cache storage", color: .cyan)
                 }
             }
+            .alert("Clear Cache", isPresented: $clearCacheAlert) {
+                Button("Clear",role:.destructive){
+                    settingsManagerVM.settingsManager.dataAndStorageManager.clearCache()
+                }
+            } message: {
+                Text("Do you really want to clear all the cache?")
+            }
+
+            
             Section{
-                Button(action: settingsManagerVM.settingsManager.dataAndStorageManager.archiveTodos){
+                Button(action: {archiveAllTodosAlert.toggle()}){
                     rowLabel(imageName: "archivebox.circle", title: "Archive Todos", headline: "Archive all current todos", color: .brown)
                 }
                 
-                Button(action: settingsManagerVM.settingsManager.dataAndStorageManager.deleteTodos){
-                    rowLabel(imageName: "trash.circle", title: "Delete Todos", headline: "Delete all current todos", color: .red)
+                Button(action: {deleteAllTodosAlert.toggle()}){
+                    rowLabel(imageName: "trash.circle", title: "Remove Todos", headline: "Remove all current todos", color: .red)
                 }
             }
+            .alert("Archive all Todos", isPresented: $archiveAllTodosAlert) {
+                Button("Archive", role: .destructive) {
+                    settingsManagerVM.settingsManager.dataAndStorageManager.archiveTodos()
+                }
+            } message: {
+                Text("Do you really want to archive all current Todos")
+            }
+            
             Section{
                 Toggle(isOn: $settingsManagerVM.settingsManager.dataAndStorageManager.isArchiveAfterCompletionEnabled){
                     rowLabel(imageName: "autostartstop", title: "Archive Todos after completion", headline: "Archive todo after completion", color: .blue)
                 }
             }
+            .alert("Remove all Todos", isPresented: $deleteAllTodosAlert) {
+                Button("Delete", role: .destructive) {
+                    settingsManagerVM.settingsManager.dataAndStorageManager.deleteTodos()
+                }
+            } message: {
+                Text("Do you really want to remove all current Todos?")
+            }
+
         }
         .navigationTitle("Data and Storage")
         .toolbarTitleDisplayMode(.inline)

@@ -11,14 +11,16 @@ import CoreData
 class DataAndStorageManager: DataStorageManaging {
     private let context: NSManagedObjectContext
     private let userDefaults = UserDefaults.standard
+    private let todoVM: TodoViewModel
     
     private let isArchiveAfterCompletionEnabledKey = "isArchiveAfterCompletionEnabled"
     private let archiveAfterDaysKey = "archiveAfterDaysKey"
     
-    init(context: NSManagedObjectContext = PersistentController.shared.context) {
+    init(context: NSManagedObjectContext = PersistentController.shared.context, todoVM: TodoViewModel) {
         self.context = context
         self.isArchiveAfterCompletionEnabled = userDefaults.bool(forKey: isArchiveAfterCompletionEnabledKey)
         self.archiveAfterDays = userDefaults.integer(forKey: archiveAfterDaysKey)
+        self.todoVM = todoVM
     }
     
     var isArchiveAfterCompletionEnabled: Bool{
@@ -32,32 +34,9 @@ class DataAndStorageManager: DataStorageManaging {
             userDefaults.set(archiveAfterDays, forKey: archiveAfterDaysKey)
         }
     }
-    func fetchArchivedTodos() -> [Todo] {
-        let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isArchived == %@", NSNumber(value: true))
-        
-        do {
-            return try context.fetch(request)
-        } catch {
-            print("Failed to fetch archived todos: \(error.localizedDescription)")
-            return []
-        }
-    }
-    
-    func fetchDeletedTodos() -> [Todo] {
-        let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: true))
-        
-        do {
-            return try context.fetch(request)
-        } catch {
-            print("Failed to fetch archived todos: \(error.localizedDescription)")
-            return []
-        }
-    }
     
     func clearCache() {
-        
+        print("Clearing the cache")
     }
     
     func archiveTodos() {
@@ -68,8 +47,10 @@ class DataAndStorageManager: DataStorageManaging {
             let todos = try context.fetch(request)
             for todo in todos {
                 todo.isArchived = true
+                print("Archived: \(todo.title ?? "No title")")
             }
             try context.save()
+            todoVM.fetchAllTodos()
         } catch {
             print("Error Archiving Todos: \(error.localizedDescription)")
         }
@@ -83,8 +64,10 @@ class DataAndStorageManager: DataStorageManaging {
             let todos = try context.fetch(request)
             for todo in todos {
                 todo.isRemoved = true
+                print("Removed: \(todo.title ?? "No title")")
             }
             try context.save()
+            todoVM.fetchAllTodos()
         } catch  {
             print("Error deleting todos: \(error.localizedDescription)")
         }

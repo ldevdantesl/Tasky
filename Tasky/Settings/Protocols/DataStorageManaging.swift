@@ -8,8 +8,6 @@
 import Foundation
 
 protocol DataStorageManaging {
-    func fetchArchivedTodos() -> [Todo]
-    func fetchDeletedTodos() -> [Todo]
     func clearCache()
     func archiveTodos()
     func deleteTodos()
