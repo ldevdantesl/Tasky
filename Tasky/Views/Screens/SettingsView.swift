@@ -10,12 +10,11 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var todoVM: TodoViewModel
-    @StateObject private var settingsMgrVM: SettingsManagerViewModel
+    @ObservedObject private var settingsMgrVM: SettingsManagerViewModel
     
-    init(todoVM: TodoViewModel){
+    init(todoVM: TodoViewModel, settingsMgrVM: SettingsManagerViewModel) {
         self.todoVM = todoVM
-        let tempSettingsViewModel = SettingsManagerViewModel(settingsManager: SettingsManager(notificationSettingsManager: NotificationSettingsManager(), dataAndStorageManager: DataAndStorageManager(todoVM: todoVM)))
-        _settingsMgrVM = StateObject(wrappedValue: tempSettingsViewModel)
+        self.settingsMgrVM = settingsMgrVM
     }
     
     var body: some View {
@@ -36,7 +35,7 @@ struct SettingsView: View {
                     NotificationAndSoundsView(settingsMgrVM: settingsMgrVM)
                 }
                 rowSettings(name: "Privacy and Security", imageName: "lock.shield.fill", color: .gray){
-                    Text("Notification Settings")
+                    PrivacySecuritySettingsView(settingsMgrVM: settingsMgrVM)
                 }
             }
             
@@ -100,6 +99,6 @@ struct SettingsView: View {
 
 #Preview {
     NavigationStack{
-        SettingsView(todoVM: TodoViewModel())
+        SettingsView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel)
     }
 }

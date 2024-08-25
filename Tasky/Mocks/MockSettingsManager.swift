@@ -12,9 +12,12 @@ class MockSettingsManager: SettingsManaging{
     
     var notificationSettingsManager: NotificationSettingsManaging
     
-    init(dataAndStorageManager: DataStorageManaging, notificationSettingsManager: NotificationSettingsManaging) {
+    var privacyAndSecurityManager: PrivacyAndSecurityManaging
+    
+    init(dataAndStorageManager: DataStorageManaging, notificationSettingsManager: NotificationSettingsManaging, privacyAndSecurityManager: PrivacyAndSecurityManaging) {
         self.dataAndStorageManager = dataAndStorageManager
         self.notificationSettingsManager = notificationSettingsManager
+        self.privacyAndSecurityManager = privacyAndSecurityManager
     }
     
     func resetAllSettings() {

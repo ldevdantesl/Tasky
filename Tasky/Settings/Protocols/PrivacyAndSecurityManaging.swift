@@ -8,7 +8,8 @@
 import Foundation
 
 protocol PrivacyAndSecurityManaging {
-    var setPassword: Bool { get set }
     var useBiometrics: Bool { get set }
     var lockWhenBackgrounded: Bool { get set }
+    
+    func resetSettings()
 }

@@ -6,10 +6,48 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 
 struct MainView: View {
+    @Environment(\.scenePhase) var scenePhase
+    @StateObject var settingsManagerVM: SettingsManagerViewModel
+    @StateObject var todoVM: TodoViewModel = TodoViewModel()
+    @StateObject var tagVM: TagViewModel = TagViewModel()
+    @State var showAutenticationView: Bool = false
+    
+    init(){
+        let todoViewModel = TodoViewModel()
+        let settingsManager = SettingsManager(
+            notificationSettingsManager: NotificationSettingsManager(),
+            dataAndStorageManager: DataAndStorageManager(todoVM: todoViewModel),
+            privacyAndSecurityManager: PrivacyAndSecuritySettingsManager()
+        )
+        // Initialize settingsManagerVM with the constructed settingsManager
+        _settingsManagerVM = StateObject(wrappedValue: SettingsManagerViewModel(settingsManager: settingsManager))
+        // Initialize todoVM and tagVM separately
+        _todoVM = StateObject(wrappedValue: todoViewModel)
+        _tagVM = StateObject(wrappedValue: TagViewModel())
+    }
+    
     var body: some View {
-        TodoView()
+        TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)
+            .blur(radius: blurView() ? 10 : 0)
+            .blur(radius: showAutenticationView ? 20 : 0)
+            .onAppear{
+                if settingsManagerVM.settingsManager.privacyAndSecurityManager.useBiometrics {
+                    showAutenticationView.toggle()
+                }
+            }
+            .sheet(isPresented: $showAutenticationView){
+                AuthenticateUserFragmentView(settingsManagerViewModel: settingsManagerVM, isAuthenticated: $showAutenticationView)
+                    .presentationDetents([.medium])
+                    .interactiveDismissDisabled()
+            }
+    }
+    
+    func blurView() -> Bool {
+        let result = settingsManagerVM.settingsManager.privacyAndSecurityManager.lockWhenBackgrounded && scenePhase == .inactive
+        return result
     }
 }
 

@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct TodoView: View {
-    @StateObject var todoVM = TodoViewModel()
-    @StateObject var tagVM = TagViewModel()
+    @ObservedObject var todoVM: TodoViewModel
+    @ObservedObject var tagVM: TagViewModel
+    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    
     @State private var onAddTodo = false
     @State private var onAddTag = false
     @State private var searchText: String = ""
@@ -61,7 +63,7 @@ struct TodoView: View {
                 }
                 ToolbarItem(placement:.topBarLeading){
                     NavigationLink{
-                        SettingsView(todoVM: todoVM)
+                        SettingsView(todoVM: todoVM, settingsMgrVM: settingsMgrVM)
                     } label: {
                         Image(systemName: "gear")
                     }
@@ -69,12 +71,8 @@ struct TodoView: View {
             }
             .overlay(alignment: .bottomTrailing){
                 Menu{
-                    Button(action: {onAddTodo.toggle()}) {
-                        Text("Todo")
-                    }
-                    Button(action: {onAddTag.toggle()}) {
-                        Text("Tag")
-                    }
+                    Button("Todo", action: { onAddTodo.toggle() })
+                    Button("Tag", action: { onAddTag.toggle() })
                 } label:{
                     Image(systemName: "plus")
                         .resizable()
@@ -135,24 +133,12 @@ struct TodoView: View {
     func toolbarSortButton() -> some View{
         Menu("Sort", systemImage: "arrow.up.and.down.text.horizontal"){
             Text("Sort By")
-            Button("Priority"){
-                sortBy(sortKey: "priority", ascending: false)
-            }
-            Button("First Done"){
-                sortBy(sortKey: "isDone", ascending: false)
-            }
-            Button("First Undone"){
-                sortBy(sortKey: "isDone", ascending: true)
-            }
-            Button("Time added"){
-                sortBy(sortKey: "addedOn", ascending: true)
-            }
-            Button("Due date"){
-                sortBy(sortKey: "dueDate", ascending: true)
-            }
-            Button("Title"){
-                sortBy(sortKey: "title", ascending: true)
-            }
+            Button("Priority", action: { sortBy(sortKey: "priority", ascending: false) })
+            Button("First Done", action: { sortBy(sortKey: "isDone", ascending: false) })
+            Button("First Undone", action: { sortBy(sortKey: "isDone", ascending: true) })
+            Button("Time added", action: { sortBy(sortKey: "addedOn", ascending: true) })
+            Button("Due date", action: { sortBy(sortKey: "dueDate", ascending: true) })
+            Button("Title", action: { sortBy(sortKey: "title", ascending: true) })
         }
     }
     
@@ -160,6 +146,6 @@ struct TodoView: View {
 
 #Preview {
     NavigationStack{
-        TodoView()
+        TodoView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel)
     }
 }

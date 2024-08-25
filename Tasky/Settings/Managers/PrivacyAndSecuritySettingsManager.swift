@@ -13,25 +13,17 @@ class PrivacyAndSecuritySettingsManager: PrivacyAndSecurityManaging{
     let userDefaults = UserDefaults.standard
     
     private let useBiometricsKey: String = "useBiometrics"
-    private let setPasswordKey: String = "setPassword"
     private let lockWhenBackgroundedKey: String = "lockWhenBackgrounded"
     
     init() {
         self.context = PersistentController.shared.context
-        self.useBiometrics = userDefaults.bool(forKey: useBiometricsKey)
-        self.lockWhenBackgrounded = userDefaults.bool(forKey: lockWhenBackgroundedKey)
-        self.setPassword = userDefaults.bool(forKey: setPasswordKey)
+        self.useBiometrics = userDefaults.object(forKey: useBiometricsKey) == nil ? false : userDefaults.bool(forKey: useBiometricsKey)
+        self.lockWhenBackgrounded = userDefaults.object(forKey: lockWhenBackgroundedKey) == nil ? true : userDefaults.bool(forKey: lockWhenBackgroundedKey)
     }
     
     var useBiometrics: Bool {
         didSet{
             userDefaults.set(useBiometrics, forKey: useBiometricsKey)
-        }
-    }
-    
-    var setPassword: Bool {
-        didSet {
-            userDefaults.set(setPassword, forKey: setPasswordKey)
         }
     }
     
@@ -41,4 +33,8 @@ class PrivacyAndSecuritySettingsManager: PrivacyAndSecurityManaging{
         }
     }
     
+    func resetSettings() {
+        useBiometrics = false
+        lockWhenBackgrounded = true
+    }
 }

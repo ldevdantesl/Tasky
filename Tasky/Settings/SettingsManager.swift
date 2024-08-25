@@ -10,14 +10,17 @@ import Foundation
 class SettingsManager: SettingsManaging{
     var notificationSettingsManager: NotificationSettingsManaging
     var dataAndStorageManager: DataStorageManaging
+    var privacyAndSecurityManager: PrivacyAndSecurityManaging
     
-    init(notificationSettingsManager: NotificationSettingsManaging, dataAndStorageManager: DataStorageManaging) {
+    init(notificationSettingsManager: NotificationSettingsManaging, dataAndStorageManager: DataStorageManaging, privacyAndSecurityManager: PrivacyAndSecurityManaging) {
         self.notificationSettingsManager = notificationSettingsManager
         self.dataAndStorageManager = dataAndStorageManager
+        self.privacyAndSecurityManager = privacyAndSecurityManager
     }
     
     func resetAllSettings() {
         notificationSettingsManager.resetAllSettings()
         dataAndStorageManager.resetDataAndStorageSettings()
+        privacyAndSecurityManager.resetSettings()
     }
 }

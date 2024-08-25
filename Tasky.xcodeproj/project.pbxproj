@@ -20,6 +20,9 @@
 		DA4B197D2C7999F900899303 /* ArchivedTodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */; };
 		DA4B197F2C79AC8300899303 /* RemovedTodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */; };
 		DA4B19812C79C46400899303 /* ArchivedTodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19802C79C46400899303 /* ArchivedTodoDetailView.swift */; };
+		DA4B19842C7ABE6800899303 /* MockPrivacySecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19832C7ABE6800899303 /* MockPrivacySecurityManager.swift */; };
+		DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */; };
+		DA4B19882C7AD64900899303 /* AuthenticateUserFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */; };
 		DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */; };
 		DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */; };
 		DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409DB2C78471C004D054E /* TagViewModel.swift */; };
@@ -63,6 +66,9 @@
 		DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovedTodosView.swift; sourceTree = "<group>"; };
 		DA4B19802C79C46400899303 /* ArchivedTodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedTodoDetailView.swift; sourceTree = "<group>"; };
 		DA4B19822C7AB26D00899303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DA4B19832C7ABE6800899303 /* MockPrivacySecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacySecurityManager.swift; sourceTree = "<group>"; };
+		DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySecuritySettingsView.swift; sourceTree = "<group>"; };
+		DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUserFragmentView.swift; sourceTree = "<group>"; };
 		DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
 		DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTextField.swift; sourceTree = "<group>"; };
 		DA9409DB2C78471C004D054E /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
@@ -109,6 +115,7 @@
 				DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */,
 				DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */,
 				DA4B19802C79C46400899303 /* ArchivedTodoDetailView.swift */,
+				DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */,
 			);
 			path = SettingsViews;
 			sourceTree = "<group>";
@@ -159,6 +166,7 @@
 				DA9409ED2C787981004D054E /* MockSettingsManager.swift */,
 				DA9409EF2C7879BE004D054E /* MockNotificationSettingsManager.swift */,
 				DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */,
+				DA4B19832C7ABE6800899303 /* MockPrivacySecurityManager.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -269,6 +277,7 @@
 				DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */,
 				DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */,
 				DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */,
+				DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */,
 			);
 			path = FragmentViews;
 			sourceTree = "<group>";
@@ -369,11 +378,13 @@
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
 				DA4B197D2C7999F900899303 /* ArchivedTodosView.swift in Sources */,
 				DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */,
+				DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */,
 				DAF659F62C730CFE004D8ACA /* AddTodoView.swift in Sources */,
 				DA4B197B2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift in Sources */,
 				DAF659EE2C730284004D8ACA /* TodoModel.xcdatamodeld in Sources */,
 				DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */,
 				DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */,
+				DA4B19842C7ABE6800899303 /* MockPrivacySecurityManager.swift in Sources */,
 				DA9409EE2C787981004D054E /* MockSettingsManager.swift in Sources */,
 				DAF65A002C732950004D8ACA /* TodoDetailView.swift in Sources */,
 				DA9409E72C78772F004D054E /* SettingsManaging.swift in Sources */,
@@ -388,6 +399,7 @@
 				DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */,
 				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
 				DAF659EB2C72FFE5004D8ACA /* PersistentController.swift in Sources */,
+				DA4B19882C7AD64900899303 /* AuthenticateUserFragmentView.swift in Sources */,
 				DA38A3502C76D009007C3FB4 /* NotificationAndSoundsView.swift in Sources */,
 				DA9409F42C787C4C004D054E /* DataStorageManaging.swift in Sources */,
 				DA9409E52C78748A004D054E /* NotificationSettingsManager.swift in Sources */,
@@ -534,6 +546,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tasky/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Use Face ID for unlocking the app. Securing the user's data. Applicable if user wants it";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -564,6 +577,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tasky/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Use Face ID for unlocking the app. Securing the user's data. Applicable if user wants it";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

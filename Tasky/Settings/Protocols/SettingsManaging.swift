@@ -10,6 +10,7 @@ import Foundation
 protocol SettingsManaging {
     var notificationSettingsManager: NotificationSettingsManaging { get set }
     var dataAndStorageManager: DataStorageManaging { get set }
+    var privacyAndSecurityManager: PrivacyAndSecurityManaging { get set }
     
     func resetAllSettings() 
 }
