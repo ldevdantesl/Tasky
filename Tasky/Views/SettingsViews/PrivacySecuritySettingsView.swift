@@ -32,7 +32,7 @@ struct PrivacySecuritySettingsView: View {
         .toolbarTitleDisplayMode(.inline)
     }
     @ViewBuilder
-    func rowLabel(imageName: String? = nil, title: String, headline: String, color: Color) -> some View{
+    func rowLabel(imageName: String? = nil, title: LocalizedStringKey, headline: LocalizedStringKey, color: Color) -> some View{
         HStack{
             if let imageName{
                 Image(systemName: imageName)

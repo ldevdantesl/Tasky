@@ -16,20 +16,20 @@ struct PriorityCapsuleView: View {
                 .foregroundStyle(.secondary)
                 .padding(.vertical,10)
             HStack{
-                filterButton(text: "Trivial")
-                filterButton(text: "Fair")
-                filterButton(text: "Principal")
+                filterButton(text: "trivial_key")
+                filterButton(text: "fair_key")
+                filterButton(text: "principal_key")
             }
         }
     }
     
     @ViewBuilder
-    func filterButton(text:String) -> some View{
+    func filterButton(text:LocalizedStringKey) -> some View{
         var color: Color {
             switch text{
-            case "Trivial":
+            case "trivial_key":
                 return Color.green
-            case "Fair":
+            case "fair_key":
                 return Color.blue
             default:
                 return Color.red
@@ -38,9 +38,9 @@ struct PriorityCapsuleView: View {
         
         var priority: Int16 {
             switch text{
-            case "Trivial":
+            case "trivial_key":
                 return 1
-            case "Fair":
+            case "fair_key":
                 return 2
             default:
                 return 3

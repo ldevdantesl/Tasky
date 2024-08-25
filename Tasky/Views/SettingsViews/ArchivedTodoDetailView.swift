@@ -116,7 +116,7 @@ struct ArchivedOrRemovedTodoDetailView: View {
                         .frame(maxHeight: 20)
                         .foregroundStyle(.white)
                 }
-                .frame(maxWidth: Constants.screenWidth / 3)
+                .frame(maxWidth: Constants.screenWidth / 3 + 30)
                 .frame(minHeight: 40)
                 .background(TodoViewHelpers(todo: todo).priorityColor, in:.capsule)
             }
@@ -132,7 +132,7 @@ struct ArchivedOrRemovedTodoDetailView: View {
                     .font(.system(.callout, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
                 HStack{
-                    Text(TodoViewHelpers(todo: todo).statusName)
+                    Text(todo.isDone ? "done_key" : "undone_key")
                         .font(.system(.title3, design: .rounded, weight: .semibold))
                         .foregroundStyle(.white)
                     Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill")
@@ -142,7 +142,7 @@ struct ArchivedOrRemovedTodoDetailView: View {
                         .frame(maxHeight: 20)
                         .foregroundStyle(.white)
                 }
-                .frame(maxWidth: Constants.screenWidth / 3)
+                .frame(maxWidth: Constants.screenWidth / 3 + 30)
                 .frame(minHeight: 40)
                 .background(TodoViewHelpers(todo: todo).statusColor, in:.capsule)
             }

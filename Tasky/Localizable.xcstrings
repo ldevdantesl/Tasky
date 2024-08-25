@@ -191,6 +191,16 @@
         }
       }
     },
+    "Blur the app when it is backgrounded" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Расфокусировать во вкладках"
+          }
+        }
+      }
+    },
     "Can't remove it is used" : {
       "localizations" : {
         "ru" : {
@@ -366,7 +376,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вы реально хотите архивировать эту задачу?"
+            "value" : "Вы реально хотите архивировать все текущие задачи?"
           }
         }
       }
@@ -406,7 +416,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вы уверены что хотите удалить эту задачи?"
+            "value" : "Вы уверены что хотите удалить эту задачу?"
           }
         }
       }
@@ -437,6 +447,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Готово"
+          }
+        }
+      }
+    },
+    "done_key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделано"
           }
         }
       }
@@ -477,6 +504,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Изменить"
+          }
+        }
+      }
+    },
+    "fair_key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fair"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Средний"
           }
         }
       }
@@ -537,6 +581,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не добавлять описание?"
+          }
+        }
+      }
+    },
+    "Lock in Background" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть во вкладках"
           }
         }
       }
@@ -621,12 +675,39 @@
         }
       }
     },
+    "Open only with Face ID or Touch ID" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть только с помощью пароля или биометрики"
+          }
+        }
+      }
+    },
     "Pause All" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Прекратить"
+          }
+        }
+      }
+    },
+    "principal_key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Principal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Важный"
           }
         }
       }
@@ -791,6 +872,9 @@
         }
       }
     },
+    "Reset custom settings" : {
+
+    },
     "Reset the settings?" : {
       "localizations" : {
         "ru" : {
@@ -826,7 +910,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Отправить уведомление %lld часов перед сроком"
+            "value" : "Уведомить о задаче за %lld часа(ов) перед сроком"
           }
         }
       }
@@ -846,7 +930,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Уведомить о всех сегодняшних задачах в 9"
+            "value" : "Уведомить о всех сегодняшних задачах в 9 утра"
           }
         }
       }
@@ -1026,7 +1110,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Задача"
+            "value" : "Задачи"
           }
         }
       }
@@ -1036,7 +1120,24 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Задачи"
+            "value" : "Задача"
+          }
+        }
+      }
+    },
+    "trivial_key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trivial"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неважный"
           }
         }
       }
@@ -1077,6 +1178,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отменить выполнение задачи"
+          }
+        }
+      }
+    },
+    "undone_key" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undone"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не сделано"
           }
         }
       }
@@ -1127,6 +1245,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отменить это удаление"
+          }
+        }
+      }
+    },
+    "Use Biometrics" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Использовать Биометрику"
           }
         }
       }

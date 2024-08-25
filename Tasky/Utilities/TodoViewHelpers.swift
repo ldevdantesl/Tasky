@@ -26,14 +26,14 @@ struct TodoViewHelpers {
         }
     }
     
-    var priorityName: String {
+    var priorityName: LocalizedStringKey {
         switch todo.priority {
         case 1:
-            return "Trivial"
+            return "trivial_key"
         case 2:
-            return "Fair"
+            return "fair_key"
         default:
-            return "Principal"
+            return "principal_key"
         }
     }
     
