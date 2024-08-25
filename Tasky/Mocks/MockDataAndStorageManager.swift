@@ -30,4 +30,8 @@ class MockDataAndStorageManager: DataStorageManaging {
     func deleteTodos() {
         mockTodos.forEach { $0.isRemoved = true }
     }
+    
+    func archiveOldCompletedTodos() {
+        
+    }
 }

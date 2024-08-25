@@ -13,5 +13,6 @@ protocol DataStorageManaging {
     func deleteTodos()
     var isArchiveAfterCompletionEnabled: Bool { get set }
     var archiveAfterDays: Int { get set }
+    func archiveOldCompletedTodos()
     func resetDataAndStorageSettings()
 }

@@ -14,6 +14,8 @@ struct DataAndStorageView: View {
     @State private var deleteAllTodosAlert: Bool = false
     @State private var clearCacheAlert: Bool = false
 
+    let archivedAfterArray = [10, 15, 20, 25, 30]
+    
     var body: some View {
         Form{
             Section{
@@ -59,6 +61,18 @@ struct DataAndStorageView: View {
             Section{
                 Toggle(isOn: $settingsManagerVM.settingsManager.dataAndStorageManager.isArchiveAfterCompletionEnabled){
                     rowLabel(imageName: "autostartstop", title: "Archive Todos after completion", headline: "Archive todo after completion", color: .blue)
+                }
+                if settingsManagerVM.settingsManager.dataAndStorageManager.isArchiveAfterCompletionEnabled{
+                    Picker(selection: $settingsManagerVM.settingsManager.dataAndStorageManager.archiveAfterDays) {
+                        ForEach(archivedAfterArray, id: \.self) { day in
+                            Text("\(day)")
+                                .tag(day)
+                        }
+                    } label: {
+                        rowLabel(imageName: "tray.and.arrow.down.fill", title: "Archive After: \(settingsManagerVM.settingsManager.dataAndStorageManager.archiveAfterDays) days", headline: "Archive todos that are done after \(settingsManagerVM.settingsManager.dataAndStorageManager.archiveAfterDays) days", color: .blue)
+                    }
+                    .pickerStyle(.navigationLink)
+
                 }
             }
             .alert("Remove all Todos", isPresented: $deleteAllTodosAlert) {
