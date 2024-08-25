@@ -88,7 +88,7 @@ struct DataAndStorageView: View {
         .toolbarTitleDisplayMode(.inline)
     }
     @ViewBuilder
-    func rowLabel(imageName: String, title: String, headline: String, color: Color) -> some View{
+    func rowLabel(imageName: String, title: LocalizedStringKey, headline: LocalizedStringKey, color: Color) -> some View{
         HStack{
             Image(systemName: imageName)
                 .resizable()

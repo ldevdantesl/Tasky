@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
@@ -41,9 +42,7 @@ struct SettingsView: View {
             
             // MARK: - LANGUAGE AND APPEARANCE
             Section{
-                rowSettings(name: "Language", imageName: "globe", color: .purple){
-                    Text("Notification Settings")
-                }
+                rowForLanguage()
                 rowSettings(name: "Appearance", imageName: "circle.lefthalf.filled", color: .brown){
                     Text("Notification Settings")
                 }
@@ -78,7 +77,7 @@ struct SettingsView: View {
         }
     }
     @ViewBuilder
-    func rowSettings(name: String, imageName: String,color: Color, destination: () -> some View) -> some View {
+    func rowSettings(name: LocalizedStringKey, imageName: String,color: Color, destination: () -> some View) -> some View {
         NavigationLink(destination: destination){
             HStack{
                 Image(systemName: imageName)
@@ -91,9 +90,29 @@ struct SettingsView: View {
                 Spacer()
                 
             }
-            
         }
-        
+    }
+    @ViewBuilder
+    func rowForLanguage() -> some View{
+        HStack{
+            Image(systemName: "globe")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: 20, maxHeight: 20)
+                .foregroundStyle(.blue)
+            Text("Language")
+            Spacer()
+            Text(settingsMgrVM.currentLanguage.localizeLanguageCode()?.capitalized ?? "English")
+                .font(.system(.subheadline, design: .rounded, weight: .light))
+        }
+        .onTapGesture(perform: openSettings)
+    }
+    
+    func openSettings() {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+        if UIApplication.shared.canOpenURL(settingsUrl) {
+            UIApplication.shared.open(settingsUrl)
+        }
     }
 }
 
