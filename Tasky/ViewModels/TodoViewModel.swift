@@ -154,6 +154,7 @@ class TodoViewModel: ObservableObject {
     
     func toggleCompletion(_ todo: Todo){
         todo.isDone.toggle()
+        todo.completionDate = Date()
         saveContext()
     }
     

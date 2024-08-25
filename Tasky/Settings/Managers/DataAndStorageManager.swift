@@ -86,9 +86,10 @@ class DataAndStorageManager: DataStorageManaging {
         let xDaysAgo = Calendar.current.date(byAdding: .day, value: -archiveAfterDays, to: Date())!
         let predicate1 = NSPredicate(format: "isDone == %@", NSNumber(value: true))
         let predicate2 = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
-        let predicate3 = NSPredicate(format: "comletionDate <= %@", xDaysAgo as NSDate)
+        let predicate3 = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
+        let predicate4 = NSPredicate(format: "comletionDate <= %@", xDaysAgo as NSDate)
         
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2, predicate3])
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2, predicate3, predicate4])
         
         do {
             let todosToArchive = try context.fetch(request)
