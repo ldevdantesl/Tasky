@@ -34,12 +34,12 @@ struct TodoView: View {
                     .swipeActions(edge:.leading, allowsFullSwipe: true){
                         if !todo.isDone{
                             Button("Done", systemImage: "checkmark.circle"){
-                                todoVM.toggleCompletion(todo)
+                                todoVM.completeTodo(todo)
                             }
                             .tint(.green)
                         } else {
                             Button("Undone", systemImage: "xmark.circle"){
-                                todoVM.toggleCompletion(todo)
+                                todoVM.uncompleteTodo(todo)
                             }
                             .tint(.gray)
                         }

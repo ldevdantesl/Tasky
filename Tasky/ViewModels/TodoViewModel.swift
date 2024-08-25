@@ -152,10 +152,18 @@ class TodoViewModel: ObservableObject {
         saveContext()
     }
     
-    func toggleCompletion(_ todo: Todo){
-        todo.isDone.toggle()
+    func completeTodo(_ todo: Todo){
+        todo.isDone = true
         todo.completionDate = Date()
         saveContext()
+        print("Complete todo: \(todo.title ?? "")")
+    }
+    
+    func uncompleteTodo(_ todo: Todo) {
+        todo.isDone = false
+        todo.completionDate = nil
+        saveContext()
+        print("Uncomplete todo: \(todo.title ?? "")")
     }
     
     func deleteTodo(_ todo: Todo) {

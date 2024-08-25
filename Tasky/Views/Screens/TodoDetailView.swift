@@ -147,7 +147,12 @@ struct TodoDetailView: View {
                 .background(TodoViewHelpers(todo: todo).statusColor, in:.capsule)
                 .onTapGesture {
                     withAnimation {
-                        todoVM.toggleCompletion(todo)
+                        if todo.isDone{
+                            todoVM.uncompleteTodo(todo)
+                        } else {
+                            todoVM.completeTodo(todo)
+                        }
+                        
                     }
                 }
             }

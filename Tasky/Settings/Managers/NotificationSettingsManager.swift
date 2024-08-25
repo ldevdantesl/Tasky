@@ -14,27 +14,30 @@ class NotificationSettingsManager: NotificationSettingsManaging {
     private let dailyReminderKey = "dailyReminder"
     private let reminderHoursBeforeKey = "reminderHoursBefore"
     
-    init() {
-        self.isPaused = userDefaults.bool(forKey: isPausedKey)
-        self.dailyReminder = userDefaults.bool(forKey: dailyReminderKey)
-        self.remindedHoursBefore = userDefaults.integer(forKey: reminderHoursBeforeKey)
-    }
-    
     var isPaused: Bool {
-        didSet{
-            userDefaults.set(isPaused, forKey: isPausedKey)
+        get {
+            return userDefaults.object(forKey: isPausedKey) == nil ? false : userDefaults.bool(forKey: isPausedKey)
+        }
+        set{
+            userDefaults.set(newValue, forKey: isPausedKey)
         }
     }
     
     var dailyReminder: Bool {
-        didSet {
-            userDefaults.set(dailyReminder, forKey: dailyReminderKey)
+        get {
+            return userDefaults.object(forKey: dailyReminderKey) == nil ? true : userDefaults.bool(forKey: dailyReminderKey)
+        }
+        set{
+            userDefaults.set(newValue, forKey: dailyReminderKey)
         }
     }
     
     var remindedHoursBefore: Int {
-        didSet{
-            userDefaults.set(remindedHoursBefore, forKey: reminderHoursBeforeKey)
+        get {
+            return userDefaults.integer(forKey: reminderHoursBeforeKey) == 0 ? 2 : userDefaults.integer(forKey: reminderHoursBeforeKey)
+        }
+        set{
+            userDefaults.set(newValue, forKey: reminderHoursBeforeKey)
         }
     }
     

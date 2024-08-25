@@ -19,20 +19,24 @@ class DataAndStorageManager: DataStorageManaging {
     
     init(context: NSManagedObjectContext = PersistentController.shared.context, todoVM: TodoViewModel?) {
         self.context = context
-        self.isArchiveAfterCompletionEnabled = userDefaults.bool(forKey: isArchiveAfterCompletionEnabledKey)
-        self.archiveAfterDays = userDefaults.integer(forKey: archiveAfterDaysKey)
         self.todoVM = todoVM
     }
     
     var isArchiveAfterCompletionEnabled: Bool{
-        didSet{
-            userDefaults.set(isArchiveAfterCompletionEnabled, forKey: isArchiveAfterCompletionEnabledKey)
+        get {
+            return userDefaults.object(forKey: isArchiveAfterCompletionEnabledKey) == nil ? true : userDefaults.bool(forKey: isArchiveAfterCompletionEnabledKey)
+        }
+        set{
+            userDefaults.set(newValue, forKey: isArchiveAfterCompletionEnabledKey)
         }
     }
     
     var archiveAfterDays: Int{
-        didSet{
-            userDefaults.set(archiveAfterDays, forKey: archiveAfterDaysKey)
+        get {
+            return userDefaults.integer(forKey: archiveAfterDaysKey) == 0 ? 20 : userDefaults.integer(forKey: archiveAfterDaysKey)
+        }
+        set {
+            userDefaults.set(newValue, forKey: archiveAfterDaysKey)
         }
     }
     
