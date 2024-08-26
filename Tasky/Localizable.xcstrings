@@ -873,7 +873,14 @@
       }
     },
     "Reset custom settings" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сбросить поставленные настройки"
+          }
+        }
+      }
     },
     "Reset the settings?" : {
       "localizations" : {
