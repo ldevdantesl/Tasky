@@ -81,7 +81,7 @@ struct TodoView: View {
                         .frame(minWidth: 30, maxWidth: 40)
                         .frame(height: 30)
                         .padding(20)
-                        .background(Color.blue, in:.circle)
+                        .background(settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme, in:.circle)
                         .shadow(radius: 5)
                         .padding()
                 }
@@ -106,7 +106,7 @@ struct TodoView: View {
         let tagsArray = todo.tags?.allObjects as? [Tag] ?? []
         VStack(alignment:.leading, spacing:5){
             Text(todo.title ?? "Uknown title")
-                .strikethrough(todo.isDone)
+                .strikethrough(todo.isDone, color: .primary)
             if !tagsArray.isEmpty{
                 HStack{
                     ForEach(tagsArray, id:\.hashValue) { tag in

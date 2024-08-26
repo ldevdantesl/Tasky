@@ -44,6 +44,7 @@ struct MainView: View {
                     .presentationDetents([.medium])
                     .interactiveDismissDisabled()
             }
+            .tint(settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme)
     }
     
     func blurView() -> Bool {

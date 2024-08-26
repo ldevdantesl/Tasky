@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AppearanceView: View {
     @ObservedObject var settingsManagerVM: SettingsManagerViewModel
-    let schemes: [String] = ["Light", "Dark", "System"]
     var body: some View {
         Form{
             Picker(selection: $settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme) {

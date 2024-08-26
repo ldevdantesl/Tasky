@@ -453,6 +453,9 @@
         }
       }
     },
+    "Do you want to reset the privacy and security settings?" : {
+
+    },
     "Done" : {
       "localizations" : {
         "ru" : {
@@ -900,6 +903,9 @@
           }
         }
       }
+    },
+    "Reset Settings" : {
+
     },
     "Reset the settings?" : {
       "localizations" : {
