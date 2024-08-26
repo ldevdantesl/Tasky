@@ -22,27 +22,12 @@ public func log(_ message: String){
 
 extension Color {
     func toData() -> Data? {
-        let uiColor = UIColor(self)  // Convert Color to UIColor
+        let uiColor = UIColor(self)
         return try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
     }
 }
 
 extension Color {
-    static func fromData(_ data: Data) -> Color? {
-        if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
-            return Color(uiColor)
-        }
-        return nil
-    }
-}
-
-extension UIColor {
-    func toData() -> Data? {
-        return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
-    }
-}
-
-extension UIColor {
     static func fromData(_ data: Data) -> Color? {
         if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
             return Color(uiColor)
@@ -64,4 +49,17 @@ func areColorsEqual(color1: Color?, color2: Color) -> Bool {
     uiColor2.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
     
     return r1 == r2 && g1 == g2 && b1 == b2 && a1 == a2
+}
+
+extension ColorScheme{
+    func name() -> String {
+        switch self {
+        case .light:
+            return "Light"
+        case .dark:
+            return "Dark"
+        default:
+            return "System"
+        }
+    }
 }

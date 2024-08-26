@@ -24,6 +24,11 @@
 		DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */; };
 		DA4B19882C7AD64900899303 /* AuthenticateUserFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */; };
 		DA4B19902C7AF19700899303 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DA4B198F2C7AF19700899303 /* Localizable.xcstrings */; };
+		DA6944692C7C2D330032437C /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6944682C7C2D330032437C /* AppearanceView.swift */; };
+		DA69446B2C7C3DB80032437C /* AppearanceSettingsManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446A2C7C3DB80032437C /* AppearanceSettingsManaging.swift */; };
+		DA69446D2C7C3E760032437C /* AppearanceSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */; };
+		DA69446F2C7C40A30032437C /* ColorThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446E2C7C40A30032437C /* ColorThemes.swift */; };
+		DA6944712C7C45BA0032437C /* MockAppearanceSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6944702C7C45BA0032437C /* MockAppearanceSettingsManager.swift */; };
 		DA78376F2C74697F0007ECC2 /* ToDoEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */; };
 		DA7837722C7469EC0007ECC2 /* UIKitTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */; };
 		DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409DB2C78471C004D054E /* TagViewModel.swift */; };
@@ -71,6 +76,11 @@
 		DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySecuritySettingsView.swift; sourceTree = "<group>"; };
 		DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUserFragmentView.swift; sourceTree = "<group>"; };
 		DA4B198F2C7AF19700899303 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		DA6944682C7C2D330032437C /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
+		DA69446A2C7C3DB80032437C /* AppearanceSettingsManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsManaging.swift; sourceTree = "<group>"; };
+		DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsManager.swift; sourceTree = "<group>"; };
+		DA69446E2C7C40A30032437C /* ColorThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemes.swift; sourceTree = "<group>"; };
+		DA6944702C7C45BA0032437C /* MockAppearanceSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppearanceSettingsManager.swift; sourceTree = "<group>"; };
 		DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditView.swift; sourceTree = "<group>"; };
 		DA7837712C7469EC0007ECC2 /* UIKitTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTextField.swift; sourceTree = "<group>"; };
 		DA9409DB2C78471C004D054E /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
@@ -118,6 +128,7 @@
 				DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */,
 				DA4B19802C79C46400899303 /* ArchivedTodoDetailView.swift */,
 				DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */,
+				DA6944682C7C2D330032437C /* AppearanceView.swift */,
 			);
 			path = SettingsViews;
 			sourceTree = "<group>";
@@ -148,6 +159,7 @@
 				DA9409E62C78772F004D054E /* SettingsManaging.swift */,
 				DA9409F32C787C4C004D054E /* DataStorageManaging.swift */,
 				DA4B19782C79975C00899303 /* PrivacyAndSecurityManaging.swift */,
+				DA69446A2C7C3DB80032437C /* AppearanceSettingsManaging.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -158,6 +170,7 @@
 				DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */,
 				DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */,
 				DA4B197A2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift */,
+				DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -169,6 +182,7 @@
 				DA9409EF2C7879BE004D054E /* MockNotificationSettingsManager.swift */,
 				DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */,
 				DA4B19832C7ABE6800899303 /* MockPrivacySecurityManager.swift */,
+				DA6944702C7C45BA0032437C /* MockAppearanceSettingsManager.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -249,6 +263,7 @@
 				DAF659F72C730DFF004D8ACA /* Constants.swift */,
 				DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */,
 				DA9409F12C787BA8004D054E /* MockPreviews.swift */,
+				DA69446E2C7C40A30032437C /* ColorThemes.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -379,11 +394,13 @@
 				DAF659F42C730707004D8ACA /* TodoViewModel.swift in Sources */,
 				DA38A3582C771E8E007C3FB4 /* AddingTagView.swift in Sources */,
 				DA9409E32C7872E5004D054E /* NotificationSettingsManaging.swift in Sources */,
+				DA69446F2C7C40A30032437C /* ColorThemes.swift in Sources */,
 				DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */,
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
 				DA4B197D2C7999F900899303 /* ArchivedTodosView.swift in Sources */,
 				DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */,
 				DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */,
+				DA69446B2C7C3DB80032437C /* AppearanceSettingsManaging.swift in Sources */,
 				DAF659F62C730CFE004D8ACA /* AddTodoView.swift in Sources */,
 				DA4B197B2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift in Sources */,
 				DAF659EE2C730284004D8ACA /* TodoModel.xcdatamodeld in Sources */,
@@ -402,7 +419,9 @@
 				DA9409E92C7877C4004D054E /* SettingsManager.swift in Sources */,
 				DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */,
 				DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */,
+				DA6944692C7C2D330032437C /* AppearanceView.swift in Sources */,
 				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
+				DA6944712C7C45BA0032437C /* MockAppearanceSettingsManager.swift in Sources */,
 				DAF659EB2C72FFE5004D8ACA /* PersistentController.swift in Sources */,
 				DA4B19882C7AD64900899303 /* AuthenticateUserFragmentView.swift in Sources */,
 				DA38A3502C76D009007C3FB4 /* NotificationAndSoundsView.swift in Sources */,
@@ -411,6 +430,7 @@
 				DA4B197F2C79AC8300899303 /* RemovedTodosView.swift in Sources */,
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
 				DA4B19812C79C46400899303 /* ArchivedTodoDetailView.swift in Sources */,
+				DA69446D2C7C3E760032437C /* AppearanceSettingsManager.swift in Sources */,
 				DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */,
 				DA9409F22C787BA8004D054E /* MockPreviews.swift in Sources */,
 				DA9409F02C7879BE004D054E /* MockNotificationSettingsManager.swift in Sources */,

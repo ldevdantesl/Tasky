@@ -14,13 +14,18 @@ class MockSettingsManager: SettingsManaging{
     
     var privacyAndSecurityManager: PrivacyAndSecurityManaging
     
-    init(dataAndStorageManager: DataStorageManaging, notificationSettingsManager: NotificationSettingsManaging, privacyAndSecurityManager: PrivacyAndSecurityManaging) {
+    var appearanceSettingsManager: AppearanceSettingsManaging
+    
+    init(dataAndStorageManager: DataStorageManaging, notificationSettingsManager: NotificationSettingsManaging, privacyAndSecurityManager: PrivacyAndSecurityManaging, appearanceSettingsManager: AppearanceSettingsManaging) {
         self.dataAndStorageManager = dataAndStorageManager
         self.notificationSettingsManager = notificationSettingsManager
         self.privacyAndSecurityManager = privacyAndSecurityManager
+        self.appearanceSettingsManager = appearanceSettingsManager
     }
     
     func resetAllSettings() {
         notificationSettingsManager.resetAllSettings()
+        dataAndStorageManager.resetDataAndStorageSettings()
+        privacyAndSecurityManager.resetSettings()
     }
 }

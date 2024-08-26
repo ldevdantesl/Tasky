@@ -211,6 +211,9 @@
         }
       }
     },
+    "Choose a theme for the app" : {
+
+    },
     "Clean up cache storage" : {
       "localizations" : {
         "ru" : {
@@ -261,6 +264,9 @@
         }
       }
     },
+    "Color Theme" : {
+
+    },
     "Daily Reminder" : {
       "localizations" : {
         "ru" : {
@@ -271,6 +277,9 @@
         }
       }
     },
+    "Dark" : {
+
+    },
     "Data and Storage" : {
       "localizations" : {
         "ru" : {
@@ -280,6 +289,9 @@
           }
         }
       }
+    },
+    "Define your app mode" : {
+
     },
     "Delete" : {
       "localizations" : {
@@ -585,6 +597,9 @@
         }
       }
     },
+    "Light" : {
+
+    },
     "Lock in Background" : {
       "localizations" : {
         "ru" : {
@@ -604,6 +619,9 @@
           }
         }
       }
+    },
+    "Mode" : {
+
     },
     "Name of tag" : {
       "localizations" : {
@@ -656,6 +674,7 @@
       }
     },
     "Notification Settings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -991,6 +1010,9 @@
           }
         }
       }
+    },
+    "System" : {
+
     },
     "Tag" : {
       "localizations" : {

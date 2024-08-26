@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PrivacySecuritySettingsView: View {
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    @State private var resetAlert: Bool = false
     
     var body: some View {
         Form{
@@ -23,10 +24,18 @@ struct PrivacySecuritySettingsView: View {
                 }
             }
             Section{
-                Button(action: settingsMgrVM.settingsManager.privacyAndSecurityManager.resetSettings){
+                Button(action: {resetAlert.toggle()}){
                     rowLabel(title: "Reset", headline: "Reset custom settings", color: .red)
                 }
             }
+            .alert("Reset Settings", isPresented: $resetAlert) {
+                Button("Reset", role:.destructive){
+                    settingsMgrVM.settingsManager.privacyAndSecurityManager.resetSettings()
+                }
+            } message: {
+                Text("Do you want to reset the privacy and security settings?")
+            }
+
         }
         .navigationTitle("Privacy and Security")
         .toolbarTitleDisplayMode(.inline)

@@ -44,7 +44,7 @@ struct SettingsView: View {
             Section{
                 rowForLanguage()
                 rowSettings(name: "Appearance", imageName: "circle.lefthalf.filled", color: .brown){
-                    Text("Notification Settings")
+                    AppearanceView(settingsManagerVM: settingsMgrVM)
                 }
             }
             

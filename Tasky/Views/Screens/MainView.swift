@@ -20,7 +20,7 @@ struct MainView: View {
         let settingsManager = SettingsManager(
             notificationSettingsManager: NotificationSettingsManager(),
             dataAndStorageManager: DataAndStorageManager(todoVM: todoViewModel),
-            privacyAndSecurityManager: PrivacyAndSecuritySettingsManager()
+            privacyAndSecurityManager: PrivacyAndSecuritySettingsManager(), appearanceSettingsManager: AppearanceSettingsManager()
         )
         // Initialize settingsManagerVM with the constructed settingsManager
         _settingsManagerVM = StateObject(wrappedValue: SettingsManagerViewModel(settingsManager: settingsManager))
@@ -33,6 +33,7 @@ struct MainView: View {
         TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)
             .blur(radius: blurView() ? 10 : 0)
             .blur(radius: showAutenticationView ? 20 : 0)
+            .preferredColorScheme(settingsManagerVM.settingsManager.appearanceSettingsManager.colorScheme)
             .onAppear{
                 if settingsManagerVM.settingsManager.privacyAndSecurityManager.useBiometrics {
                     showAutenticationView.toggle()
