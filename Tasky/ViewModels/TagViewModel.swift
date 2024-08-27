@@ -57,6 +57,19 @@ class TagViewModel: ObservableObject {
         saveContext()
     }
     
+    func deleteAllTags() {
+        let request: NSFetchRequest = Tag.fetchRequest()
+        
+        do {
+            let tags = try context.fetch(request)
+            tags.forEach { tag in
+                deleteTag(tag: tag)
+            }
+        } catch {
+            print("Error deleting all tags: \(error.localizedDescription)")
+        }
+    }
+    
     private func saveContext(){
         PersistentController.shared.saveContext()
         fetchTags()
@@ -68,6 +81,13 @@ extension Tag{
         let nssetSet = Set(nsset as! Set<Tag>)
         let arraySet = Set(array)
         return nssetSet == arraySet
+    }
+    static func foregroundForTagColor(tag: Tag) -> Color {
+        if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
+            return .black
+        } else {
+            return .white
+        }
     }
 }
 

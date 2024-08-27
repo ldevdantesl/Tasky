@@ -63,7 +63,7 @@ struct TodoView: View {
                 }
                 ToolbarItem(placement:.topBarLeading){
                     NavigationLink{
-                        SettingsView(todoVM: todoVM, settingsMgrVM: settingsMgrVM)
+                        SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM)
                     } label: {
                         Image(systemName: "gear")
                     }
@@ -134,11 +134,17 @@ struct TodoView: View {
         Menu("Sort", systemImage: "arrow.up.and.down.text.horizontal"){
             Text("Sort By")
             Button("Priority", action: { sortBy(sortKey: "priority", ascending: false) })
+                .sensoryFeedback(.success, trigger: true)
             Button("First Done", action: { sortBy(sortKey: "isDone", ascending: false) })
+                .sensoryFeedback(.success, trigger: true)
             Button("First Undone", action: { sortBy(sortKey: "isDone", ascending: true) })
+                .sensoryFeedback(.success, trigger: true)
             Button("Time added", action: { sortBy(sortKey: "addedOn", ascending: true) })
+                .sensoryFeedback(.success, trigger: true)
             Button("Due date", action: { sortBy(sortKey: "dueDate", ascending: true) })
+                .sensoryFeedback(.success, trigger: true)
             Button("Title", action: { sortBy(sortKey: "title", ascending: true) })
+                .sensoryFeedback(.success, trigger: true)
         }
     }
     

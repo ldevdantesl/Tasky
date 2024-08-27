@@ -11,20 +11,19 @@ import UIKit
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject private var settingsMgrVM: SettingsManagerViewModel
-    
-    init(todoVM: TodoViewModel, settingsMgrVM: SettingsManagerViewModel) {
-        self.todoVM = todoVM
-        self.settingsMgrVM = settingsMgrVM
-    }
+    @ObservedObject var tagVM: TagViewModel
+    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    @State private var showSettingsTag: Bool = false
     
     var body: some View {
         Form{
             // MARK: - TAGS
             Section{
-                rowSettings(name: "Tags", imageName: "number", color: .green) {
-                    Text("Tags")
-                }
+                rowForTag()
+            }
+            .sheet(isPresented: $showSettingsTag){
+                TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM)
+                    .presentationDetents([.medium, .large])
             }
             
             // MARK: - DATA, NOTIFICATION AND PRIVACY
@@ -87,25 +86,45 @@ struct SettingsView: View {
                     .frame(maxHeight: 20)
                     .foregroundStyle(color)
                 Text(name)
-                Spacer()
-                
             }
         }
     }
+    
+    @ViewBuilder
+    func rowForTag() -> some View{
+        Button(action: { showSettingsTag.toggle() }){
+            HStack{
+                Image(systemName: "number")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 20, maxHeight: 20)
+                    .foregroundStyle(.green)
+                Text(tagVM.tags.count > 0 ? "Tags" : "No tags added yet")
+                Spacer()
+                Text("\(tagVM.tags.count)")
+                    .font(.system(.subheadline, design: .rounded, weight: .light))
+            }
+            .tint(.primary)
+        }
+        .disabled(tagVM.tags.count > 0 ? false : true)
+    }
+    
     @ViewBuilder
     func rowForLanguage() -> some View{
-        HStack{
-            Image(systemName: "globe")
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 20, maxHeight: 20)
-                .foregroundStyle(.blue)
-            Text("Language")
-            Spacer()
-            Text(settingsMgrVM.currentLanguage.localizeLanguageCode()?.capitalized ?? "English")
-                .font(.system(.subheadline, design: .rounded, weight: .light))
+        Button(action:openSettings){
+            HStack{
+                Image(systemName: "globe")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 20, maxHeight: 20)
+                    .foregroundStyle(.blue)
+                Text("Language")
+                Spacer()
+                Text(settingsMgrVM.currentLanguage.localizeLanguageCode()?.capitalized ?? "English")
+                    .font(.system(.subheadline, design: .rounded, weight: .light))
+            }
+            .tint(.primary)
         }
-        .onTapGesture(perform: openSettings)
     }
     
     func openSettings() {
@@ -118,6 +137,6 @@ struct SettingsView: View {
 
 #Preview {
     NavigationStack{
-        SettingsView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel)
+        SettingsView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel)
     }
 }

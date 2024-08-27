@@ -10,7 +10,7 @@ import SwiftUI
 struct AddTodoView: View {
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
-    @FocusState var focusedField: Bool
+    @FocusState var isFocused: Bool
     @Environment(\.dismiss) var dismiss
     
     init(todoVM: TodoViewModel, tagVM: TagViewModel){
@@ -55,12 +55,17 @@ struct AddTodoView: View {
                             .foregroundStyle(.secondary)
                             .padding(.horizontal,5)
                         
-                        UIKitTextField(text: $title, placeholder: "Title")
+                        TextField("Title", text: $title)
+                            .focused($isFocused)
                             .scrollDismissesKeyboard(.immediately)
                             .padding(10)
                             .frame(maxWidth: Constants.screenWidth - 30)
                             .frame(minHeight: 40)
                             .background(Constants.secondaryColor, in: Constants.circularShape)
+                            .submitLabel(.done)
+                            .onSubmit {
+                                isFocused = false
+                            }
                     }
                     .padding(.vertical, 10)
                     
@@ -71,7 +76,7 @@ struct AddTodoView: View {
                             .foregroundStyle(.secondary)
                             .padding(.horizontal,5)
                         TextField("Description", text: $desc, axis: .vertical)
-                            .focused($focusedField)
+                            .focused($isFocused)
                             .textInputAutocapitalization(.sentences)
                             .scrollDismissesKeyboard(.immediately)
                             .padding(10)
@@ -97,9 +102,9 @@ struct AddTodoView: View {
             }
             .scrollIndicators(.never)
             .toolbar{
-                if focusedField{
+                if isFocused {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(action:{focusedField = false}){
+                        Button(action:{isFocused = false}){
                             Text("Done")
                         }
                     }

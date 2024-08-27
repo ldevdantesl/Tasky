@@ -38,12 +38,17 @@ struct ToDoEditView: View {
                             .font(.system(.subheadline, design: .rounded, weight: .semibold))
                             .foregroundStyle(.secondary)
                             .padding(.horizontal,5)
-                        UIKitTextField(text: $todoTitle, placeholder: "Title")
+                        TextField("Title", text: $todoTitle)
+                            .focused($isFocus)
                             .scrollDismissesKeyboard(.immediately)
                             .padding(10)
                             .frame(maxWidth: Constants.screenWidth - 30)
                             .frame(maxHeight: 40)
                             .background(Constants.secondaryColor, in: Constants.circularShape)
+                            .submitLabel(.done)
+                            .onSubmit {
+                                isFocus = false
+                            }
                     }
                     .padding(.vertical,10)
                     
@@ -89,6 +94,7 @@ struct ToDoEditView: View {
             .confirmationDialog("Leave Description?", isPresented: $toggleConfirmation, titleVisibility: .visible){
                 Button(role:.destructive, action: {saveAlert.toggle()}){
                     Text("Yes")
+                        .sensoryFeedback(.success, trigger: saveAlert)
                 }
                 .tint(.red)
             } message: {
@@ -98,6 +104,7 @@ struct ToDoEditView: View {
                 Button(action:{alertMessage = ""}){
                     Text("OK")
                 }
+                .sensoryFeedback(.error, trigger: toggleAlert)
             } message: {
                 Text(alertMessage)
             }
@@ -115,7 +122,7 @@ struct ToDoEditView: View {
                             .foregroundStyle(.white)
                             .frame(minWidth: Constants.screenWidth - 40)
                             .frame(height: 50)
-                            .background(Color.blue, in:.capsule)
+                            .background(Color.accentColor, in:.capsule)
                             .padding(.bottom, 15)
                     }
                 }

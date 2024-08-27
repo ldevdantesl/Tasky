@@ -323,6 +323,9 @@
         }
       }
     },
+    "Delete all Tags" : {
+
+    },
     "Delete To-Do" : {
       "localizations" : {
         "ru" : {
@@ -452,6 +455,9 @@
           }
         }
       }
+    },
+    "Do you want to delete all the tags?" : {
+
     },
     "Do you want to reset the privacy and security settings?" : {
 
@@ -624,6 +630,9 @@
       }
     },
     "Mode" : {
+
+    },
+    "Name" : {
 
     },
     "Name of tag" : {

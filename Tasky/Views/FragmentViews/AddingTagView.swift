@@ -15,6 +15,8 @@ struct AddingTagView: View {
     @State var selectedColor: Color = .gray.opacity(0.3)
     @State private var alertMessage: String = ""
     @State private var showAlert: Bool = false
+    @FocusState var isFocused: Bool
+    
     var body: some View {
         NavigationStack{
             ScrollView{
@@ -23,11 +25,15 @@ struct AddingTagView: View {
                         .font(.system(.subheadline, design: .rounded, weight: .semibold))
                         .foregroundStyle(.secondary)
                         .padding(.horizontal,5)
-                    UIKitTextField(text: $name, placeholder: "Name")
+                    TextField("Name", text: $name)
+                        .focused($isFocused)
                         .padding()
                         .frame(maxWidth: Constants.screenWidth - 20)
                         .frame(maxHeight: 40)
                         .background(Color.secondary.opacity(0.2), in:Constants.circularShape)
+                        .submitLabel(.done)
+                        .onSubmit({isFocused = false})
+                    
                 }
                 .padding(.vertical, 10)
                 VStack(alignment: .leading){
@@ -41,6 +47,7 @@ struct AddingTagView: View {
                 }
                 .padding(.vertical, 10)
             }
+            .onAppear(perform: {isFocused = true})
             .toolbar{
                 ToolbarItem(placement: .bottomBar) {
                     Button(action: checkName){
@@ -49,13 +56,16 @@ struct AddingTagView: View {
                             .foregroundStyle(.white)
                             .frame(width: Constants.screenWidth - 20)
                             .frame(height: 50)
-                            .background(Color.blue, in:.capsule)
+                            .background(Color.accentColor, in:.capsule)
+                            .padding(.bottom, 15)
                     }
+                    .sensoryFeedback(.success, trigger: true)
                 }
             }
             .alert("Invalid name", isPresented: $showAlert) {
                 Button(action: {alertMessage = ""}){
                     Text("OK")
+                        .sensoryFeedback(.error, trigger: alertMessage)
                 }
             } message: {
                 Text(alertMessage)
