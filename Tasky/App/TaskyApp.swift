@@ -22,7 +22,7 @@ struct TaskyApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "Dantes.Tasky.archiveTodos", using: nil) { task in
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "Dantes.TaskyManage.archiveTodos", using: nil) { task in
             self.handleArchiveTodosTask(task: task as! BGProcessingTask)
         }
     }

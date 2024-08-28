@@ -217,6 +217,7 @@
 				DAF659E22C72FE7E004D8ACA /* Controllers */,
 				DAF659DA2C72FE4F004D8ACA /* Preview Content */,
 				DA4B198F2C7AF19700899303 /* Localizable.xcstrings */,
+				DAF659D82C72FE4F004D8ACA /* Assets.xcassets */,
 			);
 			path = Tasky;
 			sourceTree = "<group>";
@@ -224,7 +225,6 @@
 		DAF659DA2C72FE4F004D8ACA /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				DAF659D82C72FE4F004D8ACA /* Assets.xcassets */,
 				DAF659DB2C72FE4F004D8ACA /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";

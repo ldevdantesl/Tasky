@@ -7,7 +7,9 @@
 		<string>fetch</string>
 		<string>processing</string>
 	</array>
-	<key>CFBundleIconName</key>
-	<string>AppIcon</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>Dantes.TaskyManage.archiveTodos</string>
+	</array>
 </dict>
 </plist>
