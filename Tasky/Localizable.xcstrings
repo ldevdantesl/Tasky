@@ -54,6 +54,9 @@
         }
       }
     },
+    "Add todos to get started" : {
+
+    },
     "All todos that have been archived" : {
       "localizations" : {
         "ru" : {
@@ -687,6 +690,9 @@
     "No tags yet" : {
 
     },
+    "No todos yet" : {
+
+    },
     "Notification and Sounds" : {
       "localizations" : {
         "ru" : {
@@ -1168,6 +1174,7 @@
       }
     },
     "To-Do" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {

@@ -44,6 +44,7 @@
 		DA9409F82C78822A004D054E /* MockDataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */; };
 		DAF0635A2C7D65FC00ADE7E8 /* TagSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF063592C7D65FC00ADE7E8 /* TagSettingsView.swift */; };
 		DAF0635C2C7E85AB00ADE7E8 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF0635B2C7E85AB00ADE7E8 /* FAQView.swift */; };
+		DAF0635E2C7EC43D00ADE7E8 /* TagsForTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */; };
 		DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */; };
 		DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D62C72FE4D004D8ACA /* MainView.swift */; };
 		DAF659D92C72FE4F004D8ACA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF659D82C72FE4F004D8ACA /* Assets.xcassets */; };
@@ -97,6 +98,7 @@
 		DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataAndStorageManager.swift; sourceTree = "<group>"; };
 		DAF063592C7D65FC00ADE7E8 /* TagSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSettingsView.swift; sourceTree = "<group>"; };
 		DAF0635B2C7E85AB00ADE7E8 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
+		DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsForTodoView.swift; sourceTree = "<group>"; };
 		DAF659D12C72FE4D004D8ACA /* Tasky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskyApp.swift; sourceTree = "<group>"; };
 		DAF659D62C72FE4D004D8ACA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */,
 				DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */,
 				DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */,
+				DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */,
 			);
 			path = FragmentViews;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				DA9409E92C7877C4004D054E /* SettingsManager.swift in Sources */,
 				DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */,
 				DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */,
+				DAF0635E2C7EC43D00ADE7E8 /* TagsForTodoView.swift in Sources */,
 				DA6944692C7C2D330032437C /* AppearanceView.swift in Sources */,
 				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
 				DA6944712C7C45BA0032437C /* MockAppearanceSettingsManager.swift in Sources */,

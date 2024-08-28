@@ -33,7 +33,7 @@ struct TagSettingsView: View {
                                 } label: {
                                     Text("#\(tag.name ?? "Uknown Tag")")
                                         .frame(maxWidth: (Constants.screenWidth / 2), maxHeight: 30, alignment: .leading)
-                                        .foregroundStyle(Tag.foregroundForTagColor(tag: tag))
+                                        .foregroundStyle(.white)
                                         .padding(10)
                                         .background(Color.fromData(tag.color!) ?? .blue, in:.capsule)
                                 }

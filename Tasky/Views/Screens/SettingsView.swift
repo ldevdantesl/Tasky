@@ -62,10 +62,9 @@ struct SettingsView: View {
                     HStack{
                         Image(systemName: "arrowshape.turn.up.right.fill")
                             .foregroundStyle(.yellow)
-                        Text("Share").foregroundStyle(.black)
+                        Text("Share").foregroundStyle(.primary)
                     }
                 }
-                
             }
         }
         .navigationTitle("Settings")

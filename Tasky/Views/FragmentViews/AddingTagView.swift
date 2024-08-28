@@ -77,7 +77,7 @@ struct AddingTagView: View {
     
     @ViewBuilder
     func showAllColors() -> some View{
-        let colors: [Color] = [.gray.opacity(0.3),.blue, .yellow, .brown, .green, .red, .cyan, .black.opacity(0.8)]
+        let colors: [Color] = [.blue, .yellow, .brown, .green, .red, .cyan, .purple, .pink, .orange]
         ScrollView(.horizontal){
             LazyHStack{
                 ForEach(colors, id: \.hashValue) { color in

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AllTagsFragmentView: View {
     @ObservedObject var todo: Todo
+    @Environment(\.colorScheme) var colorScheme
     
     var todosTags: [Tag] {
         todo.tags?.allObjects as? [Tag] ?? []
@@ -26,7 +27,7 @@ struct AllTagsFragmentView: View {
                         ForEach(todosTags, id: \.id) { tag in
                             Text("#\(tag.name ?? "")")
                                 .font(.system(.headline, design: .rounded, weight: .semibold))
-                                .foregroundStyle(foregroundForTagColor(tag: tag))
+                                .foregroundStyle(.white)
                                 .padding(10)
                                 .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
                                 
@@ -42,14 +43,6 @@ struct AllTagsFragmentView: View {
                     .frame(maxWidth: Constants.screenWidth - 10, alignment: .leading)
                     .padding(.horizontal)
             }
-        }
-    }
-    
-    func foregroundForTagColor(tag: Tag) -> Color {
-        if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
-            return .black
-        } else {
-            return .white
         }
     }
 }

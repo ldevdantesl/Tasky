@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RemovedTodosView: View {
     @ObservedObject var todoVM: TodoViewModel
+    
     @State private var alertToggle: Bool = false
     @State private var deleteToggle = false
     @State private var searchText: String = ""

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ArchivedTodosView: View {
     @ObservedObject var todoVM: TodoViewModel
+    
     @State private var alertToggle: Bool = false
     @State private var searchText: String = ""
-    
     
     var filteredTodos: [Todo] {
         if searchText.isEmpty{
@@ -61,10 +61,10 @@ struct ArchivedTodosView: View {
                 HStack{
                     ForEach(tagsArray, id:\.hashValue) { tag in
                         Text("#\(tag.name ?? "")")
-                            .font(.system(.caption, design: .rounded, weight: .light))
+                            .font(.system(.caption, design: .rounded, weight: .semibold))
                             .padding(3)
                             .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
-                            .foregroundStyle(foregroundForTagColor(tag: tag))
+                            .foregroundStyle(.white)
                     }
                 }
                 .frame(maxWidth: Constants.screenWidth - 40, maxHeight: 15, alignment:.leading)

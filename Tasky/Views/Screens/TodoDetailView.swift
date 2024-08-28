@@ -12,16 +12,18 @@ struct TodoDetailView: View {
     
     @ObservedObject private var todoVM: TodoViewModel
     @ObservedObject private var tagVM: TagViewModel
+    @ObservedObject private var settingsManagerVM: SettingsManagerViewModel
     
     @State private var showAlert: Bool = false
     @State private var showEditView: Bool = false
     
     @ObservedObject var todo: Todo
     
-    init(observedTodo: Todo, todoVM: TodoViewModel, tagVM: TagViewModel){
+    init(observedTodo: Todo, todoVM: TodoViewModel, tagVM: TagViewModel, settingsManagerVM: SettingsManagerViewModel){
         _todo = ObservedObject(wrappedValue: observedTodo)
         self.todoVM = todoVM
         self.tagVM = tagVM
+        self.settingsManagerVM = settingsManagerVM
     }
     
     var body: some View {
@@ -179,6 +181,6 @@ struct TodoDetailView: View {
 
 #Preview {
     NavigationStack{
-        TodoDetailView(observedTodo: TodoViewModel.mockToDo(), todoVM: TodoViewModel(), tagVM: TagViewModel())
+        TodoDetailView(observedTodo: TodoViewModel.mockToDo(), todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsManagerVM: MockPreviews.viewModel)
     }
 }

@@ -82,6 +82,9 @@ extension Tag{
         let arraySet = Set(array)
         return nssetSet == arraySet
     }
+}
+
+extension TagViewModel{
     static func foregroundForTagColor(tag: Tag) -> Color {
         if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
             return .black
