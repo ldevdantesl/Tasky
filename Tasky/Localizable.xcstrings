@@ -21,6 +21,9 @@
         }
       }
     },
+    "%@" : {
+
+    },
     "%lld" : {
       "localizations" : {
         "ru" : {
@@ -576,6 +579,9 @@
         }
       }
     },
+    "Hey checkout this app." : {
+
+    },
     "Invalid name" : {
       "localizations" : {
         "ru" : {
@@ -595,6 +601,9 @@
           }
         }
       }
+    },
+    "ldevdantesl@gmail.com" : {
+
     },
     "Leave Description?" : {
       "localizations" : {
@@ -674,6 +683,9 @@
           }
         }
       }
+    },
+    "No tags yet" : {
+
     },
     "Notification and Sounds" : {
       "localizations" : {
@@ -986,6 +998,9 @@
         }
       }
     },
+    "Share" : {
+
+    },
     "Sort" : {
       "localizations" : {
         "ru" : {
@@ -1108,6 +1123,9 @@
           }
         }
       }
+    },
+    "This is my private email. If you have any questions regarding the app. Please get in touch with me." : {
+
     },
     "Time added" : {
       "localizations" : {
@@ -1322,6 +1340,9 @@
           }
         }
       }
+    },
+    "Write a review" : {
+
     },
     "Yes" : {
       "localizations" : {

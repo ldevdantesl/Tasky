@@ -19,7 +19,10 @@ struct SettingsView: View {
         Form{
             // MARK: - TAGS
             Section{
-                rowForTag()
+                rowSettings(name: tagVM.tags.count > 0 ? "Tags" : "No tags yet", imageName: "number", color: .green) {
+                    TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM)
+                }
+                .disabled(tagVM.tags.count > 0 ? false : true)
             }
             .sheet(isPresented: $showSettingsTag){
                 TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM)
@@ -41,7 +44,8 @@ struct SettingsView: View {
             
             // MARK: - LANGUAGE AND APPEARANCE
             Section{
-                rowForLanguage()
+                rowWithAction(title: "Language", systemImage: "globe", color: .blue, rightSideKey: settingsMgrVM.currentLanguage.localizeLanguageCode(), action:openSettings)
+                
                 rowSettings(name: "Appearance", imageName: "circle.lefthalf.filled", color: .brown){
                     AppearanceView(settingsManagerVM: settingsMgrVM)
                 }
@@ -50,8 +54,18 @@ struct SettingsView: View {
             // MARK: - FAQ
             Section{
                 rowSettings(name: "FAQ", imageName: "questionmark.circle", color: .teal) {
-                    Text("")
+                    FAQView()
                 }
+                rowWithAction(title: "Write a review", systemImage: "star", color: .pink, action: openAppStore)
+            
+                ShareLink(item: URL(string:"https://apps.apple.com/app/idMYAPP_ID")!, subject: Text("Hey checkout this app.")) {
+                    HStack{
+                        Image(systemName: "arrowshape.turn.up.right.fill")
+                            .foregroundStyle(.yellow)
+                        Text("Share").foregroundStyle(.black)
+                    }
+                }
+                
             }
         }
         .navigationTitle("Settings")
@@ -91,37 +105,20 @@ struct SettingsView: View {
     }
     
     @ViewBuilder
-    func rowForTag() -> some View{
-        Button(action: { showSettingsTag.toggle() }){
+    func rowWithAction(title: LocalizedStringKey, systemImage: String, color: Color, rightSideKey: String? = nil, action: @escaping () -> ()) -> some View{
+        Button(action: action){
             HStack{
-                Image(systemName: "number")
+                Image(systemName: systemImage)
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: 20, maxHeight: 20)
-                    .foregroundStyle(.green)
-                Text(tagVM.tags.count > 0 ? "Tags" : "No tags added yet")
+                    .foregroundStyle(color)
+                Text(title)
                 Spacer()
-                Text("\(tagVM.tags.count)")
-                    .font(.system(.subheadline, design: .rounded, weight: .light))
-            }
-            .tint(.primary)
-        }
-        .disabled(tagVM.tags.count > 0 ? false : true)
-    }
-    
-    @ViewBuilder
-    func rowForLanguage() -> some View{
-        Button(action:openSettings){
-            HStack{
-                Image(systemName: "globe")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 20, maxHeight: 20)
-                    .foregroundStyle(.blue)
-                Text("Language")
-                Spacer()
-                Text(settingsMgrVM.currentLanguage.localizeLanguageCode()?.capitalized ?? "English")
-                    .font(.system(.subheadline, design: .rounded, weight: .light))
+                if let rightSideKey{
+                    Text("\(rightSideKey.capitalized)")
+                        .font(.system(.subheadline, design: .rounded, weight: .light))
+                }
             }
             .tint(.primary)
         }
@@ -131,6 +128,17 @@ struct SettingsView: View {
         guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
         if UIApplication.shared.canOpenURL(settingsUrl) {
             UIApplication.shared.open(settingsUrl)
+        }
+    }
+    
+    func openAppStore() {
+        let appID = "IDK_YET"
+        if let url = URL(string: "https://apps.apple.com/app/id\(appID)?action=write-review") {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            } else {
+                print("Cant open app store with provided url")
+            }
         }
     }
 }
