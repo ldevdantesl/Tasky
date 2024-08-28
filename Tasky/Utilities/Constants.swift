@@ -25,9 +25,7 @@ extension Color {
         let uiColor = UIColor(self)
         return try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false)
     }
-}
-
-extension Color {
+    
     static func fromData(_ data: Data) -> Color? {
         if let uiColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
             return Color(uiColor)
