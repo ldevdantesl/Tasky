@@ -29,7 +29,7 @@ struct TagSettingsView: View {
                                     Button("Remove", systemImage: "trash", role:.destructive) {
                                         tagVM.deleteTag(tag: tag)
                                     }
-                                    .sensoryFeedback(.selection, trigger: true)
+                                    
                                 } label: {
                                     Text("#\(tag.name ?? "Uknown Tag")")
                                         .frame(maxWidth: (Constants.screenWidth / 2), maxHeight: 30, alignment: .leading)
@@ -61,7 +61,7 @@ struct TagSettingsView: View {
                     }
                 }
             }
-            .toolbarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

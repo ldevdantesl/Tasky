@@ -55,7 +55,7 @@ struct RemovedTodosView: View {
             }
         }
         .navigationTitle("Removed")
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     @ViewBuilder

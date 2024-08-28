@@ -64,7 +64,7 @@ struct NotificationAndSoundsView: View {
                 }
             }
         }
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Notification and Sounds")
         .alert("Reset the settings?", isPresented: $resetAlert) {
             Button(role:.destructive,action: settingsMgrVM.settingsManager.resetAllSettings){

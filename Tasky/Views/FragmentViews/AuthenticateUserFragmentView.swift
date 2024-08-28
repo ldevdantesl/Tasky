@@ -18,7 +18,7 @@ struct AuthenticateUserFragmentView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: Constants.screenWidth / 5)
-                .foregroundStyle(.green, .gray.quaternary)
+                .foregroundStyle(.green, .gray.opacity(0.25))
             Text("Tasky Locked")
                 .font(.system(.title, design: .rounded, weight: .bold))
             

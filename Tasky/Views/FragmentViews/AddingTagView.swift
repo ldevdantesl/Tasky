@@ -59,13 +59,11 @@ struct AddingTagView: View {
                             .background(Color.accentColor, in:.capsule)
                             .padding(.bottom, 15)
                     }
-                    .sensoryFeedback(.success, trigger: true)
                 }
             }
             .alert("Invalid name", isPresented: $showAlert) {
                 Button(action: {alertMessage = ""}){
                     Text("OK")
-                        .sensoryFeedback(.error, trigger: alertMessage)
                 }
             } message: {
                 Text(alertMessage)

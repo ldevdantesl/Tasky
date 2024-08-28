@@ -16,7 +16,7 @@ struct FAQView: View {
                 Text("This is my private email. If you have any questions regarding the app. Please get in touch with me.")
             }
         }
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
     }
     func openEmailApp(){
         let email = "ldevdantesl@gmail.com"

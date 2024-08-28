@@ -39,7 +39,7 @@ struct AppearanceView: View {
                 rowLabel(imageName: "capsule.lefthalf.filled", title: "Mode", headline: "Define your app mode", color: .indigo)
             }
         }
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     @ViewBuilder

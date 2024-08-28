@@ -94,7 +94,6 @@ struct ToDoEditView: View {
             .confirmationDialog("Leave Description?", isPresented: $toggleConfirmation, titleVisibility: .visible){
                 Button(role:.destructive, action: {saveAlert.toggle()}){
                     Text("Yes")
-                        .sensoryFeedback(.success, trigger: saveAlert)
                 }
                 .tint(.red)
             } message: {
@@ -104,7 +103,6 @@ struct ToDoEditView: View {
                 Button(action:{alertMessage = ""}){
                     Text("OK")
                 }
-                .sensoryFeedback(.error, trigger: toggleAlert)
             } message: {
                 Text(alertMessage)
             }

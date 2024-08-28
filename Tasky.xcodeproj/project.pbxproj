@@ -45,6 +45,7 @@
 		DAF0635A2C7D65FC00ADE7E8 /* TagSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF063592C7D65FC00ADE7E8 /* TagSettingsView.swift */; };
 		DAF0635C2C7E85AB00ADE7E8 /* FAQView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF0635B2C7E85AB00ADE7E8 /* FAQView.swift */; };
 		DAF0635E2C7EC43D00ADE7E8 /* TagsForTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */; };
+		DAF063622C7EDFA900ADE7E8 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF063612C7EDFA900ADE7E8 /* LaunchScreen.swift */; };
 		DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */; };
 		DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659D62C72FE4D004D8ACA /* MainView.swift */; };
 		DAF659D92C72FE4F004D8ACA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAF659D82C72FE4F004D8ACA /* Assets.xcassets */; };
@@ -99,6 +100,7 @@
 		DAF063592C7D65FC00ADE7E8 /* TagSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSettingsView.swift; sourceTree = "<group>"; };
 		DAF0635B2C7E85AB00ADE7E8 /* FAQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQView.swift; sourceTree = "<group>"; };
 		DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsForTodoView.swift; sourceTree = "<group>"; };
+		DAF063612C7EDFA900ADE7E8 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		DAF659D12C72FE4D004D8ACA /* Tasky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tasky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF659D42C72FE4D004D8ACA /* TaskyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskyApp.swift; sourceTree = "<group>"; };
 		DAF659D62C72FE4D004D8ACA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				DAF659FF2C732950004D8ACA /* TodoDetailView.swift */,
 				DA78376E2C74697F0007ECC2 /* ToDoEditView.swift */,
 				DA38A34C2C76B78C007C3FB4 /* SettingsView.swift */,
+				DAF063612C7EDFA900ADE7E8 /* LaunchScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				DA4B19792C79975C00899303 /* PrivacyAndSecurityManaging.swift in Sources */,
 				DA38A3562C770C16007C3FB4 /* TagLazyFragmentView.swift in Sources */,
 				DA9409EB2C787810004D054E /* SettingsManagerViewModel.swift in Sources */,
+				DAF063622C7EDFA900ADE7E8 /* LaunchScreen.swift in Sources */,
 				DA38A34D2C76B78C007C3FB4 /* SettingsView.swift in Sources */,
 				DAF659F02C7302F8004D8ACA /* TodoView.swift in Sources */,
 				DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */,
@@ -575,8 +579,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -584,9 +589,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Dantes.Tasky;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -606,8 +614,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -615,9 +624,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Dantes.Tasky;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -85,7 +85,7 @@ struct DataAndStorageView: View {
 
         }
         .navigationTitle("Data and Storage")
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
     }
     @ViewBuilder
     func rowLabel(imageName: String, title: LocalizedStringKey, headline: LocalizedStringKey, color: Color) -> some View{

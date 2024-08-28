@@ -29,7 +29,7 @@ struct TodoView: View {
     var body: some View {
         NavigationStack{
             Group{
-                if filteredTodos.isEmpty{
+                if filteredTodos.isEmpty, #available(iOS 17.0, *){
                     ContentUnavailableView("No todos yet", systemImage: "questionmark.folder", description: Text("Add todos to get started"))
                 } else {
                     List {
@@ -120,17 +120,11 @@ struct TodoView: View {
         Menu("Sort", systemImage: "arrow.up.and.down.text.horizontal"){
             Text("Sort By")
             Button("Priority", action: { sortBy(sortKey: "priority", ascending: false) })
-                .sensoryFeedback(.success, trigger: true)
             Button("First Done", action: { sortBy(sortKey: "isDone", ascending: false) })
-                .sensoryFeedback(.success, trigger: true)
             Button("First Undone", action: { sortBy(sortKey: "isDone", ascending: true) })
-                .sensoryFeedback(.success, trigger: true)
             Button("Time added", action: { sortBy(sortKey: "addedOn", ascending: true) })
-                .sensoryFeedback(.success, trigger: true)
             Button("Due date", action: { sortBy(sortKey: "dueDate", ascending: true) })
-                .sensoryFeedback(.success, trigger: true)
             Button("Title", action: { sortBy(sortKey: "title", ascending: true) })
-                .sensoryFeedback(.success, trigger: true)
         }
     }
     

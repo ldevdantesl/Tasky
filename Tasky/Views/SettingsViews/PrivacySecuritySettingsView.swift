@@ -38,7 +38,7 @@ struct PrivacySecuritySettingsView: View {
 
         }
         .navigationTitle("Privacy and Security")
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
     }
     @ViewBuilder
     func rowLabel(imageName: String? = nil, title: LocalizedStringKey, headline: LocalizedStringKey, color: Color) -> some View{

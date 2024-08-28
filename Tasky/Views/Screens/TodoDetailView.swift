@@ -129,10 +129,10 @@ struct TodoDetailView: View {
             VStack(alignment:.leading){
                 Text("Status: ")
                     .font(.system(.callout, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.secondary) +
+                    .foregroundColor(.secondary) +
                 Text("Click to change the status")
                     .font(.system(.caption, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.secondary)
+                    .foregroundColor(.secondary)
                 HStack{
                     Text(todo.isDone ? "done_key" : "undone_key")
                         .font(.system(.title3, design: .rounded, weight: .semibold))

@@ -48,7 +48,7 @@ struct ArchivedTodosView: View {
             }
         }
         .navigationTitle("Archived")
-        .toolbarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     @ViewBuilder

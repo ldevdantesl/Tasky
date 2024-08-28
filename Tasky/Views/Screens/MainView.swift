@@ -14,6 +14,7 @@ struct MainView: View {
     @StateObject var todoVM: TodoViewModel = TodoViewModel()
     @StateObject var tagVM: TagViewModel = TagViewModel()
     @State var showAutenticationView: Bool = false
+    @State var showLaunchScreen: Bool = true
     
     init(){
         let todoViewModel = TodoViewModel()
@@ -30,21 +31,32 @@ struct MainView: View {
     }
     
     var body: some View {
-        TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)
-            .blur(radius: blurView() ? 10 : 0)
-            .blur(radius: showAutenticationView ? 20 : 0)
-            .preferredColorScheme(settingsManagerVM.settingsManager.appearanceSettingsManager.colorScheme)
-            .onAppear{
-                if settingsManagerVM.settingsManager.privacyAndSecurityManager.useBiometrics {
-                    showAutenticationView.toggle()
+        if showLaunchScreen{
+            LaunchScreen()
+                .onAppear{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        withAnimation {
+                            self.showLaunchScreen = false
+                        }
+                    }
                 }
-            }
-            .sheet(isPresented: $showAutenticationView){
-                AuthenticateUserFragmentView(settingsManagerViewModel: settingsManagerVM, isAuthenticated: $showAutenticationView)
-                    .presentationDetents([.medium])
-                    .interactiveDismissDisabled()
-            }
-            .tint(settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme)
+        } else {
+            TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)
+                .blur(radius: blurView() ? 10 : 0)
+                .blur(radius: showAutenticationView ? 20 : 0)
+                .preferredColorScheme(settingsManagerVM.settingsManager.appearanceSettingsManager.colorScheme)
+                .onAppear{
+                    if settingsManagerVM.settingsManager.privacyAndSecurityManager.useBiometrics {
+                        showAutenticationView.toggle()
+                    }
+                }
+                .sheet(isPresented: $showAutenticationView){
+                    AuthenticateUserFragmentView(settingsManagerViewModel: settingsManagerVM, isAuthenticated: $showAutenticationView)
+                        .presentationDetents([.medium])
+                        .interactiveDismissDisabled()
+                }
+                .tint(settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme)
+        }
     }
     
     func blurView() -> Bool {
