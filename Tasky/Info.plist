@@ -7,5 +7,7 @@
 		<string>fetch</string>
 		<string>processing</string>
 	</array>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
 </dict>
 </plist>
