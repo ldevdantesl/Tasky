@@ -101,7 +101,6 @@ extension Tag{
     }
 }
 
-#if DEBUG
 extension TagViewModel{
     static func mockTags() -> [Tag]{
         let newTag = Tag(context: PersistentController.shared.context)
@@ -117,5 +116,3 @@ extension TagViewModel{
         return [newTag, newTag2]
     }
 }
-#endif
-

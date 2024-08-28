@@ -220,7 +220,6 @@ class TodoViewModel: ObservableObject {
     
 }
 
-#if DEBUG
 extension TodoViewModel{
     static func mockToDo() -> Todo{
         let mocktodo = Todo(context: PersistentController.shared.context)
@@ -234,4 +233,3 @@ extension TodoViewModel{
         return mocktodo
     }
 }
-#endif
