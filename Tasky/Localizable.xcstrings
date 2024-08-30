@@ -22,7 +22,14 @@
       }
     },
     "%@" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%lld" : {
       "localizations" : {
@@ -55,7 +62,14 @@
       }
     },
     "Add todos to get started" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавьте задачу чтоб начать"
+          }
+        }
+      }
     },
     "All todos that have been archived" : {
       "localizations" : {
@@ -218,7 +232,14 @@
       }
     },
     "Choose a theme for the app" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите тему для приложения"
+          }
+        }
+      }
     },
     "Clean up cache storage" : {
       "localizations" : {
@@ -271,7 +292,14 @@
       }
     },
     "Color Theme" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тема"
+          }
+        }
+      }
     },
     "Daily Reminder" : {
       "localizations" : {
@@ -284,7 +312,14 @@
       }
     },
     "Dark" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Темная"
+          }
+        }
+      }
     },
     "Data and Storage" : {
       "localizations" : {
@@ -297,7 +332,14 @@
       }
     },
     "Define your app mode" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите мод для вашего приложения"
+          }
+        }
+      }
     },
     "Delete" : {
       "localizations" : {
@@ -330,7 +372,14 @@
       }
     },
     "Delete all Tags" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить все Тэги"
+          }
+        }
+      }
     },
     "Delete To-Do" : {
       "localizations" : {
@@ -463,10 +512,24 @@
       }
     },
     "Do you want to delete all the tags?" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы хотите удалить все тэги?"
+          }
+        }
+      }
     },
     "Do you want to reset the privacy and security settings?" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы хотите сбросить конфиденциальные настройки?"
+          }
+        }
+      }
     },
     "Done" : {
       "localizations" : {
@@ -583,7 +646,14 @@
       }
     },
     "Hey checkout this app." : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зацени приложение"
+          }
+        }
+      }
     },
     "Invalid name" : {
       "localizations" : {
@@ -619,7 +689,14 @@
       }
     },
     "Light" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Светлая"
+          }
+        }
+      }
     },
     "Lock in Background" : {
       "localizations" : {
@@ -642,10 +719,24 @@
       }
     },
     "Mode" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Схема"
+          }
+        }
+      }
     },
     "Name" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
+          }
+        }
+      }
     },
     "Name of tag" : {
       "localizations" : {
@@ -688,10 +779,24 @@
       }
     },
     "No tags yet" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нету тэгов пока что"
+          }
+        }
+      }
     },
     "No todos yet" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нету задачи пока что"
+          }
+        }
+      }
     },
     "Notification and Sounds" : {
       "localizations" : {
@@ -932,7 +1037,14 @@
       }
     },
     "Reset Settings" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сбросить настройки"
+          }
+        }
+      }
     },
     "Reset the settings?" : {
       "localizations" : {
@@ -1005,7 +1117,14 @@
       }
     },
     "Share" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поделиться"
+          }
+        }
+      }
     },
     "Sort" : {
       "localizations" : {
@@ -1048,7 +1167,14 @@
       }
     },
     "System" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Системная"
+          }
+        }
+      }
     },
     "Tag" : {
       "localizations" : {
@@ -1131,7 +1257,14 @@
       }
     },
     "This is my private email. If you have any questions regarding the app. Please get in touch with me." : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это мой приватный имейл, если что то пошло не так то пожалуйста напишите мне. Спасибо за понимание"
+          }
+        }
+      }
     },
     "Time added" : {
       "localizations" : {
@@ -1349,7 +1482,14 @@
       }
     },
     "Write a review" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дайте отзыв"
+          }
+        }
+      }
     },
     "Yes" : {
       "localizations" : {

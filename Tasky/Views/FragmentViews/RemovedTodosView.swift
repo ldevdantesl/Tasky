@@ -28,8 +28,9 @@ struct RemovedTodosView: View {
                 NavigationLink(destination: ArchivedOrRemovedTodoDetailView(observedTodo: todo, todoVM: todoVM, isArchive: false)) {
                     rowForTodo(todo)
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            Button("Unremove", systemImage: "trash.slash", action: {todoVM.unRemoveTodo(todo)})
-                                .tint(.secondary)
+                            Button("Unremove", systemImage: "trash.slash"){ todoVM.unRemoveTodo(todo)
+                            }
+                            .tint(.secondary)
                         }
                 }
             }
