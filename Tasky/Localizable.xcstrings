@@ -211,6 +211,9 @@
         }
       }
     },
+    "Ascending" : {
+
+    },
     "Blur the app when it is backgrounded" : {
       "localizations" : {
         "ru" : {
@@ -301,6 +304,9 @@
         }
       }
     },
+    "Complete" : {
+
+    },
     "Daily Reminder" : {
       "localizations" : {
         "ru" : {
@@ -330,6 +336,9 @@
           }
         }
       }
+    },
+    "Decending" : {
+
     },
     "Define your app mode" : {
       "localizations" : {
@@ -568,6 +577,9 @@
         }
       }
     },
+    "Due date is not specified" : {
+
+    },
     "Due Date:" : {
       "localizations" : {
         "ru" : {
@@ -625,6 +637,9 @@
         }
       }
     },
+    "First" : {
+
+    },
     "First Done" : {
       "localizations" : {
         "ru" : {
@@ -654,6 +669,9 @@
           }
         }
       }
+    },
+    "Hide Completed" : {
+
     },
     "Invalid name" : {
       "localizations" : {
@@ -1126,7 +1144,11 @@
         }
       }
     },
+    "Show Completed" : {
+
+    },
     "Sort" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1373,6 +1395,9 @@
           }
         }
       }
+    },
+    "Uncomplete" : {
+
     },
     "Undone" : {
       "localizations" : {

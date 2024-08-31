@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 
 struct TodoViewHelpers {
+    enum ListStyles{
+        case boxed
+        case standard
+    }
+    
     var todo: Todo
     
     init(todo: Todo) {

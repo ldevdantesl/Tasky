@@ -13,7 +13,11 @@ class TodoViewModel: ObservableObject {
     @Published var todos: [Todo] = []
     @Published var removedTodos: [Todo] = []
     @Published var archivedTodos: [Todo] = []
-    @Published var sortDescriptor: NSSortDescriptor?
+    @Published var sortDescriptor: NSSortDescriptor? {
+        didSet {
+            fetchAllTodos()
+        }
+    }
     
     let context = PersistentController.shared.context
     

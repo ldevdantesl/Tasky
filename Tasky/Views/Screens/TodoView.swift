@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TodoView: View {
+    @AppStorage("isBoxStyle") var isBoxStyle: Bool = false
+    
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
@@ -15,119 +17,84 @@ struct TodoView: View {
     @State private var onAddTodo = false
     @State private var onAddTag = false
     @State private var searchText: String = ""
-    
-    var filteredTodos: [Todo]{
-        if searchText.isEmpty{
-            return todoVM.todos
-        } else {
-            return todoVM.todos.filter { todo in
-               todo.title!.localizedStandardContains(searchText)
-            }
-        }
-    }
+    @State private var path: NavigationPath = NavigationPath()
     
     var body: some View {
-        NavigationStack{
-            Group{
-                if filteredTodos.isEmpty, #available(iOS 17.0, *){
-                    ContentUnavailableView("No todos yet", systemImage: "questionmark.folder", description: Text("Add todos to get started"))
-                } else {
-                    List {
-                        ForEach(filteredTodos, id: \.id){ todo in
-                            NavigationLink(value: todo) {
-                                rowForTodo(todo)
-                            }
-                            .swipeActions(edge:.leading, allowsFullSwipe: true){
-                                if !todo.isDone{
-                                    Button("Done", systemImage: "checkmark.circle"){
-                                        todoVM.completeTodo(todo)
-                                    }
-                                    .tint(.green)
-                                } else {
-                                    Button("Undone", systemImage: "xmark.circle"){
-                                        todoVM.uncompleteTodo(todo)
-                                    }
-                                    .tint(.gray)
-                                }
-                                Button("Archive", systemImage: "archivebox", action: {todoVM.archive(todo)})
-                                    .tint(.purple)
-                            }
+        NavigationStack(path: $path){
+            TodoListView(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM: tagVM, path: $path)
+                .toolbar{
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Picker("",selection: $isBoxStyle) {
+                            Image(systemName: "list.bullet")
+                                .tag(false)
+                            Image(systemName: "square.stack")
+                                .tag(true)
+                            
                         }
-                        .onDelete(perform: todoVM.removeTodoByIndex)
+                        .pickerStyle(SegmentedPickerStyle())
+                        .contextMenu{
+                            toolbarSortButton()
+                        }
+                    }
+                    ToolbarItem(placement:.topBarLeading){
+                        NavigationLink{
+                            SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM)
+                        } label: {
+                            Image(systemName: "gear")
+                        }
                     }
                 }
-            }
-            .searchable(text: $searchText)
-            .toolbar{
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    toolbarSortButton()
-                    EditButton()
-                }
-                ToolbarItem(placement:.topBarLeading){
-                    NavigationLink{
-                        SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM)
-                    } label: {
-                        Image(systemName: "gear")
+                .overlay(alignment: .bottomTrailing){
+                    Menu{
+                        Button("Todo", action: { onAddTodo.toggle() })
+                        Button("Tag", action: { onAddTag.toggle() })
+                    } label:{
+                        Image(systemName: "plus")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundStyle(.white)
+                            .frame(minWidth: 30, maxWidth: 40)
+                            .frame(height: 30)
+                            .padding(20)
+                            .background(settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme, in:.circle)
+                            .shadow(radius: 5)
+                            .padding()
                     }
                 }
-            }
-            .overlay(alignment: .bottomTrailing){
-                Menu{
-                    Button("Todo", action: { onAddTodo.toggle() })
-                    Button("Tag", action: { onAddTag.toggle() })
-                } label:{
-                    Image(systemName: "plus")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundStyle(.white)
-                        .frame(minWidth: 30, maxWidth: 40)
-                        .frame(height: 30)
-                        .padding(20)
-                        .background(settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme, in:.circle)
-                        .shadow(radius: 5)
-                        .padding()
+                .fullScreenCover(isPresented: $onAddTodo) {
+                    AddTodoView(todoVM: todoVM, tagVM: tagVM)
                 }
-            }
-            .navigationDestination(for: Todo.self){ todo in
-                TodoDetailView(observedTodo: todo, todoVM: todoVM, tagVM: tagVM, settingsManagerVM: settingsMgrVM)
-            }
-            .fullScreenCover(isPresented: $onAddTodo) {
-                AddTodoView(todoVM: todoVM, tagVM: tagVM)
-            }
-            .sheet(isPresented: $onAddTag) {
-                AddingTagView(tagVM: tagVM)
-                    .presentationDetents([.medium, .large])
-            }
-            
+                .sheet(isPresented: $onAddTag) {
+                    AddingTagView(tagVM: tagVM)
+                        .presentationDetents([.medium, .large])
+                }
         }
     }
     
     func sortBy(sortKey: String, ascending: Bool){
         todoVM.sortDescriptor = NSSortDescriptor(key: sortKey, ascending: ascending)
-        todoVM.fetchAllTodos()
-    }
-    
-    @ViewBuilder
-    func rowForTodo(_ todo: Todo) -> some View {
-        VStack(alignment:.leading, spacing:5){
-            Text(todo.title ?? "Uknown title")
-                .strikethrough(todo.isDone, color: .primary)
-            TagsForTodoView(todo: todo, settingsManagerVM: settingsMgrVM)
-        }
     }
     
     func toolbarSortButton() -> some View{
-        Menu("Sort", systemImage: "arrow.up.and.down.text.horizontal"){
-            Text("Sort By")
-            Button("Priority", action: { sortBy(sortKey: "priority", ascending: false) })
-            Button("First Done", action: { sortBy(sortKey: "isDone", ascending: false) })
-            Button("First Undone", action: { sortBy(sortKey: "isDone", ascending: true) })
+        Menu{
+            Button("Title", action: { sortBy(sortKey: "title", ascending: true) })
             Button("Time added", action: { sortBy(sortKey: "addedOn", ascending: true) })
             Button("Due date", action: { sortBy(sortKey: "dueDate", ascending: true) })
-            Button("Title", action: { sortBy(sortKey: "title", ascending: true) })
+            Menu("Priority", systemImage: "bookmark"){
+                Button("Ascending", systemImage: "arrow.up.circle",action: { sortBy(sortKey: "priority", ascending: true) })
+                Button("Decending", systemImage: "arrow.down.circle",action: { sortBy(sortKey: "priority", ascending: false) })
+            }
+            Menu("First", systemImage: "questionmark.circle"){
+                Button("First Done", systemImage: "checkmark.circle",action: { sortBy(sortKey: "isDone", ascending: false) })
+                Button("First Undone", systemImage: "xmark.circle", action: { sortBy(sortKey: "isDone", ascending: true) })
+            }
+        } label: {
+            Label(
+                title: { Text("Sort By") },
+                icon: { Image(systemName: "list.bullet.indent") }
+            )
         }
     }
-    
 }
 
 #Preview {
