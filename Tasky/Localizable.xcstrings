@@ -577,9 +577,6 @@
         }
       }
     },
-    "Due date is not specified" : {
-
-    },
     "Due Date:" : {
       "localizations" : {
         "ru" : {
@@ -975,6 +972,7 @@
       }
     },
     "Remove Todo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {

@@ -64,13 +64,10 @@ struct TodoRowView: View {
                             .scaledToFit()
                             .frame(maxWidth: 20, maxHeight: 30)
                     }
-                    if let dueDate = todo.dueDate{
-                        Text(dueDate.formatted(date: .abbreviated, time: .omitted))
-                            .font(.system(.caption, design: .rounded, weight: .light))
-                    } else {
-                        Text("Due date is not specified")
-                            .font(.system(.caption, design: .rounded, weight: .light))
-                    }
+                    
+                    Text(TodoViewHelpers(todo: todo).formatDate())
+                        .font(.system(.caption, design: .rounded, weight: .light))
+                    
                 }
                 .padding(.horizontal, 10)
                 .foregroundStyle(.white)

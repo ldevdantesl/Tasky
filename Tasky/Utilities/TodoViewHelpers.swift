@@ -52,9 +52,37 @@ struct TodoViewHelpers {
     
     func formatDate() -> String {
         if let date = todo.dueDate {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd MMM, HH:mm"
-            return formatter.string(from: date)
+            let calendar = Calendar.current
+            
+            // Get the current date without time component
+            let today = calendar.startOfDay(for: Date())
+
+            // Create dates representing yesterday and tomorrow
+            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
+                  let tomorrow = calendar.date(byAdding: .day, value: 1, to: today) else {
+                return "Due date is not specified"
+            }
+            
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "h:mm a"
+
+            // Check if the date is today
+            if calendar.isDate(date, inSameDayAs: today) {
+                return "Today at \(timeFormatter.string(from: date))"
+            }
+            // Check if the date is yesterday
+            else if calendar.isDate(date, inSameDayAs: yesterday) {
+                return "Yesterday at \(timeFormatter.string(from: date))"
+            }
+            // Check if the date is tomorrow
+            else if calendar.isDate(date, inSameDayAs: tomorrow) {
+                return "Tomorrow at \(timeFormatter.string(from: date))"
+            } else {
+                // If not today, yesterday, or tomorrow, format the date as usual
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd MMM, h:mm a"
+                return formatter.string(from: date)
+            }
         } else {
             return "Due date is not specified"
         }
