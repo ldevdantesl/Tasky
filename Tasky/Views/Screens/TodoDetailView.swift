@@ -12,6 +12,7 @@ struct TodoDetailView: View {
     enum Fields{
         case title
         case description
+        case dueDate
     }
     
     @Environment(\.dismiss) var dismiss
@@ -21,7 +22,6 @@ struct TodoDetailView: View {
     @ObservedObject private var settingsManagerVM: SettingsManagerViewModel
     
     @State private var showAlert: Bool = false
-    @State private var showEditView: Bool = false
     @State private var isEditing: Fields? = nil
     
     @State private var editingTitle: String = ""
@@ -43,6 +43,7 @@ struct TodoDetailView: View {
     
     var body: some View {
         ScrollView{
+            // MARK: - TITLE
             HStack{
                 Image(systemName: "flag.fill")
                     .resizable()
@@ -52,13 +53,13 @@ struct TodoDetailView: View {
                     .foregroundStyle(TodoViewHelpers(todo: todo).priorityColor)
                 
                 if isEditing == .title{
-                    TextField("\(todo.title ?? "")", text: $editingTitle)
+                    TextFieldComponent(text: $editingTitle, placeholder: "\(todo.title ?? "")", maxChars: 25)
                         .focused($focusedField, equals: Fields.title)
                         .submitLabel(.done)
                         .onSubmit{
                             withAnimation {
                                 isEditing = nil
-                                todoVM.editTodos(todo, newTitle: editingTitle, newDesc: editingDesc, newPriority: editingPriority, newDueDate: editingDueDate, newTags: editingTags)
+                                editingTitle.isEmpty ? () : todoVM.editTodos(todo, newTitle: editingTitle)
                                 focusedField = nil
                             }
                         }
@@ -77,14 +78,17 @@ struct TodoDetailView: View {
                 }
                 Spacer()
                 
-                Button("",systemImage: "trash", role:.destructive){
-                    withAnimation {
-                        todoVM.removeTodo(todo)
-                        dismiss()
-                    }
+                Button(action:{showAlert.toggle()}){
+                    Image(systemName: "trash")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 20)
+                        .tint(.red)
                 }
             }
+            .padding(.horizontal)
             
+            // MARK: - DESCRIPTION
             HStack{
                 VStack(alignment:.leading){
                     Text("Description:")
@@ -98,11 +102,11 @@ struct TodoDetailView: View {
                                 withAnimation {
                                     isEditing = nil
                                     focusedField = nil
-                                    todoVM.editTodos(todo, newTitle: editingTitle, newDesc: editingDesc, newPriority: editingPriority, newDueDate: editingDueDate, newTags: editingTags)
+                                    todoVM.editTodos(todo, newDesc: editingDesc)
                                 }
                             }
                     } else {
-                        Text(todo.desc ?? "No description")
+                        Text(todo.desc ?? "Add description")
                             .font(.system(.title2, design: .rounded, weight: .semibold))
                             .frame(maxWidth: Constants.screenWidth - 10, alignment: .leading)
                             .onTapGesture(count: 2){
@@ -116,16 +120,40 @@ struct TodoDetailView: View {
                 Spacer()
             }
             .padding(.vertical, 10)
+            .padding(.horizontal)
+            
+            // MARK: - STATUS AND PRIORITY
             HStack{
                 VStack(alignment:.leading){
-                    Text("Due Date:")
+                    Text("Status: ")
                         .font(.system(.callout, design: .rounded, weight: .semibold))
-                        .foregroundStyle(.secondary)
-                    
-                    Text(TodoViewHelpers(todo: todo).formatDate())
-                        .font(.system(.title2, design: .rounded, weight: .semibold))
-                        .frame(maxWidth: Constants.screenWidth - 10, alignment: .leading)
+                        .foregroundColor(.secondary)
+                    HStack{
+                        Text(todo.isDone ? "done_key" : "undone_key")
+                            .font(.system(.title3, design: .rounded, weight: .semibold))
+                            .foregroundStyle(.white)
+                        Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 20)
+                            .frame(maxHeight: 20)
+                            .foregroundStyle(.white)
+                    }
+                    .frame(maxWidth: Constants.screenWidth / 3 + 30)
+                    .frame(minHeight: 40)
+                    .background(TodoViewHelpers(todo: todo).statusColor, in:.capsule)
+                    .onTapGesture(count:2){
+                        withAnimation {
+                            if todo.isDone{
+                                todoVM.uncompleteTodo(todo)
+                            } else {
+                                todoVM.completeTodo(todo)
+                            }
+                            
+                        }
+                    }
                 }
+               Spacer()
                 
                 VStack(alignment:.leading){
                     Text("Priority:")
@@ -153,14 +181,51 @@ struct TodoDetailView: View {
                 }
                 
             }
-            showStatus()
-                .padding(.vertical, 10)
-            
-            
+            .padding(.vertical, 10)
+            .padding(.horizontal)
+
+            // MARK: - TAGS
             AllTagsFragmentView(todo: todo)
                 .padding(.vertical, 10)
+                .frame(maxWidth: .infinity, maxHeight: 100)
+            
+            // MARK: - DUE DATE
+            VStack(alignment:.leading){
+                HStack{
+                    if isEditing != .dueDate{
+                        Spacer()
+                    }
+                    Text(TodoViewHelpers(todo: todo).formatDate())
+                        .font(.system(.title2, design: .rounded, weight: .medium))
+                        .foregroundStyle(isEditing == .dueDate ? .secondary : .primary)
+                        .scaleEffect(isEditing == .dueDate ? 0.8 : 1)
+                    if isEditing == .dueDate{
+                        Spacer()
+                    }
+                }
+                .onTapGesture(count: 2) {
+                    withAnimation {
+                        if isEditing == .dueDate {
+                            isEditing = nil
+                        } else {
+                            isEditing = .dueDate
+                        }
+                    }
+                }
+                
+                if isEditing == .dueDate {
+                    HStack{
+                        ShowSpecDate(text: "Date", sysImage: "calendar.circle.fill", color: .red, action: {_ in})
+                        ShowSpecDate(text: "- Day", sysImage: "arrow.backward.circle.fill", color: .purple, action:todoVM.removeADayTodo)
+                        ShowSpecDate(text: "Today", sysImage: "sun.and.horizon.circle.fill", action:todoVM.makeTodoToday)
+                        ShowSpecDate(text: "+ Day", sysImage: "arrow.forward.circle.fill", color: .purple, action:todoVM.addADayTodo)
+                    }
+                    
+                }
+            }
+            .padding(.vertical, 20)
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
         .onAppear{
             editingTitle = todo.title ?? ""
             editingDesc = todo.desc ?? ""
@@ -170,105 +235,44 @@ struct TodoDetailView: View {
         .scrollIndicators(.never)
         .navigationBarTitleDisplayMode(.inline)
         .alert("Remove To-Do? ", isPresented: $showAlert) {
-            Button("Remove", role:.destructive, action:{todoVM.deleteTodo(todo); dismiss()})
+            Button("Remove", role:.destructive){
+                withAnimation {
+                    todoVM.removeTodo(todo)
+                    dismiss()
+                }
+            }
         } message: {
             Text("Do you really want to remove this Todo?")
-        }
-        .sheet(isPresented: $showEditView){
-            ToDoEditView(todo: todo, todoVM: todoVM, tagVM: tagVM)
-                .presentationDetents([.fraction(1/1.3), .large])
         }
         .onTapGesture {
             withAnimation {
                 isEditing = nil
+                focusedField == .description ? todoVM.editTodos(todo, newDesc: editingDesc) : todoVM.editTodos(todo, newTitle: editingTitle)
                 focusedField = nil
             }
         }
     }
     
     @ViewBuilder
-    func showTodo() -> some View {
-        
-    }
-    
-    @ViewBuilder
-    func showPriority() -> some View {
-        HStack{
-            VStack(alignment:.leading){
-                Text("Priority:")
-                    .font(.system(.callout, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                HStack{
-                    Text(TodoViewHelpers(todo: todo).priorityName)
-                        .font(.system(.title3, design: .rounded, weight: .semibold))
-                        .foregroundStyle(.white)
-                    Image(systemName: "exclamationmark.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 20)
-                        .frame(maxHeight: 20)
-                        .foregroundStyle(.white)
-                }
-                .frame(maxWidth: Constants.screenWidth / 3 + 30)
-                .frame(minHeight: 40)
-                .background(TodoViewHelpers(todo: todo).priorityColor, in:.capsule)
-            }
-            Spacer()
-        }
-    }
-    
-    @ViewBuilder
-    func showStatus() -> some View {
-        HStack{
-            VStack(alignment:.leading){
-                Text("Status: ")
-                    .font(.system(.callout, design: .rounded, weight: .semibold))
-                    .foregroundColor(.secondary) +
-                Text("Click to change the status")
-                    .font(.system(.caption, design: .rounded, weight: .semibold))
-                    .foregroundColor(.secondary)
-                HStack{
-                    Text(todo.isDone ? "done_key" : "undone_key")
-                        .font(.system(.title3, design: .rounded, weight: .semibold))
-                        .foregroundStyle(.white)
-                    Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 20)
-                        .frame(maxHeight: 20)
-                        .foregroundStyle(.white)
-                }
-                .frame(maxWidth: Constants.screenWidth / 3 + 30)
-                .frame(minHeight: 40)
-                .background(TodoViewHelpers(todo: todo).statusColor, in:.capsule)
-                .onTapGesture {
-                    withAnimation {
-                        if todo.isDone{
-                            todoVM.uncompleteTodo(todo)
-                        } else {
-                            todoVM.completeTodo(todo)
-                        }
-                        
-                    }
-                }
-            }
-            Spacer()
-        }
-    }
-    
-    @ViewBuilder
-    func showDueDate() -> some View {
-        HStack{
-            VStack(alignment:.leading){
-                Text("Due Date:")
-                    .font(.system(.callout, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.secondary)
+    func ShowSpecDate(text: String, sysImage: String, color: Color? = .yellow, action: @escaping (Todo) -> ()) -> some View {
+        VStack(spacing: 0){
+            Image(systemName: sysImage)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: 20)
+                .foregroundStyle(color ?? .black)
                 
-                Text(TodoViewHelpers(todo: todo).formatDate())
-                    .font(.system(.title2, design: .rounded, weight: .semibold))
-                    .frame(maxWidth: Constants.screenWidth - 10, alignment: .leading)
+            Text(text)
+                .font(.system(.callout, design: .rounded, weight: .medium))
+        }
+        .frame(minWidth: Constants.screenWidth / 7, maxHeight: 40)
+        .padding(5)
+        .background(Color.gray.opacity(0.2), in: .rect(cornerRadius: 15))
+        .onTapGesture {
+            withAnimation {
+                isEditing = nil
+                action(todo)
             }
-            Spacer()
         }
     }
 }

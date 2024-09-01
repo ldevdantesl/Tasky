@@ -139,20 +139,29 @@ class TodoViewModel: ObservableObject {
         }
     }
     
-    func editTodos(_ todo: Todo, newTitle: String, newDesc: String?, newIsDone: Bool? = nil, newPriority: Int16, newDueDate: Date?, newTags: [Tag]?){
-        todo.title = newTitle
+    func editTodos(_ todo: Todo, newTitle: String? = nil, newDesc: String? = nil, newIsDone: Bool? = nil, newPriority: Int16? = nil, newDueDate: Date? = nil, newTags: [Tag]? = nil){
+        if let newTitle, !newTitle.isEmpty {
+            todo.title = newTitle.capitalized
+        }
         if let newDesc{
-            todo.desc = newDesc
+            if newDesc.trimmingCharacters(in: .newlines).isEmpty{
+                todo.desc = nil
+            } else {
+                todo.desc = newDesc.trimmingCharacters(in: .newlines).capitalized
+            }
         }
         if let newIsDone{
             todo.isDone = newIsDone
         }
-        todo.priority = newPriority
-        todo.dueDate = newDueDate
+        if let newPriority{
+            todo.priority = newPriority
+        }
+        if let newDueDate{
+            todo.dueDate = newDueDate
+        }
         if let newTags{
             todo.tags = NSSet(array: newTags)
         }
-        
         saveContext()
     }
     
@@ -215,6 +224,37 @@ class TodoViewModel: ObservableObject {
         } catch {
             log("Error deleting all todos: \(error.localizedDescription)")
         }
+    }
+    
+    func addADayTodo(_ todo: Todo) {
+        if let dueDate = todo.dueDate {
+            if let newDueDate = Calendar.current.date(byAdding: .day, value: 1, to: dueDate) {
+                todo.dueDate = newDueDate
+            }
+        } else {
+            if let newDueDate = Calendar.current.date(byAdding: .day, value: 1, to: .now){
+                todo.dueDate = newDueDate
+            }
+        }
+        saveContext()
+    }
+    
+    func makeTodoToday(_ todo: Todo){
+        todo.dueDate = .now
+        saveContext()
+    }
+    
+    func removeADayTodo(_ todo: Todo) {
+        if let dueDate = todo.dueDate{
+            if let newDueDate = Calendar.current.date(byAdding: .day, value: -1, to: dueDate){
+                todo.dueDate = newDueDate
+            }
+        } else {
+            if let newDueDate = Calendar.current.date(byAdding: .day, value: -1, to: .now){
+                todo.dueDate = newDueDate
+            }
+        }
+        saveContext()
     }
     
     private func saveContext(){

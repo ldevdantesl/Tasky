@@ -23,13 +23,14 @@ struct AllTagsFragmentView: View {
             
             if let tags = todo.tags, tags.count > 0{
                 ScrollView(.horizontal){
-                    LazyHStack{
+                    LazyHStack(spacing:0){
                         ForEach(todosTags, id: \.id) { tag in
                             Text("#\(tag.name ?? "")")
                                 .font(.system(.headline, design: .rounded, weight: .semibold))
                                 .foregroundStyle(.white)
                                 .padding(10)
                                 .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
+                                .padding(.leading, 10)
                                 
                         }
                     }

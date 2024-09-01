@@ -60,7 +60,7 @@ struct TodoViewHelpers {
             // Create dates representing yesterday and tomorrow
             guard let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
                   let tomorrow = calendar.date(byAdding: .day, value: 1, to: today) else {
-                return "Due date is not specified"
+                return "No Due Date"
             }
             
             let timeFormatter = DateFormatter()
@@ -68,23 +68,23 @@ struct TodoViewHelpers {
 
             // Check if the date is today
             if calendar.isDate(date, inSameDayAs: today) {
-                return "Today at \(timeFormatter.string(from: date))"
+                return "Today \(timeFormatter.string(from: date).capitalized)"
             }
             // Check if the date is yesterday
             else if calendar.isDate(date, inSameDayAs: yesterday) {
-                return "Yesterday at \(timeFormatter.string(from: date))"
+                return "Yesterday \(timeFormatter.string(from: date).capitalized)"
             }
             // Check if the date is tomorrow
             else if calendar.isDate(date, inSameDayAs: tomorrow) {
-                return "Tomorrow at \(timeFormatter.string(from: date))"
+                return "Tomorrow \(timeFormatter.string(from: date).capitalized)"
             } else {
                 // If not today, yesterday, or tomorrow, format the date as usual
                 let formatter = DateFormatter()
-                formatter.dateFormat = "dd MMM, h:mm a"
-                return formatter.string(from: date)
+                formatter.dateFormat = "dd MMM h:mm a"
+                return formatter.string(from: date).capitalized
             }
         } else {
-            return "Due date is not specified"
+            return "No due date"
         }
     }
 }

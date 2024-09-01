@@ -41,6 +41,16 @@
         }
       }
     },
+    "%lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
+    },
     "+ Tag" : {
       "localizations" : {
         "ru" : {
@@ -275,6 +285,7 @@
       }
     },
     "Click to change the status" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1073,6 +1084,7 @@
       }
     },
     "Save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1083,6 +1095,7 @@
       }
     },
     "Save changes?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1267,6 +1280,7 @@
       }
     },
     "This changes can not be inverted. Please pay attention!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1495,6 +1509,7 @@
       }
     },
     "Watch Out! Title is not Accurate" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
