@@ -51,6 +51,9 @@
         }
       }
     },
+    "+" : {
+
+    },
     "+ Tag" : {
       "localizations" : {
         "ru" : {
@@ -60,6 +63,9 @@
           }
         }
       }
+    },
+    "Active" : {
+
     },
     "Add Due Date" : {
       "localizations" : {
@@ -72,6 +78,7 @@
       }
     },
     "Add todos to get started" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -243,9 +250,6 @@
           }
         }
       }
-    },
-    "Check the spelling or try a new search." : {
-
     },
     "Choose a theme for the app" : {
       "localizations" : {
@@ -680,7 +684,7 @@
         }
       }
     },
-    "Hide Completed" : {
+    "Home" : {
 
     },
     "Invalid name" : {
@@ -796,7 +800,7 @@
         }
       }
     },
-    "No results for '%@'" : {
+    "Nickname" : {
 
     },
     "No tags for this todo" : {
@@ -820,6 +824,7 @@
       }
     },
     "No todos yet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1163,9 +1168,6 @@
         }
       }
     },
-    "Show Completed" : {
-
-    },
     "Sort" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1186,6 +1188,9 @@
           }
         }
       }
+    },
+    "Stats" : {
+
     },
     "Status:" : {
       "localizations" : {
@@ -1218,6 +1223,7 @@
       }
     },
     "Tag" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1358,6 +1364,9 @@
           }
         }
       }
+    },
+    "Today is %@" : {
+
     },
     "Todo" : {
       "localizations" : {
@@ -1546,6 +1555,12 @@
           }
         }
       }
+    },
+    "You don't have any tasks." : {
+
+    },
+    "Your Todos" : {
+
     }
   },
   "version" : "1.0"

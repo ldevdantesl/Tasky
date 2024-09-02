@@ -29,6 +29,11 @@
 		DA69446D2C7C3E760032437C /* AppearanceSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */; };
 		DA69446F2C7C40A30032437C /* ColorThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446E2C7C40A30032437C /* ColorThemes.swift */; };
 		DA6944712C7C45BA0032437C /* MockAppearanceSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6944702C7C45BA0032437C /* MockAppearanceSettingsManager.swift */; };
+		DA69C9A72C858B9200B3C511 /* CapsuleWeekStackComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9A62C858B9200B3C511 /* CapsuleWeekStackComponent.swift */; };
+		DA69C9A92C858BF600B3C511 /* CalendarSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9A82C858BF600B3C511 /* CalendarSet.swift */; };
+		DA69C9AB2C858C1C00B3C511 /* CapsuleDateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9AA2C858C1C00B3C511 /* CapsuleDateComponent.swift */; };
+		DA69C9AD2C858DB100B3C511 /* YourTodosComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9AC2C858DB100B3C511 /* YourTodosComponentView.swift */; };
+		DA69C9AF2C85A33400B3C511 /* TabBarsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9AE2C85A33400B3C511 /* TabBarsComponents.swift */; };
 		DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409DB2C78471C004D054E /* TagViewModel.swift */; };
 		DA9409E32C7872E5004D054E /* NotificationSettingsManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */; };
 		DA9409E52C78748A004D054E /* NotificationSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */; };
@@ -86,6 +91,11 @@
 		DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsManager.swift; sourceTree = "<group>"; };
 		DA69446E2C7C40A30032437C /* ColorThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemes.swift; sourceTree = "<group>"; };
 		DA6944702C7C45BA0032437C /* MockAppearanceSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppearanceSettingsManager.swift; sourceTree = "<group>"; };
+		DA69C9A62C858B9200B3C511 /* CapsuleWeekStackComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleWeekStackComponent.swift; sourceTree = "<group>"; };
+		DA69C9A82C858BF600B3C511 /* CalendarSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSet.swift; sourceTree = "<group>"; };
+		DA69C9AA2C858C1C00B3C511 /* CapsuleDateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleDateComponent.swift; sourceTree = "<group>"; };
+		DA69C9AC2C858DB100B3C511 /* YourTodosComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourTodosComponentView.swift; sourceTree = "<group>"; };
+		DA69C9AE2C85A33400B3C511 /* TabBarsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarsComponents.swift; sourceTree = "<group>"; };
 		DA9409DB2C78471C004D054E /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
 		DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsManaging.swift; sourceTree = "<group>"; };
 		DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsManager.swift; sourceTree = "<group>"; };
@@ -143,6 +153,17 @@
 				DAF0635B2C7E85AB00ADE7E8 /* FAQView.swift */,
 			);
 			path = SettingsViews;
+			sourceTree = "<group>";
+		};
+		DA69C9A52C858B7E00B3C511 /* ComponentViews */ = {
+			isa = PBXGroup;
+			children = (
+				DA69C9A62C858B9200B3C511 /* CapsuleWeekStackComponent.swift */,
+				DA69C9AA2C858C1C00B3C511 /* CapsuleDateComponent.swift */,
+				DA69C9AC2C858DB100B3C511 /* YourTodosComponentView.swift */,
+				DA69C9AE2C85A33400B3C511 /* TabBarsComponents.swift */,
+			);
+			path = ComponentViews;
 			sourceTree = "<group>";
 		};
 		DA9409DF2C7872AD004D054E /* Settings */ = {
@@ -253,6 +274,7 @@
 		DAF659E42C72FE8C004D8ACA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DA69C9A52C858B7E00B3C511 /* ComponentViews */,
 				DAF659FE2C73293E004D8ACA /* Screens */,
 				DA38A34E2C76CFF0007C3FB4 /* SettingsViews */,
 				DAF659F92C731859004D8ACA /* FragmentViews */,
@@ -267,6 +289,7 @@
 				DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */,
 				DA9409F12C787BA8004D054E /* MockPreviews.swift */,
 				DA69446E2C7C40A30032437C /* ColorThemes.swift */,
+				DA69C9A82C858BF600B3C511 /* CalendarSet.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -399,10 +422,12 @@
 				DA9409F82C78822A004D054E /* MockDataAndStorageManager.swift in Sources */,
 				DAF659F42C730707004D8ACA /* TodoViewModel.swift in Sources */,
 				DA38A3582C771E8E007C3FB4 /* AddingTagView.swift in Sources */,
+				DA69C9AF2C85A33400B3C511 /* TabBarsComponents.swift in Sources */,
 				DA9409E32C7872E5004D054E /* NotificationSettingsManaging.swift in Sources */,
 				DA69446F2C7C40A30032437C /* ColorThemes.swift in Sources */,
 				DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */,
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
+				DA69C9AB2C858C1C00B3C511 /* CapsuleDateComponent.swift in Sources */,
 				DA4B197D2C7999F900899303 /* ArchivedTodosView.swift in Sources */,
 				DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */,
 				DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */,
@@ -431,10 +456,13 @@
 				DA6944692C7C2D330032437C /* AppearanceView.swift in Sources */,
 				DAC7554D2C844ED600112F40 /* TextFieldComponent.swift in Sources */,
 				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
+				DA69C9AD2C858DB100B3C511 /* YourTodosComponentView.swift in Sources */,
 				DA6944712C7C45BA0032437C /* MockAppearanceSettingsManager.swift in Sources */,
 				DAF659EB2C72FFE5004D8ACA /* PersistentController.swift in Sources */,
 				DA4B19882C7AD64900899303 /* AuthenticateUserFragmentView.swift in Sources */,
+				DA69C9A92C858BF600B3C511 /* CalendarSet.swift in Sources */,
 				DA38A3502C76D009007C3FB4 /* NotificationAndSoundsView.swift in Sources */,
+				DA69C9A72C858B9200B3C511 /* CapsuleWeekStackComponent.swift in Sources */,
 				DA9409F42C787C4C004D054E /* DataStorageManaging.swift in Sources */,
 				DAF0635C2C7E85AB00ADE7E8 /* FAQView.swift in Sources */,
 				DA9409E52C78748A004D054E /* NotificationSettingsManager.swift in Sources */,

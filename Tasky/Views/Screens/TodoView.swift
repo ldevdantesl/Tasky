@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct TodoView: View {
-    @AppStorage("isBoxStyle") var isBoxStyle: Bool = false
-    
+    @Environment(\.colorScheme) var systemColorScheme
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
@@ -19,55 +18,62 @@ struct TodoView: View {
     @State private var searchText: String = ""
     @State private var path: NavigationPath = NavigationPath()
     
+    let calendar = CalendarSet.instance
+    var colorScheme: ColorScheme {
+        settingsMgrVM.settingsManager.appearanceSettingsManager.colorScheme ?? systemColorScheme
+    }
+    
     var body: some View {
         NavigationStack(path: $path){
-            TodoListView(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM: tagVM, path: $path)
-                .toolbar{
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Picker("",selection: $isBoxStyle) {
-                            Image(systemName: "list.bullet")
-                                .tag(false)
-                            Image(systemName: "square.stack")
-                                .tag(true)
-                            
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .contextMenu{
-                            toolbarSortButton()
-                        }
-                    }
-                    ToolbarItem(placement:.topBarLeading){
-                        NavigationLink{
-                            SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM)
-                        } label: {
-                            Image(systemName: "gear")
-                        }
-                    }
-                }
-                .overlay(alignment: .bottomTrailing){
-                    Menu{
-                        Button("Todo", action: { onAddTodo.toggle() })
-                        Button("Tag", action: { onAddTag.toggle() })
-                    } label:{
-                        Image(systemName: "plus")
+            VStack(alignment:.leading){
+                HStack{
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 50)
+                        .frame(width: 40)
+                        .foregroundStyle(.secondary)
+                    
+                    Text("Nickname")
+                        .font(.system(.title2, design: .rounded, weight: .semibold))
+        
+                    Spacer()
+        
+                    Button(action: {}){
+                        Image(systemName: "bell")
                             .resizable()
                             .scaledToFit()
-                            .foregroundStyle(.white)
-                            .frame(minWidth: 30, maxWidth: 40)
-                            .frame(height: 30)
-                            .padding(20)
-                            .background(settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme, in:.circle)
-                            .shadow(radius: 5)
-                            .padding()
+                            .frame(height: 25)
+                            .frame(maxWidth: 25)
+                            .foregroundStyle(.gray)
+                    }
+                    
+                    NavigationLink(destination: SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM)){
+                        Image(systemName: "gearshape")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 25)
+                            .frame(maxWidth: 25)
+                            .foregroundStyle(.gray)
                     }
                 }
-                .fullScreenCover(isPresented: $onAddTodo) {
-                    AddTodoView(todoVM: todoVM, tagVM: tagVM)
+                .padding(.horizontal,10)
+                Text("Today is \(calendar.currentDayName.capitalized)")
+                    .font(.system(.title, design: .rounded, weight: .bold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal,10)
+                CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM)
+                    .frame(height: 130)
+                YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                    .padding(.horizontal,10)
+                Spacer()
+            }
+            .toolbar{
+                ToolbarItem(placement: .bottomBar) {
+                    TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM)
+                        .padding(.top, 10)
                 }
-                .sheet(isPresented: $onAddTag) {
-                    AddingTagView(tagVM: tagVM)
-                        .presentationDetents([.medium, .large])
-                }
+            }
         }
     }
     
