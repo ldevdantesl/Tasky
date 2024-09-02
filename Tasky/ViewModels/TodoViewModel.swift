@@ -141,7 +141,7 @@ class TodoViewModel: ObservableObject {
     
     func editTodos(_ todo: Todo, newTitle: String? = nil, newDesc: String? = nil, newIsDone: Bool? = nil, newPriority: Int16? = nil, newDueDate: Date? = nil, newTags: [Tag]? = nil){
         if let newTitle, !newTitle.isEmpty {
-            todo.title = newTitle.capitalized
+            todo.title = newTitle
         }
         if let newDesc{
             if newDesc.trimmingCharacters(in: .newlines).isEmpty{

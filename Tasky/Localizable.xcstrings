@@ -244,6 +244,9 @@
         }
       }
     },
+    "Check the spellin  or try a new search." : {
+
+    },
     "Choose a theme for the app" : {
       "localizations" : {
         "ru" : {
@@ -645,10 +648,8 @@
         }
       }
     },
-    "First" : {
-
-    },
     "First Done" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -659,6 +660,7 @@
       }
     },
     "First Undone" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -794,6 +796,9 @@
         }
       }
     },
+    "No results for '%@'" : {
+
+    },
     "No tags for this todo" : {
       "localizations" : {
         "ru" : {
@@ -823,6 +828,9 @@
           }
         }
       }
+    },
+    "Not Done" : {
+
     },
     "Notification and Sounds" : {
       "localizations" : {

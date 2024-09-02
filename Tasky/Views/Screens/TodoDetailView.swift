@@ -45,15 +45,8 @@ struct TodoDetailView: View {
         ScrollView{
             // MARK: - TITLE
             HStack{
-                Image(systemName: "flag.fill")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: 25)
-                    .frame(maxHeight: 25)
-                    .foregroundStyle(TodoViewHelpers(todo: todo).priorityColor)
-                
                 if isEditing == .title{
-                    TextFieldComponent(text: $editingTitle, placeholder: "\(todo.title ?? "")", maxChars: 25)
+                    TextFieldComponent(text: $editingTitle, placeholder: "\(todo.title ?? "")", maxChars: 30)
                         .focused($focusedField, equals: Fields.title)
                         .submitLabel(.done)
                         .onSubmit{
@@ -78,12 +71,26 @@ struct TodoDetailView: View {
                 }
                 Spacer()
                 
-                Button(action:{showAlert.toggle()}){
-                    Image(systemName: "trash")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 20)
-                        .tint(.red)
+                if isEditing == nil {
+                    Button(action: {dismiss()}) {
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 25)
+                            .foregroundStyle(.gray, .gray.opacity(0.3))
+                    }
+                } else if isEditing == .title || isEditing == .description {
+                    Button {
+                        isEditing == .title ? todoVM.editTodos(todo, newTitle: editingTitle) : todoVM.editTodos(todo, newDesc: editingDesc)
+                        isEditing = nil
+                        focusedField = nil
+                    } label:{
+                        Image(systemName: "checkmark.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 25)
+                            .foregroundStyle(Color.accentColor)
+                    }
                 }
             }
             .padding(.horizontal)
@@ -97,14 +104,6 @@ struct TodoDetailView: View {
                     if isEditing == .description{
                         TextField("\(editingDesc)", text: $editingDesc, axis:.vertical)
                             .focused($focusedField, equals: .description)
-                            .submitLabel(.done)
-                            .onSubmit {
-                                withAnimation {
-                                    isEditing = nil
-                                    focusedField = nil
-                                    todoVM.editTodos(todo, newDesc: editingDesc)
-                                }
-                            }
                     } else {
                         Text(todo.desc ?? "Add description")
                             .font(.system(.title2, design: .rounded, weight: .semibold))
@@ -183,11 +182,6 @@ struct TodoDetailView: View {
             }
             .padding(.vertical, 10)
             .padding(.horizontal)
-
-            // MARK: - TAGS
-            AllTagsFragmentView(todo: todo)
-                .padding(.vertical, 10)
-                .frame(maxWidth: .infinity, maxHeight: 100)
             
             // MARK: - DUE DATE
             VStack(alignment:.leading){
@@ -196,7 +190,7 @@ struct TodoDetailView: View {
                         Spacer()
                     }
                     Text(TodoViewHelpers(todo: todo).formatDate())
-                        .font(.system(.title2, design: .rounded, weight: .medium))
+                        .font(.system(.title3, design: .rounded, weight: .medium))
                         .foregroundStyle(isEditing == .dueDate ? .secondary : .primary)
                         .scaleEffect(isEditing == .dueDate ? 0.8 : 1)
                     if isEditing == .dueDate{

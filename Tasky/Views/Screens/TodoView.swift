@@ -77,16 +77,12 @@ struct TodoView: View {
     
     func toolbarSortButton() -> some View{
         Menu{
-            Button("Title", action: { sortBy(sortKey: "title", ascending: true) })
-            Button("Time added", action: { sortBy(sortKey: "addedOn", ascending: true) })
-            Button("Due date", action: { sortBy(sortKey: "dueDate", ascending: true) })
+            Button("Title", systemImage: "text.magnifyingglass",action: { sortBy(sortKey: "title", ascending: true) })
+            Button("Time added", systemImage: "clock",action: { sortBy(sortKey: "addedOn", ascending: true) })
+            Button("Due date", systemImage: "calendar", action: { sortBy(sortKey: "dueDate", ascending: true) })
             Menu("Priority", systemImage: "bookmark"){
                 Button("Ascending", systemImage: "arrow.up.circle",action: { sortBy(sortKey: "priority", ascending: true) })
                 Button("Decending", systemImage: "arrow.down.circle",action: { sortBy(sortKey: "priority", ascending: false) })
-            }
-            Menu("First", systemImage: "questionmark.circle"){
-                Button("First Done", systemImage: "checkmark.circle",action: { sortBy(sortKey: "isDone", ascending: false) })
-                Button("First Undone", systemImage: "xmark.circle", action: { sortBy(sortKey: "isDone", ascending: true) })
             }
         } label: {
             Label(

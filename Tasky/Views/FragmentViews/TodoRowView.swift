@@ -47,34 +47,40 @@ struct TodoRowView: View {
                     .tint(.purple)
             }
         } else {
-            ZStack{
+            ZStack(alignment:.topLeading){
                 RoundedRectangle(cornerRadius: 25)
                     .fill(TodoViewHelpers(todo: todo).priorityColor.gradient.opacity(0.8))
-                    .frame(width: Constants.screenWidth / 2 - 30, alignment: .topLeading)
-                    .frame(minHeight: 80, maxHeight: 100)
                 
                 VStack(alignment:.leading){
+                    
+                    Text(todo.title ?? "Uknown title")
+                        .font(.system(.title3, design: .rounded, weight: .bold))
+                        .lineLimit(1)
+                    
+                    Text(todo.desc ?? "No description")
+                        .font(.system(.subheadline, design: .rounded, weight: .regular))
+                    Spacer()
+                    
                     HStack{
-                        Text(todo.title ?? "Uknown title")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .lineLimit(2)
+                        Group{
+                            Text(todo.isDone ? "Done" : "Not Done")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                            Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        }
+                        .padding(10)
+                        .background(TodoViewHelpers(todo: todo).priorityColor.opacity(0.4), in:.capsule)
+
                         Spacer()
-                        Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: 20, maxHeight: 30)
+                        Text(TodoViewHelpers(todo: todo).formatDate())
+                            .font(.system(.caption, design: .rounded, weight: .light))
                     }
-                    
-                    Text(TodoViewHelpers(todo: todo).formatDate())
-                        .font(.system(.caption, design: .rounded, weight: .light))
-                    
                 }
-                .padding(.horizontal, 10)
+                .padding()
                 .foregroundStyle(.white)
             
             }
-            .frame(width: Constants.screenWidth / 2 - 30, alignment: .topLeading)
-            .frame(minHeight: 80, maxHeight: 100)
+            .frame(width: Constants.screenWidth - 20)
+            .frame(minHeight: 130, maxHeight: 130)
             .contextMenu {
                 Button(todo.isDone ? "Uncomplete" : "Complete", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill"){
                     withAnimation {

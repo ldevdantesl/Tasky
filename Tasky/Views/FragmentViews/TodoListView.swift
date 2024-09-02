@@ -36,8 +36,10 @@ struct TodoListView: View {
     
     var body: some View {
         Group{
-            if filteredTodos.isEmpty, #available(iOS 17.0, *){
+            if todoVM.todos.isEmpty, #available(iOS 17.0, *) {
                 ContentUnavailableView("No todos yet", systemImage: "questionmark.folder", description: Text("Add todos to get started"))
+            } else if filteredTodos.isEmpty, #available(iOS 17.0, *){
+                ContentUnavailableView("No results for '\(searchText)'", systemImage: "questionmark.folder", description: Text("Check the spellin  or try a new search."))
             } else {
                 if !isBoxStyle{
                     List{
@@ -76,13 +78,11 @@ struct TodoListView: View {
                     }
                 } else {
                     ScrollView(.vertical){
-                        LazyVGrid(columns: columns, spacing: 20){
-                            ForEach(filteredTodos, id: \.self){ todo in
-                                TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
-                                    .onTapGesture {
-                                        path.append(todo)
-                                    }
-                            }
+                        ForEach(filteredTodos, id: \.self){ todo in
+                            TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                                .onTapGesture {
+                                    path.append(todo)
+                                }
                         }
                         if doneTodos.isEmpty == false {
                             Button{
@@ -104,13 +104,11 @@ struct TodoListView: View {
                             .padding(.horizontal, 10)
                         }
                         if isShowingDone {
-                            LazyVGrid(columns: columns, spacing: 20){
-                                ForEach(doneTodos, id: \.self){ todo in
-                                    TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
-                                        .onTapGesture {
-                                            path.append(todo)
-                                        }
-                                }
+                            ForEach(doneTodos, id: \.self){ todo in
+                                TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                                    .onTapGesture {
+                                        path.append(todo)
+                                    }
                             }
                         }
                     }
