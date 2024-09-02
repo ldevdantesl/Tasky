@@ -39,7 +39,7 @@ struct TodoListView: View {
             if todoVM.todos.isEmpty, #available(iOS 17.0, *) {
                 ContentUnavailableView("No todos yet", systemImage: "questionmark.folder", description: Text("Add todos to get started"))
             } else if filteredTodos.isEmpty, #available(iOS 17.0, *){
-                ContentUnavailableView("No results for '\(searchText)'", systemImage: "questionmark.folder", description: Text("Check the spellin  or try a new search."))
+                ContentUnavailableView("No results for '\(searchText)'", systemImage: "magnifyingglass", description: Text("Check the spelling or try a new search."))
             } else {
                 if !isBoxStyle{
                     List{
