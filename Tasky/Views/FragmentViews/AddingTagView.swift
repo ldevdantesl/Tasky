@@ -20,19 +20,31 @@ struct AddingTagView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
+                HStack{
+                    Text("Add Tag")
+                        .font(.system(.title, design: .rounded, weight: .semibold))
+                    Spacer()
+                    Image(systemName: "xmark.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(Constants.secondaryColor)
+                }
+                .padding(.horizontal, 10)
                 VStack(alignment: .leading){
-                    Text("Name of tag")
+                    Text("Name")
                         .font(.system(.subheadline, design: .rounded, weight: .semibold))
                         .foregroundStyle(.secondary)
                         .padding(.horizontal,5)
-                    TextField("Name", text: $name)
+                    TextFieldComponent(text: $name, placeholder: "Name", maxChars: 30)
                         .focused($isFocused)
-                        .padding()
+                        .padding(.vertical, 10)
                         .frame(maxWidth: Constants.screenWidth - 20)
                         .frame(maxHeight: 40)
-                        .background(Color.secondary.opacity(0.2), in:Constants.circularShape)
+                        .background(Constants.textFieldColor, in:.capsule)
                         .submitLabel(.done)
                         .onSubmit({isFocused = false})
+                        .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                     
                 }
                 .padding(.vertical, 10)
@@ -68,8 +80,6 @@ struct AddingTagView: View {
             } message: {
                 Text(alertMessage)
             }
-            .navigationTitle("New Tag")
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
     

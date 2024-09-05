@@ -77,9 +77,16 @@ struct DueDateFragmentView: View {
                         .frame(minWidth: 80, maxWidth: 85)
                         .frame(height: 45)
                         .overlay{
-                            Text("Today")
-                                .font(.system(.headline, design: .rounded, weight: dueDate?.getDayDigit == Date.now.getDayDigit ? .semibold : .regular))
-                                .foregroundColor(dueDate?.getDayDigit == Date.now.getDayDigit ? .white : Constants.textColor)
+                            VStack(spacing: 0){
+                                Image(systemName: "sun.and.horizon.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundStyle(dueDate?.getDayDigit == Date.now.getDayDigit ? .white : .secondary)
+                                Text("Today")
+                                    .font(.system(.subheadline, design: .rounded, weight: dueDate?.getDayDigit == Date.now.getDayDigit ? .semibold : .regular))
+                                    .foregroundColor(dueDate?.getDayDigit == Date.now.getDayDigit ? .white : Constants.textColor)
+                            }
                         }
                         .onTapGesture {
                             withAnimation(.bouncy) {
@@ -90,12 +97,19 @@ struct DueDateFragmentView: View {
                     
                     Capsule()
                         .fill(dueDate?.getDayDigit == Date.now.getDayDigit + 1 ? themeColor : Constants.textFieldColor)
-                        .frame(minWidth: 80, maxWidth: 85)
+                        .frame(minWidth: 100, maxWidth: 90)
                         .frame(height: 45)
                         .overlay{
-                            Text("Tomorrow")
-                                .font(.system(.headline, design: .rounded, weight: dueDate?.getDayDigit == Date.now.getDayDigit + 1 ? .semibold : .regular))
-                                .foregroundColor(dueDate?.getDayDigit == Date.now.getDayDigit + 1 ? .white : Constants.textColor)
+                            VStack(spacing: 0){
+                                Image(systemName: "clock.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 15, height: 20)
+                                    .foregroundStyle(dueDate?.getDayDigit == Date.now.getDayDigit + 1 ? .white : .secondary)
+                                Text("Tomorrow")
+                                    .font(.system(.subheadline, design: .rounded, weight: dueDate?.getDayDigit == Date.now.getDayDigit + 1 ? .semibold : .regular))
+                                    .foregroundColor(dueDate?.getDayDigit == Date.now.getDayDigit + 1 ? .white : Constants.textColor)
+                            }
                         }
                         .onTapGesture {
                             withAnimation(.bouncy) {
@@ -110,9 +124,17 @@ struct DueDateFragmentView: View {
                             .frame(minWidth: 70, maxWidth: 90)
                             .frame(height: 45)
                             .overlay{
-                                Text("Custom")
-                                    .font(.system(.headline, design: .rounded, weight: dueDate?.getDayDigit != Date.now.getDayDigit + 1 && dueDate?.getDayDigit != Date.now.getDayDigit && dueDate != nil ? .semibold : .regular))
-                                    .foregroundColor(dueDate?.getDayDigit != Date.now.getDayDigit + 1 && dueDate?.getDayDigit != Date.now.getDayDigit && dueDate != nil ? .white : Constants.textColor)
+                                VStack(spacing: 0){
+                                    Image(systemName: "calendar.badge.plus")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundStyle(dueDate?.getDayDigit != Date.now.getDayDigit + 1 && dueDate?.getDayDigit != Date.now.getDayDigit && dueDate != nil ? .white : Constants.secondaryColor)
+                                        .padding(.leading, 3)
+                                    Text("Custom")
+                                        .font(.system(.subheadline, design: .rounded, weight: dueDate?.getDayDigit != Date.now.getDayDigit + 1 && dueDate?.getDayDigit != Date.now.getDayDigit && dueDate != nil ? .semibold : .regular))
+                                        .foregroundColor(dueDate?.getDayDigit != Date.now.getDayDigit + 1 && dueDate?.getDayDigit != Date.now.getDayDigit && dueDate != nil ? .white : Constants.textColor)
+                                }
                             }
                             .onTapGesture {
                                 withAnimation(.bouncy) {
