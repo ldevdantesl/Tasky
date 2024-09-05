@@ -52,7 +52,9 @@ struct TodoListView: View {
                     .font(.system(.headline, design: .rounded, weight: .bold))
                     .foregroundStyle(colorTheme)
                     .onTapGesture {
-                        isShowingActive = false
+                        withAnimation {
+                            isShowingActive = false
+                        }
                     }
                 Spacer()
             }
