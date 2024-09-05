@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct YourTodosComponentView: View {
-    @State var isShowingActive: Bool = false
+    @State var isShowingActive: Bool = true
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    
+    var colorTheme: Color {
+        settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
+    }
     
     @Binding var path: NavigationPath
     var body: some View {
         VStack{
             HStack{
-                Text("Your Todos")
+                Text("\(isShowingActive ? "Active" : "Done") Todos")
                     .font(.system(.title, design: .rounded, weight: .bold))
                 Spacer()
                 Button{
@@ -25,32 +29,32 @@ struct YourTodosComponentView: View {
                         isShowingActive = true
                     }
                 } label:{
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 25)
-                            .stroke(Color.green, lineWidth: 2)
-                            .background(isShowingActive ? .green : .clear, in:.capsule)
-                            .frame(width: 80, height: 40)
-                        Text("Active")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .foregroundStyle(isShowingActive ? .white : .green)
-                            .frame(width: 80, height: 40)
-                    }
+                    Capsule()
+                        .stroke(colorTheme, lineWidth: 2)
+                        .background(isShowingActive ? colorTheme : .clear, in: .capsule)
+                        .frame(width: 80, height: 40)
+                        .overlay{
+                            Text("Active")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .foregroundStyle(isShowingActive ? .white : colorTheme)
+                                .frame(width: 80, height: 40)
+                        }
                 }
                 Button{
                     withAnimation {
                         isShowingActive = false
                     }
                 } label:{
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 25)
-                            .stroke(Color.green, lineWidth: 2)
-                            .background(!isShowingActive ? .green : .clear, in: .capsule)
-                            .frame(width: 80, height: 40)
-                        Text("Done")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .foregroundStyle(!isShowingActive ? .white : .green)
-                            .frame(width: 80, height: 40)
-                    }
+                    Capsule()
+                        .stroke(colorTheme, lineWidth: 2)
+                        .background(!isShowingActive ? colorTheme : .clear, in: .capsule)
+                        .frame(width: 80, height: 40)
+                        .overlay{
+                            Text("Done")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .foregroundStyle(!isShowingActive ? .white : colorTheme)
+                                .frame(width: 80, height: 40)
+                        }
                 }
             }
             TodoListView(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM: tagVM, path: $path, isShowingActive: $isShowingActive)

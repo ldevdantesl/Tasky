@@ -13,6 +13,8 @@ struct SettingsView: View {
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    
+    @Binding var path: NavigationPath
     @State private var showSettingsTag: Bool = false
     
     var body: some View {
@@ -68,26 +70,14 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
-    }
-    
-    @ViewBuilder
-    func header() -> some View {
-        HStack{
-            Text("Settings")
-                .font(.system(.title, design: .rounded, weight: .semibold))
-                .foregroundStyle(.primary)
-            Spacer()
-            Image(systemName: "xmark")
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 20)
-                .bold()
-                .foregroundStyle(.red)
-                .onTapGesture {
-                    dismiss()
-                }
+        .toolbar{
+            ToolbarItem(placement: .bottomBar) {
+                TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM: tagVM, path: $path)
+                    .padding(.horizontal,20)
+            }
         }
     }
+    
     @ViewBuilder
     func rowSettings(name: LocalizedStringKey, imageName: String,color: Color, destination: () -> some View) -> some View {
         NavigationLink(destination: destination){
@@ -144,6 +134,6 @@ struct SettingsView: View {
 
 #Preview {
     NavigationStack{
-        SettingsView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel)
+        SettingsView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
     }
 }

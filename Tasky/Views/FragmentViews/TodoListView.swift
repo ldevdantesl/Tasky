@@ -16,6 +16,10 @@ struct TodoListView: View {
 
     @Binding var isShowingActive: Bool
     
+    var colorTheme: Color {
+        settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
+    }
+    
     var doneTodos: [Todo]{
         return todoVM.todos.filter { $0.isDone }
     }
@@ -28,8 +32,45 @@ struct TodoListView: View {
     }
     
     var body: some View {
-        if todoVM.todos.isEmpty, #available(iOS 17.0, *) {
-            Text("You don't have any tasks.")
+        if todoVM.todos.isEmpty{
+            HStack{
+                Text("No todos for this day.")
+                    .font(.system(.headline, design: .rounded, weight: .regular))
+                Text("Add Todo")
+                    .font(.system(.headline, design: .rounded, weight: .bold))
+                    .foregroundStyle(colorTheme)
+                    .onTapGesture {
+                        path.append("AddTodoView")
+                    }
+                Spacer()
+            }
+        } else if isShowingActive && activeTodos.isEmpty {
+            HStack{
+                Text("No active todos for this day.")
+                    .font(.system(.headline, design: .rounded, weight: .regular))
+                Text("See Completed")
+                    .font(.system(.headline, design: .rounded, weight: .bold))
+                    .foregroundStyle(colorTheme)
+                    .onTapGesture {
+                        isShowingActive = false
+                    }
+                Spacer()
+            }
+        } else if !isShowingActive && doneTodos.isEmpty {
+            HStack{
+                Text("Nothing is done for this day.")
+                    .font(.system(.headline, design: .rounded, weight: .regular))
+                Text("See Active")
+                    .foregroundStyle(colorTheme)
+                    .font(.system(.headline, design: .rounded, weight: .bold))
+                    .onTapGesture {
+                        withAnimation {
+                            isShowingActive = true
+                        }
+                    }
+                Spacer()
+            }
+            
         } else {
             ScrollView{
                 ForEach(todos, id: \.self){ todo in

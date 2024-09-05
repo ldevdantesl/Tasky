@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -27,6 +28,19 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
+          }
+        }
+      }
+    },
+    "%@ Todos" : {
+
+    },
+    "%@, %lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$lld %3$@"
           }
         }
       }
@@ -67,7 +81,11 @@
     "Active" : {
 
     },
+    "Add + " : {
+
+    },
     "Add Due Date" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -76,6 +94,9 @@
           }
         }
       }
+    },
+    "Add Todo" : {
+
     },
     "Add todos to get started" : {
       "extractionState" : "stale",
@@ -325,6 +346,9 @@
     "Complete" : {
 
     },
+    "Custom" : {
+
+    },
     "Daily Reminder" : {
       "localizations" : {
         "ru" : {
@@ -354,6 +378,9 @@
           }
         }
       }
+    },
+    "Date: " : {
+
     },
     "Decending" : {
 
@@ -439,6 +466,7 @@
       }
     },
     "Description of your task" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -457,6 +485,9 @@
           }
         }
       }
+    },
+    "Description(optional)" : {
+
     },
     "Do you really want to %@ this Todo?" : {
       "localizations" : {
@@ -606,6 +637,7 @@
       }
     },
     "Due Date: " : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -711,6 +743,7 @@
 
     },
     "Leave Description?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -800,7 +833,7 @@
         }
       }
     },
-    "Nickname" : {
+    "No active todos for this day." : {
 
     },
     "No tags for this todo" : {
@@ -823,6 +856,9 @@
         }
       }
     },
+    "No todos for this day." : {
+
+    },
     "No todos yet" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -834,7 +870,7 @@
         }
       }
     },
-    "Not Done" : {
+    "Nothing is done for this day." : {
 
     },
     "Notification and Sounds" : {
@@ -916,6 +952,7 @@
       }
     },
     "Priority of your task" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1118,6 +1155,15 @@
         }
       }
     },
+    "See Active" : {
+
+    },
+    "See Completed" : {
+
+    },
+    "Select a Date" : {
+
+    },
     "Send a reminder %lld hours before scheduled" : {
       "localizations" : {
         "ru" : {
@@ -1188,9 +1234,6 @@
           }
         }
       }
-    },
-    "Stats" : {
-
     },
     "Status:" : {
       "localizations" : {
@@ -1274,6 +1317,7 @@
       }
     },
     "The description serves as a reminder of what you should have done." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1335,6 +1379,7 @@
       }
     },
     "Title Issues" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1345,6 +1390,7 @@
       }
     },
     "Title of your task" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1365,10 +1411,11 @@
         }
       }
     },
-    "Today is %@" : {
+    "Today" : {
 
     },
     "Todo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1377,6 +1424,9 @@
           }
         }
       }
+    },
+    "Tomorrow" : {
+
     },
     "trivial_key" : {
       "extractionState" : "manual",
@@ -1429,6 +1479,7 @@
 
     },
     "Undone" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1547,6 +1598,7 @@
       }
     },
     "Yes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1555,12 +1607,6 @@
           }
         }
       }
-    },
-    "You don't have any tasks." : {
-
-    },
-    "Your Todos" : {
-
     }
   },
   "version" : "1.0"

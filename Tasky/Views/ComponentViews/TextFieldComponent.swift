@@ -15,13 +15,8 @@ struct TextFieldComponent: View {
     var body: some View {
         ZStack(alignment:.trailing){
             TextField(placeholder, text: $text)
-                .padding(10)
-                .padding(.trailing, 50)
-                .frame(height: 50)
                 .frame(maxWidth: Constants.screenWidth - 20)
-                .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.gray, lineWidth: 0.4))
                 .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
                 .padding(.horizontal,10)
                 .onChange(of: text) { value in
                     if let maxChars = maxChars{

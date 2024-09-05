@@ -158,7 +158,7 @@ struct ArchivedOrRemovedTodoDetailView: View {
                     .font(.system(.callout, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
                 
-                Text(TodoViewHelpers(todo: todo).formatDate())
+                Text(TodoViewHelpers(todo: todo).formatDate)
                     .font(.system(.title2, design: .rounded, weight: .semibold))
                     .frame(maxWidth: Constants.screenWidth - 10, alignment: .leading)
             }

@@ -9,31 +9,37 @@ import SwiftUI
 
 struct CapsuleDateComponent: View {
     @ObservedObject var settingsMangerVM: SettingsManagerViewModel
-    @Environment(\.colorScheme) var systemColorScheme
-    let calendarSet = CalendarSet.instance
-    let day: Day
-    var colorScheme: ColorScheme {
-        settingsMangerVM.settingsManager.appearanceSettingsManager.colorScheme ?? systemColorScheme
+    @ObservedObject var calendarSet = CalendarSet.instance
+    
+    let day: Date
+    
+    var colorTheme: Color {
+        settingsMangerVM.settingsManager.appearanceSettingsManager.colorTheme
     }
+    
+    var isItCurrentDay: Bool {
+        day.getDayDigit == calendarSet.currentDay.getDayDigit
+    }
+    
     var body: some View {
         VStack{
             ZStack{
                 Capsule()
                     .stroke(Color.gray, lineWidth: 1)
-                    .background(day.number == calendarSet.currentDayNumber ? .linearGradient(colors: [.blue, .orange], startPoint: .top, endPoint: .bottom) : .linearGradient(colors: colorScheme == .light ? [.white] : [.black], startPoint: .top, endPoint: .bottom), in:.capsule)
+                    .background(isItCurrentDay ? colorTheme : Color.clear, in:.capsule)
                     .frame(height: 90)
                     .frame(width: 50)
                     .foregroundStyle(.clear)
-                Text(day.number)
-                    .font(.system(.headline, design: .rounded, weight: .bold))
-                    .foregroundStyle(day.number == calendarSet.currentDayNumber || colorScheme == .dark ? .white : .black)
+                Text("\(day.getDayDigit)")
+                    .font(.system(.headline, design: .rounded, weight: isItCurrentDay ? .bold : .regular))
+                    .foregroundStyle(isItCurrentDay ? .white : .black)
             }
-            Text(day.name.prefix(3).capitalized)
-                .font(.system(.headline, design: .rounded, weight: .semibold))
+            Text(day.getWeekName.prefix(3).capitalized)
+                .font(.system(.headline, design: .rounded, weight: isItCurrentDay ? .semibold : .regular))
         }
     }
 }
 
 #Preview {
-    CapsuleDateComponent(settingsMangerVM: MockPreviews.viewModel, day: Day(number: "22", name: "Wednesday"))
+    CapsuleDateComponent(settingsMangerVM: MockPreviews.viewModel, day: .now)
 }

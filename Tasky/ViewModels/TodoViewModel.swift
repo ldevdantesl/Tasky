@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 import SwiftUI
+import Combine
 
 class TodoViewModel: ObservableObject {
     @Published var todos: [Todo] = []
@@ -19,10 +20,22 @@ class TodoViewModel: ObservableObject {
         }
     }
     
+    private var cancellables = Set<AnyCancellable>()
+    private let calendarSet = CalendarSet.instance
+    
     let context = PersistentController.shared.context
     
     init() {
         fetchAllTodos()
+        observeCurrentDay()
+    }
+    
+    private func observeCurrentDay() {
+        calendarSet.$currentDay
+            .sink { [weak self] newDay in
+                self?.fetchStandardTodos(for: newDay)
+            }
+            .store(in: &cancellables)
     }
     
     func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag]){
@@ -45,16 +58,21 @@ class TodoViewModel: ObservableObject {
     }
     
     func fetchAllTodos(){
-        fetchStandardTodos()
+        fetchStandardTodos(for: .now)
         fetchArchivedTodos()
         fetchRemovedTodos()
     }
     
-    func fetchStandardTodos() {
+    func fetchStandardTodos(for day: Date) {
         let request: NSFetchRequest = Todo.fetchRequest()
         let archivePredicate = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
         let removedPredicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [archivePredicate, removedPredicate])
+        
+        let startOfDay = Calendar.current.startOfDay(for: day)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+        
+        let datePredicate = NSPredicate(format: "dueDate >= %@ AND dueDate < %@", startOfDay as NSDate, endOfDay as NSDate)
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [archivePredicate, removedPredicate, datePredicate])
         
         if let sortDescriptor {
             request.sortDescriptors = [sortDescriptor]
@@ -222,7 +240,7 @@ class TodoViewModel: ObservableObject {
             try context.execute(deleteRequest)
             saveContext()
         } catch {
-            log("Error deleting all todos: \(error.localizedDescription)")
+            print("Error deleting all todos: \(error.localizedDescription)")
         }
     }
     

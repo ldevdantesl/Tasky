@@ -18,7 +18,8 @@ struct TodoView: View {
     @State private var searchText: String = ""
     @State private var path: NavigationPath = NavigationPath()
     
-    let calendar = CalendarSet.instance
+    @ObservedObject var calendar = CalendarSet.instance
+    
     var colorScheme: ColorScheme {
         settingsMgrVM.settingsManager.appearanceSettingsManager.colorScheme ?? systemColorScheme
     }
@@ -27,41 +28,16 @@ struct TodoView: View {
         NavigationStack(path: $path){
             VStack(alignment:.leading){
                 HStack{
-                    Image(systemName: "person.circle.fill")
+                    Text("\(calendar.currentDay.getWeekName.capitalized), \(calendar.currentDay.getDayDigit) \(String(calendar.currentDay.getDayMonth.prefix(3)))")
+                        .font(.system(.title, design: .rounded, weight: .bold))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Image(systemName: "calendar")
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 50)
-                        .frame(width: 40)
-                        .foregroundStyle(.secondary)
-                    
-                    Text("Nickname")
-                        .font(.system(.title2, design: .rounded, weight: .semibold))
-        
-                    Spacer()
-        
-                    Button(action: {}){
-                        Image(systemName: "bell")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 25)
-                            .frame(maxWidth: 25)
-                            .foregroundStyle(.gray)
-                    }
-                    
-                    NavigationLink(destination: SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM)){
-                        Image(systemName: "gearshape")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 25)
-                            .frame(maxWidth: 25)
-                            .foregroundStyle(.gray)
-                    }
+                        .frame(maxWidth: 20)
                 }
                 .padding(.horizontal,10)
-                Text("Today is \(calendar.currentDayName.capitalized)")
-                    .font(.system(.title, design: .rounded, weight: .bold))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal,10)
                 CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM)
                     .frame(height: 130)
                 YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
@@ -70,7 +46,7 @@ struct TodoView: View {
             }
             .toolbar{
                 ToolbarItem(placement: .bottomBar) {
-                    TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM)
+                    TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
                         .padding(.top, 10)
                 }
             }

@@ -34,6 +34,7 @@
 		DA69C9AB2C858C1C00B3C511 /* CapsuleDateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9AA2C858C1C00B3C511 /* CapsuleDateComponent.swift */; };
 		DA69C9AD2C858DB100B3C511 /* YourTodosComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9AC2C858DB100B3C511 /* YourTodosComponentView.swift */; };
 		DA69C9AF2C85A33400B3C511 /* TabBarsComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9AE2C85A33400B3C511 /* TabBarsComponents.swift */; };
+		DA69C9FF2C89292500B3C511 /* CustomExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9FE2C89292500B3C511 /* CustomExtensions.swift */; };
 		DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409DB2C78471C004D054E /* TagViewModel.swift */; };
 		DA9409E32C7872E5004D054E /* NotificationSettingsManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */; };
 		DA9409E52C78748A004D054E /* NotificationSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */; };
@@ -96,6 +97,7 @@
 		DA69C9AA2C858C1C00B3C511 /* CapsuleDateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleDateComponent.swift; sourceTree = "<group>"; };
 		DA69C9AC2C858DB100B3C511 /* YourTodosComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourTodosComponentView.swift; sourceTree = "<group>"; };
 		DA69C9AE2C85A33400B3C511 /* TabBarsComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarsComponents.swift; sourceTree = "<group>"; };
+		DA69C9FE2C89292500B3C511 /* CustomExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomExtensions.swift; sourceTree = "<group>"; };
 		DA9409DB2C78471C004D054E /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
 		DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsManaging.swift; sourceTree = "<group>"; };
 		DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsManager.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 		DA69C9A52C858B7E00B3C511 /* ComponentViews */ = {
 			isa = PBXGroup;
 			children = (
+				DAC7554C2C844ED600112F40 /* TextFieldComponent.swift */,
 				DA69C9A62C858B9200B3C511 /* CapsuleWeekStackComponent.swift */,
 				DA69C9AA2C858C1C00B3C511 /* CapsuleDateComponent.swift */,
 				DA69C9AC2C858DB100B3C511 /* YourTodosComponentView.swift */,
@@ -289,7 +292,7 @@
 				DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */,
 				DA9409F12C787BA8004D054E /* MockPreviews.swift */,
 				DA69446E2C7C40A30032437C /* ColorThemes.swift */,
-				DA69C9A82C858BF600B3C511 /* CalendarSet.swift */,
+				DA69C9FE2C89292500B3C511 /* CustomExtensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 		DAF659F22C7306D2004D8ACA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				DA69C9A82C858BF600B3C511 /* CalendarSet.swift */,
 				DAF659F32C730707004D8ACA /* TodoViewModel.swift */,
 				DA9409DB2C78471C004D054E /* TagViewModel.swift */,
 			);
@@ -325,7 +329,6 @@
 				DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */,
 				DAC755462C82967000112F40 /* TodoRowView.swift */,
 				DAC755482C829B7600112F40 /* TodoListView.swift */,
-				DAC7554C2C844ED600112F40 /* TextFieldComponent.swift */,
 			);
 			path = FragmentViews;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				DA9409EB2C787810004D054E /* SettingsManagerViewModel.swift in Sources */,
 				DAF063622C7EDFA900ADE7E8 /* LaunchScreen.swift in Sources */,
 				DA38A34D2C76B78C007C3FB4 /* SettingsView.swift in Sources */,
+				DA69C9FF2C89292500B3C511 /* CustomExtensions.swift in Sources */,
 				DAF659F02C7302F8004D8ACA /* TodoView.swift in Sources */,
 				DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */,
 				DA9409E92C7877C4004D054E /* SettingsManager.swift in Sources */,

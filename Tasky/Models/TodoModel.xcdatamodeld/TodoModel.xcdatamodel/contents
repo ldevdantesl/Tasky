@@ -4,6 +4,7 @@
         <attribute name="color" optional="YES" attributeType="Binary"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="systemImage" optional="YES" attributeType="String"/>
         <relationship name="todos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Todo" inverseName="tags" inverseEntity="Todo"/>
         <uniquenessConstraints>
             <uniquenessConstraint>

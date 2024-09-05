@@ -11,14 +11,17 @@ struct PriorityCapsuleView: View {
     @Binding var selectedPriority: Int16
     var body: some View {
         VStack(alignment:.leading){
-            Text("Priority of your task")
+            Text("Priority")
                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                .foregroundStyle(.secondary)
-                .padding(.vertical,10)
+                .foregroundStyle(Constants.secondaryColor)
+                
             HStack{
                 filterButton(text: "trivial_key")
+                    .shadow(color: .black.opacity(selectedPriority == 1 ? 0.2 : 0), radius: 10, x: 0, y: 5)
                 filterButton(text: "fair_key")
+                    .shadow(color: .black.opacity(selectedPriority == 2 ? 0.2 : 0), radius: 10, x: 0, y: 5)
                 filterButton(text: "principal_key")
+                    .shadow(color: .black.opacity(selectedPriority == 3 ? 0.2 : 0), radius: 10, x: 0, y: 5)
             }
         }
     }

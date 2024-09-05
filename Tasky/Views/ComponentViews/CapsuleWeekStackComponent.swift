@@ -9,13 +9,23 @@ import SwiftUI
 
 struct CapsuleWeekStackComponent: View {
     @ObservedObject var settingsManagerVM: SettingsManagerViewModel
-    let calendar = CalendarSet.instance
+    @ObservedObject var calendar = CalendarSet.instance
+    
+    var currentWeek: [Date]{
+        calendar.getCurrentWeek()
+    }
+    
     var body: some View {
         ScrollView(.horizontal) {
             LazyHStack(spacing:0){
-                ForEach(calendar.getCurrentWeek(), id: \.id) {day in
+                ForEach(currentWeek, id: \.self) { day in
                     CapsuleDateComponent(settingsMangerVM: settingsManagerVM, day: day)
                         .padding(.horizontal,10)
+                        .onTapGesture {
+                            withAnimation(.bouncy) {
+                                calendar.currentDay = day
+                            }
+                        }
                 }
             }
         }

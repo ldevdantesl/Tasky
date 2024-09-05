@@ -15,13 +15,12 @@ struct TagLazyFragmentView: View {
     @State private var isAddingTag: Bool = false
         
     var body: some View {
-        VStack(alignment:.leading){
-            HStack{
-                Text("Tags")
-                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal)
-            }
+        VStack(alignment:.leading, spacing: 10){
+            Text("Tags")
+                .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal,22)
+            
             ScrollView(.horizontal) {
                 LazyHStack {
                     ForEach(tagVM.tags, id: \.self) { tag in
@@ -61,12 +60,11 @@ struct TagLazyFragmentView: View {
                             .foregroundStyle(.white)
                             .padding(10)
                             .background(Color.blue, in:.circle)
-                            .shadow(radius: 5)
                     }
                 }
-                .padding(.horizontal, 5)
+                .padding(.horizontal, 15)
             }
-            .frame(maxHeight: 70)
+            .frame(maxHeight: 40)
             .scrollIndicators(.hidden)
         }
         .sheet(isPresented: $isAddingTag, onDismiss: tagVM.fetchTags) {

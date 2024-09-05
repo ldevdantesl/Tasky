@@ -189,7 +189,7 @@ struct TodoDetailView: View {
                     if isEditing != .dueDate{
                         Spacer()
                     }
-                    Text(TodoViewHelpers(todo: todo).formatDate())
+                    Text(TodoViewHelpers(todo: todo).formatDate)
                         .font(.system(.title3, design: .rounded, weight: .medium))
                         .foregroundStyle(isEditing == .dueDate ? .secondary : .primary)
                         .scaleEffect(isEditing == .dueDate ? 0.8 : 1)
