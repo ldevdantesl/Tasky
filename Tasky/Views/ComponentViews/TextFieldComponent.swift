@@ -31,6 +31,8 @@ struct TextFieldComponent: View {
             if let maxChars = maxChars{
                 Text("\(text.count)/\(maxChars)")
                     .padding(.horizontal, 20)
+                    .opacity(text.count > 5 ? 1 : 0)
+                    .animation(.snappy, value: text)
             }
         }
     }

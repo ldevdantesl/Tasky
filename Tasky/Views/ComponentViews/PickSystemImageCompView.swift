@@ -67,10 +67,11 @@ struct PickSystemImageCompView: View {
             }
         }
         .padding(.horizontal, 10)
-        .frame(width: Constants.screenWidth - 20, height: Constants.screenHeight * 0.8)
+        .frame(width: Constants.screenWidth - 20, height: Constants.screenHeight * 0.56)
     }
 }
 
 #Preview {
     PickSystemImageCompView(selectedImage: .constant("bookmark.fill"), selectedColor: .constant(.blue))
+        .previewLayout(.sizeThatFits)
 }

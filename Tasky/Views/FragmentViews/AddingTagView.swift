@@ -47,7 +47,7 @@ struct AddingTagView: View {
                     .font(.system(.subheadline, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
                     .padding(.horizontal,5)
-                TextFieldComponent(text: $name, placeholder: "Name", maxChars: 30)
+                TextFieldComponent(text: $name, placeholder: "Name", maxChars: 20)
                     .focused($isFocused)
                     .padding(.vertical, 10)
                     .frame(maxWidth: Constants.screenWidth - 20)

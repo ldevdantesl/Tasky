@@ -14,13 +14,25 @@ struct TagLazyFragmentView: View {
     @Binding var selectedTags: [Tag]
     
     @State private var isAddingTag: Bool = false
+    
+    var colorTheme: Color {
+        return settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
+    }
         
     var body: some View {
         VStack(alignment:.leading, spacing: 10){
-            Text("Tags")
-                .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                .foregroundStyle(.secondary)
-                .padding(.horizontal,22)
+            HStack(spacing: 0){
+                Text("Tags: \(selectedTags.count)")
+                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal,22)
+                
+                if selectedTags.count == 5{
+                    Text("Max 5")
+                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                        .foregroundStyle(.red.opacity(0.8))
+                }
+            }
             
             ScrollView(.horizontal) {
                 LazyHStack {
@@ -31,10 +43,11 @@ struct TagLazyFragmentView: View {
                                     .font(.system(.headline, design: .rounded, weight: .semibold))
                                     .foregroundStyle(foregroundForTagColor(tag: tag))
                                 
-                                Image(systemName: tag.systemImage)
+                                Image(systemName: tag.systemImage ?? "")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 15, height: 15)
+                                    .foregroundStyle(.white)
                                 
                                 if isSelected(tag: tag){
                                     Image(systemName: "checkmark.circle.fill")
@@ -66,10 +79,10 @@ struct TagLazyFragmentView: View {
                             .frame(maxWidth: 25)
                             .foregroundStyle(.white)
                             .padding(10)
-                            .background(Color.blue, in:.circle)
+                            .background(colorTheme, in:.circle)
                     }
                 }
-                .padding(.horizontal, 15)
+                .padding(.horizontal, 20)
             }
             .frame(maxHeight: 40)
             .scrollIndicators(.hidden)
@@ -82,27 +95,19 @@ struct TagLazyFragmentView: View {
     }
     
     func addToSelection(tag: Tag) {
-        if selectedTags.contains(tag){
-            selectedTags.removeAll(where: {$0 == tag})
-        } else {
+        if !selectedTags.contains(tag) && selectedTags.count <= 4{
             selectedTags.append(tag)
+        } else {
+            selectedTags.removeAll(where: {$0 == tag})
         }
     }
     
     func foregroundForTagColor(tag: Tag) -> Color {
-        if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
-            return .black
-        } else {
-            return .white
-        }
+        return areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)) ? .black : .white
     }
     
     func isSelected(tag: Tag) -> Bool{
-        if selectedTags.contains(where: { $0 == tag }){
-            return true
-        } else {
-            return false
-        }
+        selectedTags.contains(where: { $0 == tag })
     }
 }
 

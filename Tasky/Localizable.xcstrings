@@ -776,6 +776,9 @@
         }
       }
     },
+    "Max 5" : {
+
+    },
     "Menu" : {
       "localizations" : {
         "ru" : {
@@ -1301,6 +1304,9 @@
           }
         }
       }
+    },
+    "Tags: %lld" : {
+
     },
     "Tasky Locked" : {
       "localizations" : {

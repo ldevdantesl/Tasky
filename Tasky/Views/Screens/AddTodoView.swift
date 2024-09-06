@@ -62,7 +62,7 @@ struct AddTodoView: View {
                     .foregroundStyle(Constants.secondaryColor)
                     .padding(.horizontal,5)
                 
-                TextFieldComponent(text: $title, placeholder: "Title", maxChars: 30)
+                TextFieldComponent(text: $title, placeholder: "Title", maxChars: 25)
                     .focused($focusedField, equals: .title)
                     .scrollDismissesKeyboard(.immediately)
                     .frame(maxWidth: Constants.screenWidth - 30)
