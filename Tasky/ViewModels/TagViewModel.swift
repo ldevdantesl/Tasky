@@ -37,11 +37,20 @@ class TagViewModel: ObservableObject {
         }
     }
     
-    func createTag(_ name: String, color: Color = .gray.opacity(0.3)) {
+    func isTagByImageReserved(_ systemImage: String) -> Bool {
+        if tags.contains(where: { $0.systemImage == systemImage }){
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func createTag(_ name: String, color: Color, systemImage: String) {
         let newTag = Tag(context: context)
         newTag.id = UUID()
         newTag.name = name
         newTag.color = color.toData()
+        newTag.systemImage = systemImage
         
         saveContext()
     }

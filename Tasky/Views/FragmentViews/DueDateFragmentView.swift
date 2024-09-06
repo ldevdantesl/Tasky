@@ -97,7 +97,7 @@ struct DueDateFragmentView: View {
                     
                     Capsule()
                         .fill(dueDate?.getDayDigit == Date.now.getDayDigit + 1 ? themeColor : Constants.textFieldColor)
-                        .frame(minWidth: 100, maxWidth: 90)
+                        .frame(minWidth: 90, maxWidth: 90)
                         .frame(height: 45)
                         .overlay{
                             VStack(spacing: 0){

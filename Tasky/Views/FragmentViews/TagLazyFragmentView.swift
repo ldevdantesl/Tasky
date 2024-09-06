@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TagLazyFragmentView: View {
     @ObservedObject var tagVM: TagViewModel
+    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
     
     @Binding var selectedTags: [Tag]
     
@@ -29,6 +30,12 @@ struct TagLazyFragmentView: View {
                                 Text("#\(tag.name ?? "")")
                                     .font(.system(.headline, design: .rounded, weight: .semibold))
                                     .foregroundStyle(foregroundForTagColor(tag: tag))
+                                
+                                Image(systemName: tag.systemImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 15, height: 15)
+                                
                                 if isSelected(tag: tag){
                                     Image(systemName: "checkmark.circle.fill")
                                         .resizable()
@@ -68,8 +75,9 @@ struct TagLazyFragmentView: View {
             .scrollIndicators(.hidden)
         }
         .sheet(isPresented: $isAddingTag, onDismiss: tagVM.fetchTags) {
-            AddingTagView(tagVM: tagVM)
-                .presentationDetents([.medium, .large])
+            AddingTagView(tagVM: tagVM, settingsMgrVm: settingsMgrVM)
+                .presentationDetents([.large])
+                .interactiveDismissDisabled()
         }
     }
     
@@ -99,5 +107,5 @@ struct TagLazyFragmentView: View {
 }
 
 #Preview {
-    TagLazyFragmentView(tagVM: TagViewModel(), selectedTags: .constant([]))
+    TagLazyFragmentView(tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel, selectedTags: .constant(TagViewModel.mockTags()))
 }

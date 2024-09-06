@@ -2,7 +2,6 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -94,6 +93,9 @@
           }
         }
       }
+    },
+    "Add Tag" : {
+
     },
     "Add Todo" : {
 
@@ -720,6 +722,7 @@
 
     },
     "Invalid name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -804,6 +807,7 @@
       }
     },
     "Name of tag" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -814,6 +818,7 @@
       }
     },
     "New Tag" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -895,6 +900,7 @@
       }
     },
     "OK" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {

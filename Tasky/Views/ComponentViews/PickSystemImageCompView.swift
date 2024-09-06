@@ -11,7 +11,7 @@ struct PickSystemImageCompView: View {
     @Binding var selectedImage: String
     @Binding var selectedColor: Color
     
-    @State private var selectedCategory: String = "Popular"
+    @State private var selectedCategory: TagImagesCategory = .allCategories[0]
     
     let columns: [GridItem] = Array(repeating: GridItem(.fixed(40), spacing: 15), count: 6)
     var body: some View {
@@ -26,30 +26,39 @@ struct PickSystemImageCompView: View {
                         .frame(width: 25, height: 25)
                         .foregroundStyle(.white)
                 }
+                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
             
             VStack(alignment: .leading){
-                Menu {
+                Picker("",selection: $selectedCategory) {
                     ForEach(TagImagesCategory.allCategories, id:\.self){ cat in
-                        Button("\(cat.name)", systemImage: cat.titleImage, action: {self.selectedCategory = cat.name})
+                        HStack{
+                            Text(cat.name)
+                            Image(systemName: cat.titleImage)
+                        }
+                        .tag(cat)
                     }
-                } label: {
-                    Text(selectedCategory)
-                        .font(.system(.headline, design: .rounded, weight: .semibold))
-                    Image(systemName: "chevron.up.chevron.down")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 15, height: 15)
-                    Spacer()
                 }
                 RoundedRectangle(cornerRadius: 25)
                     .fill(Constants.textFieldColor)
-                    .frame(maxWidth: Constants.screenWidth - 20, maxHeight: Constants.screenHeight / 3)
+                    .frame(maxWidth: Constants.screenWidth - 20, maxHeight: Constants.screenHeight * 0.4)
+                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                     .overlay {
                         LazyVGrid(columns: columns, spacing: 20){
-                            ForEach(TagImagesCategory.allCategories, id: \.self) { cat in
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: 45, height: 45)
+                            ForEach(selectedCategory.symbols, id: \.self) { symbol in
+                                Button{
+                                    withAnimation {selectedImage = symbol}
+                                } label: {
+                                    Circle()
+                                        .fill(selectedImage == symbol ? selectedColor : Color.white)
+                                        .frame(width: Constants.screenWidth * 0.12, height: Constants.screenHeight * 0.07)
+                                        .overlay{
+                                            Image(systemName: symbol)
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 20, height: 20)
+                                                .foregroundStyle(selectedImage == symbol ? .white : .black)
+                                        }
+                                }
                             }
                         }
                         .padding(.horizontal, 20)
@@ -58,6 +67,7 @@ struct PickSystemImageCompView: View {
             }
         }
         .padding(.horizontal, 10)
+        .frame(width: Constants.screenWidth - 20, height: Constants.screenHeight * 0.8)
     }
 }
 

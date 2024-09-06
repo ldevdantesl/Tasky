@@ -72,7 +72,7 @@ struct AddTodoView: View {
                     .onSubmit {
                         focusedField = nil
                     }
-                    .shadow(color: Color.black.opacity(focusedField == .title ? 0.2 : 0), radius: 10, x: 0, y: 5)
+                    .shadow(color: Color.black.opacity(!title.isEmpty ? 0.2 : 0), radius: 10, x: 0, y: 5)
                 
                 if let titleErrorMessage, title.count <= 3 {
                     Text(titleErrorMessage)
@@ -111,7 +111,7 @@ struct AddTodoView: View {
                 .padding(.bottom,15)
             
             // MARK: - TAGS
-            TagLazyFragmentView(tagVM: tagVM, selectedTags: $selectedTags)
+            TagLazyFragmentView(tagVM: tagVM, settingsMgrVM: settingsMgrVM ,selectedTags: $selectedTags)
                         
         }
         .background(Constants.backgroundColor)
@@ -125,6 +125,7 @@ struct AddTodoView: View {
                         .frame(width: Constants.screenWidth - 40, height: 50)
                         .background(colorTheme, in: .capsule)
                 }
+                .padding(.bottom, 10)
             }
         }
         .overlay{
@@ -151,13 +152,14 @@ struct AddTodoView: View {
         showProgressView = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             withAnimation {
-                if title.count > 2 && title.trimmingCharacters(in: .whitespaces).count > 2 && dueDate != nil {
+                if title.count > 2 && !title.trimmingCharacters(in: .whitespaces).isEmpty && dueDate != nil {
                     todoVM.createTodo(title: title, description: desc.isEmpty ? nil : desc, priority: priority, dueDate: dueDate, tags:selectedTags)
                     withAnimation {
                         showProgressView = false
                         path.removeLast()
                     }
                 } else {
+                    print("Something went wrong while creating the todo")
                     withAnimation {
                         if title.count < 2{
                             titleErrorMessage = "Title should be more than 2 characters"
