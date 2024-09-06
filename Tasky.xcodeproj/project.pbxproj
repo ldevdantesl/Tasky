@@ -50,6 +50,7 @@
 		DA9409F42C787C4C004D054E /* DataStorageManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F32C787C4C004D054E /* DataStorageManaging.swift */; };
 		DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */; };
 		DA9409F82C78822A004D054E /* MockDataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */; };
+		DA9830B22C8ADA7900368C0A /* TodoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */; };
 		DAC755472C82967000112F40 /* TodoRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC755462C82967000112F40 /* TodoRowView.swift */; };
 		DAC755492C829B7600112F40 /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC755482C829B7600112F40 /* TodoListView.swift */; };
 		DAC7554D2C844ED600112F40 /* TextFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7554C2C844ED600112F40 /* TextFieldComponent.swift */; };
@@ -116,6 +117,7 @@
 		DA9409F32C787C4C004D054E /* DataStorageManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageManaging.swift; sourceTree = "<group>"; };
 		DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAndStorageManager.swift; sourceTree = "<group>"; };
 		DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataAndStorageManager.swift; sourceTree = "<group>"; };
+		DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoHeaderView.swift; sourceTree = "<group>"; };
 		DAC755462C82967000112F40 /* TodoRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRowView.swift; sourceTree = "<group>"; };
 		DAC755482C829B7600112F40 /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 		DAC7554C2C844ED600112F40 /* TextFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponent.swift; sourceTree = "<group>"; };
@@ -284,9 +286,9 @@
 		DAF659E42C72FE8C004D8ACA /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DA69C9A52C858B7E00B3C511 /* ComponentViews */,
 				DAF659FE2C73293E004D8ACA /* Screens */,
 				DA38A34E2C76CFF0007C3FB4 /* SettingsViews */,
+				DA69C9A52C858B7E00B3C511 /* ComponentViews */,
 				DAF659F92C731859004D8ACA /* FragmentViews */,
 			);
 			path = Views;
@@ -338,6 +340,7 @@
 				DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */,
 				DAC755462C82967000112F40 /* TodoRowView.swift */,
 				DAC755482C829B7600112F40 /* TodoListView.swift */,
+				DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */,
 			);
 			path = FragmentViews;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				DAF659F62C730CFE004D8ACA /* AddTodoView.swift in Sources */,
 				DA4B197B2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift in Sources */,
 				DAF0635A2C7D65FC00ADE7E8 /* TagSettingsView.swift in Sources */,
+				DA9830B22C8ADA7900368C0A /* TodoHeaderView.swift in Sources */,
 				DAF659EE2C730284004D8ACA /* TodoModel.xcdatamodeld in Sources */,
 				DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */,
 				DA4B19842C7ABE6800899303 /* MockPrivacySecurityManager.swift in Sources */,

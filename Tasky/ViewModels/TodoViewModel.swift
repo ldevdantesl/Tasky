@@ -11,7 +11,8 @@ import SwiftUI
 import Combine
 
 class TodoViewModel: ObservableObject {
-    @Published var todos: [Todo] = []
+    @Published var allTodos: [Todo] = []
+    @Published var todayTodos: [Todo] = []
     @Published var removedTodos: [Todo] = []
     @Published var archivedTodos: [Todo] = []
     @Published var sortDescriptor: NSSortDescriptor? {
@@ -33,7 +34,7 @@ class TodoViewModel: ObservableObject {
     private func observeCurrentDay() {
         calendarSet.$currentDay
             .sink { [weak self] newDay in
-                self?.fetchStandardTodos(for: newDay)
+                self?.fetchTodayTodos(for: newDay)
             }
             .store(in: &cancellables)
     }
@@ -58,12 +59,30 @@ class TodoViewModel: ObservableObject {
     }
     
     func fetchAllTodos(){
-        fetchStandardTodos(for: .now)
+        fetchTodayTodos(for: .now)
+        fetchTodos()
         fetchArchivedTodos()
         fetchRemovedTodos()
     }
     
-    func fetchStandardTodos(for day: Date) {
+    func fetchTodos() {
+        let request: NSFetchRequest = Todo.fetchRequest()
+        let archivePredicate = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
+        let removedPredicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [archivePredicate, removedPredicate])
+        
+        if let sortDescriptor {
+            request.sortDescriptors = [sortDescriptor]
+        }
+        
+        do {
+            todayTodos = try context.fetch(request)
+        } catch {
+            print("Error fetching removed Todos: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchTodayTodos(for day: Date) {
         let request: NSFetchRequest = Todo.fetchRequest()
         let archivePredicate = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
         let removedPredicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
@@ -79,7 +98,7 @@ class TodoViewModel: ObservableObject {
         }
         
         do {
-            todos = try context.fetch(request)
+            todayTodos = try context.fetch(request)
         } catch {
             print("Error fetching removed Todos: \(error.localizedDescription)")
         }
@@ -214,21 +233,6 @@ class TodoViewModel: ObservableObject {
             saveContext()
         } catch {
             print("Error Deleting All Removed Todos: \(error.localizedDescription)")
-        }
-    }
-    
-    func deleteTodoByIndex(at offsets: IndexSet){
-        offsets.forEach { index in
-            let todo = todos[index]
-            context.delete(todo)
-        }
-        saveContext()
-    }
-    
-    func removeTodoByIndex(at offsets: IndexSet) {
-        offsets.forEach { index in
-            let todo = todos[index]
-            removeTodo(todo)
         }
     }
     

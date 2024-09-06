@@ -31,6 +31,16 @@
         }
       }
     },
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
     "%@ Todos" : {
 
     },
@@ -707,6 +717,9 @@
           }
         }
       }
+    },
+    "Go to Today" : {
+
     },
     "Hey checkout this app." : {
       "localizations" : {

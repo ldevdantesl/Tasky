@@ -21,10 +21,10 @@ struct TodoListView: View {
     }
     
     var doneTodos: [Todo]{
-        return todoVM.todos.filter { $0.isDone }
+        return todoVM.todayTodos.filter { $0.isDone }
     }
     var activeTodos: [Todo] {
-        todoVM.todos.filter { $0.isDone == false }
+        todoVM.todayTodos.filter { $0.isDone == false }
     }
     
     var todos: [Todo]{
@@ -32,7 +32,7 @@ struct TodoListView: View {
     }
     
     var body: some View {
-        if todoVM.todos.isEmpty{
+        if todoVM.todayTodos.isEmpty{
             HStack{
                 Text("No todos for this day.")
                     .font(.system(.headline, design: .rounded, weight: .regular))

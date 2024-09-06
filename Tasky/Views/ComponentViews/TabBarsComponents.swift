@@ -62,8 +62,9 @@ struct TabBarsComponent: View {
                     .frame(width: 55,height: 55)
                     .overlay{
                         Text("+")
-                            .font(.system(.title, design: .rounded, weight: .semibold))
+                            .font(.system(.largeTitle, design: .rounded, weight: .semibold))
                             .foregroundStyle(.white)
+                            .padding(.bottom, 3)
                     }
                     .padding(.horizontal, 5)
             }
@@ -100,14 +101,6 @@ struct TabBarsComponent: View {
             .disabled(path.count > 0)
         }
         .padding(.horizontal,10)
-        .navigationDestination(for: String.self) { view in
-            if view == "SettingsView"{
-                SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
-                    .toolbar(.hidden, for: .navigationBar)
-            } else {
-                AddTodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
-            }
-        }
     }
 }
 

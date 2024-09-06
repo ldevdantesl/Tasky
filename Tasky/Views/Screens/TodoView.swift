@@ -8,46 +8,49 @@
 import SwiftUI
 
 struct TodoView: View {
-    @Environment(\.colorScheme) var systemColorScheme
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    @ObservedObject var calendar = CalendarSet.instance
     
+    @State private var showingWholeMonth: Bool = false
     @State private var onAddTodo = false
     @State private var onAddTag = false
     @State private var searchText: String = ""
+    @State private var selectedMonth: String = CalendarSet.instance.currentDay.getDayMonthString
+    
     @State private var path: NavigationPath = NavigationPath()
     
-    @ObservedObject var calendar = CalendarSet.instance
-    
-    var colorScheme: ColorScheme {
-        settingsMgrVM.settingsManager.appearanceSettingsManager.colorScheme ?? systemColorScheme
+    var colorTheme: Color {
+        settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
     
     var body: some View {
         NavigationStack(path: $path){
             VStack(alignment:.leading){
-                HStack{
-                    Text("\(calendar.currentDay.getWeekName.capitalized), \(calendar.currentDay.getDayDigit) \(String(calendar.currentDay.getDayMonth.prefix(3)))")
-                        .font(.system(.title, design: .rounded, weight: .bold))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Image(systemName: "calendar")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 20)
-                }
+                TodoHeaderView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
                 .padding(.horizontal,10)
-                CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM)
-                    .frame(height: 130)
-                YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
-                    .padding(.horizontal,10)
+                CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
+                    
+                if !showingWholeMonth{
+                    YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                        .padding(.horizontal,10)
+                }
                 Spacer()
             }
             .toolbar{
                 ToolbarItem(placement: .bottomBar) {
                     TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
                         .padding(.top, 10)
+                }
+            }
+            .background(Constants.backgroundColor)
+            .navigationDestination(for: String.self) { view in
+                if view == "SettingsView"{
+                    SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                        .toolbar(.hidden, for: .navigationBar)
+                } else {
+                    AddTodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
                 }
             }
         }

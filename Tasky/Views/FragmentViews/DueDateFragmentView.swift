@@ -18,7 +18,7 @@ struct DueDateFragmentView: View {
 
     var showDate: String {
         if let dueDate{
-            return "\(String(dueDate.getDayDigit)) \(dueDate.getDayMonth)"
+            return "\(String(dueDate.getDayDigit)) \(dueDate.getDayMonthString)"
         } else {
             return ""
         }

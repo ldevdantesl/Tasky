@@ -16,9 +16,9 @@ struct RemovedTodosView: View {
     
     var filteredTodos: [Todo] {
         if searchText.isEmpty{
-            return todoVM.todos
+            return todoVM.todayTodos
         } else {
-            return todoVM.todos.filter { $0.title!.localizedStandardContains(searchText) }
+            return todoVM.todayTodos.filter { $0.title!.localizedStandardContains(searchText) }
         }
     }
     
@@ -34,7 +34,6 @@ struct RemovedTodosView: View {
                         }
                 }
             }
-            .onDelete(perform: todoVM.deleteTodoByIndex)
         }
         .searchable(text: $searchText, prompt: "Removed Todos")
         .alert("Unremove All", isPresented: $alertToggle){
