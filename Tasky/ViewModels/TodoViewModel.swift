@@ -76,7 +76,7 @@ class TodoViewModel: ObservableObject {
         }
         
         do {
-            todayTodos = try context.fetch(request)
+            allTodos = try context.fetch(request)
         } catch {
             print("Error fetching removed Todos: \(error.localizedDescription)")
         }

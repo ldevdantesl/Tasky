@@ -74,7 +74,7 @@ struct TodoListView: View {
             }
             
         } else {
-            ScrollView{
+            LazyVStack{
                 ForEach(todos, id: \.self){ todo in
                     TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
                         .onTapGesture {

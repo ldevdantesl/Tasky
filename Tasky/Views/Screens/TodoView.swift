@@ -27,14 +27,14 @@ struct TodoView: View {
     
     var body: some View {
         NavigationStack(path: $path){
-            VStack(alignment:.leading){
+            ScrollView{
                 TodoHeaderView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
                 .padding(.horizontal,10)
                 CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
                     
                 if !showingWholeMonth{
                     YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
-                        .padding(.horizontal,10)
+                        .padding(.horizontal, 10)
                 }
                 Spacer()
             }

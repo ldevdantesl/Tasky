@@ -42,7 +42,7 @@ struct AddTodoView: View {
                     .font(.system(.title, design: .rounded, weight: .semibold))
                     .foregroundStyle(Constants.textColor)
                 Spacer()
-                Button(action: {path.removeLast()}){
+                Button(action: {path = NavigationPath()}){
                     Image(systemName: "xmark.circle.fill")
                         .resizable()
                         .scaledToFit()
