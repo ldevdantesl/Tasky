@@ -11,61 +11,60 @@ struct TagSettingsView: View {
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsManagerVM: SettingsManagerViewModel
     
-    @State private var deleteAllAlert: Bool = false
+    @Binding var path: NavigationPath
     
-    let gridRows:[GridItem] = [
-        GridItem(.flexible(minimum: (Constants.screenWidth / 4) - 20), spacing: 0),
-        GridItem(.flexible(minimum: (Constants.screenWidth / 4) - 20), spacing: 0)
-    ]
+    @State private var deleteAllAlert: Bool = false
+    @State private var isAddingTag: Bool = false
+    
+    var colorTheme: Color {
+        settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme
+    }
     
     var body: some View {
-        NavigationStack{
-            Form{
-                Section("Tags"){
-                    ScrollView(.horizontal) {
-                        LazyHGrid(rows: gridRows, spacing: 10){
-                            ForEach(tagVM.tags) { tag in
-                                Menu{
-                                    Button("Remove", systemImage: "trash", role:.destructive) {
-                                        tagVM.deleteTag(tag: tag)
-                                    }
-                                    
-                                } label: {
-                                    Text("#\(tag.name ?? "Uknown Tag")")
-                                        .frame(maxWidth: (Constants.screenWidth / 2), maxHeight: 30, alignment: .leading)
-                                        .foregroundStyle(.white)
-                                        .padding(10)
-                                        .background(Color.fromData(tag.color!) ?? .blue, in:.capsule)
-                                }
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
+        VStack(spacing: 20){
+            SettingsHeaderComponent(settingsMgrVM: settingsManagerVM, path: $path, title: "Tags", buttonItems: [.init(systemImage: "questionmark.circle", color: colorTheme, action: {})])
+                .padding(.horizontal, 10)
+            ScrollView(.horizontal){
+                LazyHStack(spacing: 15){
+                    ForEach(tagVM.tags, id: \.self) { tag in
+                        TagCapsuleView(tag: tag)
                     }
-                    .scrollIndicators(.hidden)
-                }
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets())
-                if tagVM.tags.count > 0{
-                    Section{
-                        Button("Delete all",systemImage: "trash", role:.destructive) {
-                            deleteAllAlert.toggle()
-                        }
-                        .alert("Delete all Tags", isPresented: $deleteAllAlert) {
-                            Button("Delete", systemImage:"trash", role:.destructive){
-                                tagVM.deleteAllTags()
-                            }
-                        } message: {
-                            Text("Do you want to delete all the tags?")
-                        }
-
+                    Button(action: {isAddingTag.toggle()}){
+                        Image(systemName: "plus")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 25)
+                            .foregroundStyle(.white)
+                            .padding(10)
+                            .background(colorTheme, in:.circle)
                     }
                 }
+                .padding(.horizontal, 15)
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .scrollIndicators(.hidden)
+            .frame(height: 50)
+            .padding(.bottom, 15)
+            SettingsRowComponent(title: "Add New Tag", image: "plus", color: .yellow, toggler: $isAddingTag)
+                .padding(.horizontal, 10)
+            SettingsRowComponent(title: "Remove All Tags", image: "trash.fill", color: .red, toggler: $deleteAllAlert)
+                .padding(.horizontal, 10)
+            Spacer()
+        }
+        .sheet(isPresented: $isAddingTag){
+            AddingTagView(tagVM: tagVM, settingsMgrVm: settingsManagerVM)
+                .presentationDetents([.large])
+                .interactiveDismissDisabled()
+        }
+        .alert("Delete All", isPresented: $deleteAllAlert){
+            Button("Delete", role:.destructive, action: tagVM.deleteAllTags)
+        } message: {
+            Text("Do you want to delete all the tags?")
         }
     }
 }
 
 #Preview {
-    TagSettingsView(tagVM: TagViewModel(), settingsManagerVM: MockPreviews.viewModel)
+    NavigationStack{
+        TagSettingsView(tagVM: TagViewModel(), settingsManagerVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+    }
 }

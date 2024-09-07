@@ -91,22 +91,14 @@ extension Tag{
         let arraySet = Set(array)
         return nssetSet == arraySet
     }
-}
-
-extension TagViewModel{
-    static func foregroundForTagColor(tag: Tag) -> Color {
-        if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
-            return .black
-        } else {
-            return .white
-        }
-    }
-}
-
-extension Tag{
+    
     static func getColor(from tag: Tag) -> Color? {
         guard let colorData = tag.color else { return nil }
         return Color.fromData(colorData)
+    }
+    
+    static func foregroundForTagColor(tag: Tag) -> Color {
+        return areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)) ? .black : .white
     }
 }
 

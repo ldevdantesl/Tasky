@@ -51,6 +51,10 @@
 		DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */; };
 		DA9409F82C78822A004D054E /* MockDataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */; };
 		DA9830B22C8ADA7900368C0A /* TodoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */; };
+		DA9830B42C8BD71900368C0A /* SettingsRowComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B32C8BD71900368C0A /* SettingsRowComponent.swift */; };
+		DA9830B62C8BE93D00368C0A /* SettingsHeaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B52C8BE93D00368C0A /* SettingsHeaderComponent.swift */; };
+		DA9830B82C8BEAC900368C0A /* ButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B72C8BEAC900368C0A /* ButtonItem.swift */; };
+		DA9830BA2C8BEFDC00368C0A /* TagCapsuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B92C8BEFDC00368C0A /* TagCapsuleView.swift */; };
 		DAC755472C82967000112F40 /* TodoRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC755462C82967000112F40 /* TodoRowView.swift */; };
 		DAC755492C829B7600112F40 /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC755482C829B7600112F40 /* TodoListView.swift */; };
 		DAC7554D2C844ED600112F40 /* TextFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7554C2C844ED600112F40 /* TextFieldComponent.swift */; };
@@ -118,6 +122,10 @@
 		DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAndStorageManager.swift; sourceTree = "<group>"; };
 		DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataAndStorageManager.swift; sourceTree = "<group>"; };
 		DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoHeaderView.swift; sourceTree = "<group>"; };
+		DA9830B32C8BD71900368C0A /* SettingsRowComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowComponent.swift; sourceTree = "<group>"; };
+		DA9830B52C8BE93D00368C0A /* SettingsHeaderComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderComponent.swift; sourceTree = "<group>"; };
+		DA9830B72C8BEAC900368C0A /* ButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonItem.swift; sourceTree = "<group>"; };
+		DA9830B92C8BEFDC00368C0A /* TagCapsuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCapsuleView.swift; sourceTree = "<group>"; };
 		DAC755462C82967000112F40 /* TodoRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoRowView.swift; sourceTree = "<group>"; };
 		DAC755482C829B7600112F40 /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 		DAC7554C2C844ED600112F40 /* TextFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponent.swift; sourceTree = "<group>"; };
@@ -174,6 +182,9 @@
 				DA69C9AC2C858DB100B3C511 /* YourTodosComponentView.swift */,
 				DA69C9AE2C85A33400B3C511 /* TabBarsComponents.swift */,
 				DA69CA042C899A4D00B3C511 /* PickSystemImageCompView.swift */,
+				DA9830B32C8BD71900368C0A /* SettingsRowComponent.swift */,
+				DA9830B52C8BE93D00368C0A /* SettingsHeaderComponent.swift */,
+				DA9830B92C8BEFDC00368C0A /* TagCapsuleView.swift */,
 			);
 			path = ComponentViews;
 			sourceTree = "<group>";
@@ -304,6 +315,7 @@
 				DA69C9FE2C89292500B3C511 /* CustomExtensions.swift */,
 				DA69CA002C8994AF00B3C511 /* TagImages.json */,
 				DA69CA022C8997A000B3C511 /* TagImagesModel.swift */,
+				DA9830B72C8BEAC900368C0A /* ButtonItem.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -440,6 +452,7 @@
 				DA38A3582C771E8E007C3FB4 /* AddingTagView.swift in Sources */,
 				DA69C9AF2C85A33400B3C511 /* TabBarsComponents.swift in Sources */,
 				DA9409E32C7872E5004D054E /* NotificationSettingsManaging.swift in Sources */,
+				DA9830B62C8BE93D00368C0A /* SettingsHeaderComponent.swift in Sources */,
 				DA69446F2C7C40A30032437C /* ColorThemes.swift in Sources */,
 				DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */,
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
@@ -452,6 +465,7 @@
 				DAC755492C829B7600112F40 /* TodoListView.swift in Sources */,
 				DAF659F62C730CFE004D8ACA /* AddTodoView.swift in Sources */,
 				DA4B197B2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift in Sources */,
+				DA9830B42C8BD71900368C0A /* SettingsRowComponent.swift in Sources */,
 				DAF0635A2C7D65FC00ADE7E8 /* TagSettingsView.swift in Sources */,
 				DA9830B22C8ADA7900368C0A /* TodoHeaderView.swift in Sources */,
 				DAF659EE2C730284004D8ACA /* TodoModel.xcdatamodeld in Sources */,
@@ -465,6 +479,7 @@
 				DA9409EB2C787810004D054E /* SettingsManagerViewModel.swift in Sources */,
 				DAF063622C7EDFA900ADE7E8 /* LaunchScreen.swift in Sources */,
 				DA38A34D2C76B78C007C3FB4 /* SettingsView.swift in Sources */,
+				DA9830BA2C8BEFDC00368C0A /* TagCapsuleView.swift in Sources */,
 				DA69C9FF2C89292500B3C511 /* CustomExtensions.swift in Sources */,
 				DAF659F02C7302F8004D8ACA /* TodoView.swift in Sources */,
 				DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */,
@@ -489,6 +504,7 @@
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
 				DA4B19812C79C46400899303 /* ArchivedTodoDetailView.swift in Sources */,
 				DA69446D2C7C3E760032437C /* AppearanceSettingsManager.swift in Sources */,
+				DA9830B82C8BEAC900368C0A /* ButtonItem.swift in Sources */,
 				DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */,
 				DAC755472C82967000112F40 /* TodoRowView.swift in Sources */,
 				DA9409F22C787BA8004D054E /* MockPreviews.swift in Sources */,

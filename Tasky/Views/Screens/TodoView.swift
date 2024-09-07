@@ -14,9 +14,6 @@ struct TodoView: View {
     @ObservedObject var calendar = CalendarSet.instance
     
     @State private var showingWholeMonth: Bool = false
-    @State private var onAddTodo = false
-    @State private var onAddTag = false
-    @State private var searchText: String = ""
     @State private var selectedMonth: String = CalendarSet.instance.currentDay.getDayMonthString
     
     @State private var path: NavigationPath = NavigationPath()
@@ -29,9 +26,9 @@ struct TodoView: View {
         NavigationStack(path: $path){
             ScrollView{
                 TodoHeaderView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
-                .padding(.horizontal,10)
+                    .padding(.horizontal,10)
                 CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
-                    
+                
                 if !showingWholeMonth{
                     YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
                         .padding(.horizontal, 10)
@@ -46,34 +43,37 @@ struct TodoView: View {
             }
             .background(Constants.backgroundColor)
             .navigationDestination(for: String.self) { view in
-                if view == "SettingsView"{
-                    SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
-                        .toolbar(.hidden, for: .navigationBar)
-                } else {
-                    AddTodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                switch view{
+                    case "SettingsView":
+                        SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                            .toolbar(.hidden, for: .navigationBar)
+                    case "TagSettingsView":
+                        TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
+                            .toolbar(.hidden, for: .navigationBar)
+                    case "DataStorageSettingsView":
+                        DataAndStorageView(settingsManagerVM: settingsMgrVM, todoVM: todoVM, path: $path)
+                            .toolbar(.hidden, for: .navigationBar)
+                    case "ArchivedTodosView":
+                        ArchivedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
+                            .toolbar(.hidden, for: .navigationBar)
+                    case "RemovedTodosView":
+                        RemovedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
+                            .toolbar(.hidden, for: .navigationBar)
+                    case "NotificationSoundSettingsView":
+                        NotificationAndSoundsView(settingsMgrVM: settingsMgrVM)
+                            .toolbar(.hidden, for: .navigationBar)
+                    case "PrivacySecuritySettingsView":
+                        PrivacySecuritySettingsView(settingsMgrVM: settingsMgrVM)
+                            .toolbar(.hidden, for: .navigationBar)
+                    case "AppearanceSettingsView":
+                        AppearanceView(settingsManagerVM: settingsMgrVM)
+                            .toolbar(.hidden, for: .navigationBar)
+                    default:
+                        AddTodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                            .toolbar(.hidden, for: .navigationBar)
                 }
             }
-        }
-    }
-    
-    func sortBy(sortKey: String, ascending: Bool){
-        todoVM.sortDescriptor = NSSortDescriptor(key: sortKey, ascending: ascending)
-    }
-    
-    func toolbarSortButton() -> some View{
-        Menu{
-            Button("Title", systemImage: "text.magnifyingglass",action: { sortBy(sortKey: "title", ascending: true) })
-            Button("Time added", systemImage: "clock",action: { sortBy(sortKey: "addedOn", ascending: true) })
-            Button("Due date", systemImage: "calendar", action: { sortBy(sortKey: "dueDate", ascending: true) })
-            Menu("Priority", systemImage: "bookmark"){
-                Button("Ascending", systemImage: "arrow.up.circle",action: { sortBy(sortKey: "priority", ascending: true) })
-                Button("Decending", systemImage: "arrow.down.circle",action: { sortBy(sortKey: "priority", ascending: false) })
-            }
-        } label: {
-            Label(
-                title: { Text("Sort By") },
-                icon: { Image(systemName: "list.bullet.indent") }
-            )
+            .scrollIndicators(.hidden)
         }
     }
 }

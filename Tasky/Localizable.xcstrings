@@ -122,6 +122,7 @@
       }
     },
     "All todos that have been archived" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -132,6 +133,7 @@
       }
     },
     "All todos that have been removed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -142,6 +144,7 @@
       }
     },
     "Appearance" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -162,6 +165,7 @@
       }
     },
     "Archive After: %lld days" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -172,6 +176,7 @@
       }
     },
     "Archive all current todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -182,6 +187,7 @@
       }
     },
     "Archive all Todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -192,6 +198,7 @@
       }
     },
     "Archive todo after completion" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -202,6 +209,7 @@
       }
     },
     "Archive Todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -212,6 +220,7 @@
       }
     },
     "Archive Todos after completion" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -222,6 +231,7 @@
       }
     },
     "Archive todos that are done after %lld days" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -232,6 +242,7 @@
       }
     },
     "Archived" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -242,6 +253,7 @@
       }
     },
     "Archived Search" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -252,6 +264,7 @@
       }
     },
     "Archived Todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -260,9 +273,6 @@
           }
         }
       }
-    },
-    "Ascending" : {
-
     },
     "Blur the app when it is backgrounded" : {
       "localizations" : {
@@ -295,6 +305,7 @@
       }
     },
     "Clean up cache storage" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -315,6 +326,7 @@
       }
     },
     "Clear Cache" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -323,6 +335,9 @@
           }
         }
       }
+    },
+    "Clear the Cache" : {
+
     },
     "Click to change the status" : {
       "extractionState" : "stale",
@@ -382,6 +397,7 @@
       }
     },
     "Data and Storage" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -392,9 +408,6 @@
       }
     },
     "Date: " : {
-
-    },
-    "Decending" : {
 
     },
     "Define your app mode" : {
@@ -438,6 +451,7 @@
       }
     },
     "Delete all Tags" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -512,6 +526,7 @@
       }
     },
     "Do you really want to archive all current Todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -522,6 +537,7 @@
       }
     },
     "Do you really want to clear all the cache?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -542,6 +558,7 @@
       }
     },
     "Do you really want to remove all current Todos?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -580,6 +597,9 @@
           }
         }
       }
+    },
+    "Do you want to clear all the cache?" : {
+
     },
     "Do you want to delete all the tags?" : {
       "localizations" : {
@@ -629,6 +649,7 @@
       }
     },
     "Due date" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -660,6 +681,7 @@
       }
     },
     "Edit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -687,6 +709,7 @@
       }
     },
     "FAQ" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -722,6 +745,7 @@
 
     },
     "Hey checkout this app." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -746,6 +770,7 @@
       }
     },
     "Language" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -857,6 +882,12 @@
     "No active todos for this day." : {
 
     },
+    "No archived Todos" : {
+
+    },
+    "No deleted todos" : {
+
+    },
     "No tags for this todo" : {
       "localizations" : {
         "ru" : {
@@ -868,6 +899,7 @@
       }
     },
     "No tags yet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1015,6 +1047,7 @@
       }
     },
     "Remove all current todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1025,6 +1058,7 @@
       }
     },
     "Remove all Todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1066,6 +1100,7 @@
       }
     },
     "Remove Todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1076,6 +1111,7 @@
       }
     },
     "Removed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1086,6 +1122,7 @@
       }
     },
     "Removed Todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1248,6 +1285,7 @@
       }
     },
     "Sort By" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1299,6 +1337,7 @@
       }
     },
     "Tags" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1384,6 +1423,7 @@
       }
     },
     "Time added" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1552,6 +1592,7 @@
       }
     },
     "Unremove all" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1613,6 +1654,7 @@
       }
     },
     "Write a review" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1632,6 +1674,12 @@
           }
         }
       }
+    },
+    "You don't have archived Todos, archive any to see it here" : {
+
+    },
+    "You don't have deleted Todos, delete any to see it here" : {
+
     }
   },
   "version" : "1.0"

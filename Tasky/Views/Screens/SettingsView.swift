@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 
 struct SettingsView: View {
-    @Environment(\.dismiss) var dismiss
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
@@ -17,100 +16,58 @@ struct SettingsView: View {
     @Binding var path: NavigationPath
     @State private var showSettingsTag: Bool = false
     
+    var colorTheme: Color {
+        settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
+    }
+    
     var body: some View {
-        Form{
-            // MARK: - TAGS
-            Section{
-                rowSettings(name: tagVM.tags.count > 0 ? "Tags" : "No tags yet", imageName: "number", color: .green) {
-                    TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM)
-                }
-                .disabled(tagVM.tags.count > 0 ? false : true)
-            }
-            .sheet(isPresented: $showSettingsTag){
-                TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM)
-                    .presentationDetents([.medium, .large])
-            }
+        VStack(spacing: 20){
+            SettingsHeaderComponent(settingsMgrVM: settingsMgrVM, path: $path, title: "Settings", buttonItems: [.init(systemImage: "questionmark.circle", color: colorTheme, action: {})], showingBackButton: false)
+            SettingsRowComponent(title: "Tags", image: "number", color: .teal, link: "TagSettingsView", path: $path)
+            SettingsRowComponent(title: "Data & Storage", image: "folder.fill", color: .yellow, link: "DataStorageSettingsView", path: $path)
+            SettingsRowComponent(title: "Notification & Sound", image: "bell.fill", color: .blue.opacity(0.8), link: "NotificationSoundSettingsView", path: $path)
+            SettingsRowComponent(title: "Privacy & Security", image: "checkerboard.shield", color: .red.opacity(0.8), link: "PrivacySecuritySettingsView", path: $path)
+            SettingsRowComponent(title: "Appearance", image: "drop.degreesign.fill", color: .purple, link: "AppearanceSettingsView", path: $path)
             
-            // MARK: - DATA, NOTIFICATION AND PRIVACY
-            Section{
-                rowSettings(name: "Data and Storage", imageName: "folder.fill.badge.gearshape", color: .mint){
-                    DataAndStorageView(settingsManagerVM: settingsMgrVM, todoVM: todoVM)
-                }
-                rowSettings(name: "Notification and Sounds", imageName: "bell.badge.fill", color: .red){
-                    NotificationAndSoundsView(settingsMgrVM: settingsMgrVM)
-                }
-                rowSettings(name: "Privacy and Security", imageName: "lock.shield.fill", color: .gray){
-                    PrivacySecuritySettingsView(settingsMgrVM: settingsMgrVM)
-                }
-            }
-            
-            // MARK: - LANGUAGE AND APPEARANCE
-            Section{
-                rowWithAction(title: "Language", systemImage: "globe", color: .blue, rightSideKey: settingsMgrVM.currentLanguage.localizeLanguageCode(), action:openSettings)
-                
-                rowSettings(name: "Appearance", imageName: "circle.lefthalf.filled", color: .brown){
-                    AppearanceView(settingsManagerVM: settingsMgrVM)
-                }
-            }
-            
-            // MARK: - FAQ
-            Section{
-                rowSettings(name: "FAQ", imageName: "questionmark.circle", color: .teal) {
-                    FAQView()
-                }
-                rowWithAction(title: "Write a review", systemImage: "star", color: .pink, action: openAppStore)
-            
-                ShareLink(item: URL(string:"https://apps.apple.com/app/idMYAPP_ID")!, subject: Text("Hey checkout this app.")) {
-                    HStack{
-                        Image(systemName: "arrowshape.turn.up.right.fill")
-                            .foregroundStyle(.yellow)
-                        Text("Share").foregroundStyle(.primary)
+            HStack{
+                Capsule().fill(Color.gray)
+                    .frame(width: Constants.screenWidth / 2.7, height: 55)
+                    .overlay{
+                        HStack(spacing: 10){
+                            Image(systemName: "paperplane")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .foregroundStyle(.white)
+                            Text("Share")
+                                .font(.system(.title2, design: .rounded, weight: .bold))
+                                .foregroundStyle(.white)
+                        }
                     }
-                }
+                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                Circle().fill(Color.gray)
+                    .frame(width: 55, height: 55)
+                    .overlay {
+                        Image(systemName: "star.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundStyle(.yellow)
+                    }
+                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                
+                Spacer()
             }
+            .padding(.top, 10)
+            Spacer()
         }
-        .navigationTitle("Settings")
         .toolbar{
             ToolbarItem(placement: .bottomBar) {
                 TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM: tagVM, path: $path)
                     .padding(.horizontal,20)
             }
         }
-    }
-    
-    @ViewBuilder
-    func rowSettings(name: LocalizedStringKey, imageName: String,color: Color, destination: () -> some View) -> some View {
-        NavigationLink(destination: destination){
-            HStack{
-                Image(systemName: imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 20)
-                    .frame(maxHeight: 20)
-                    .foregroundStyle(color)
-                Text(name)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func rowWithAction(title: LocalizedStringKey, systemImage: String, color: Color, rightSideKey: String? = nil, action: @escaping () -> ()) -> some View{
-        Button(action: action){
-            HStack{
-                Image(systemName: systemImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 20, maxHeight: 20)
-                    .foregroundStyle(color)
-                Text(title)
-                Spacer()
-                if let rightSideKey{
-                    Text("\(rightSideKey.capitalized)")
-                        .font(.system(.subheadline, design: .rounded, weight: .light))
-                }
-            }
-            .tint(.primary)
-        }
+        .padding(.horizontal, 20)
     }
     
     func openSettings() {

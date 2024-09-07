@@ -9,33 +9,48 @@ import SwiftUI
 
 struct RemovedTodosView: View {
     @ObservedObject var todoVM: TodoViewModel
+    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    
+    @Binding var path: NavigationPath
     
     @State private var alertToggle: Bool = false
     @State private var deleteToggle = false
     @State private var searchText: String = ""
     
-    var filteredTodos: [Todo] {
-        if searchText.isEmpty{
-            return todoVM.todayTodos
-        } else {
-            return todoVM.todayTodos.filter { $0.title!.localizedStandardContains(searchText) }
-        }
+    var removedTodos: [Todo] {
+        todoVM.removedTodos
     }
     
     var body: some View {
-        List{
-            ForEach(todoVM.removedTodos){ todo in
-                NavigationLink(destination: ArchivedOrRemovedTodoDetailView(observedTodo: todo, todoVM: todoVM, isArchive: false)) {
-                    rowForTodo(todo)
-                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            Button("Unremove", systemImage: "trash.slash"){ todoVM.unRemoveTodo(todo)
-                            }
-                            .tint(.secondary)
-                        }
+        VStack{
+            SettingsHeaderComponent(settingsMgrVM: settingsMgrVM, path: $path, title: "Removed Todos", buttonItems: [ButtonItem(systemImage: "trash.slash.fill", color: .blue, action: {alertToggle.toggle()}), ButtonItem(systemImage: "trash.fill", color: .red, action: {deleteToggle.toggle()})])
+                .padding(.horizontal, 10)
+            
+            if !removedTodos.isEmpty{
+                ScrollView{
+                    ForEach(removedTodos) { todo in
+                        TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                    }
+                }
+                .scrollIndicators(.hidden)
+            } else {
+                VStack{
+                    Spacer()
+                    Image(systemName: "trash.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+                        .foregroundStyle(.red)
+                    Text("No deleted todos")
+                        .font(.system(.title2, design: .rounded, weight: .bold))
+                    Text("You don't have deleted Todos, delete any to see it here")
+                        .font(.system(.caption, design: .rounded, weight: .light))
+                        .foregroundStyle(.secondary)
+                    Spacer()
                 }
             }
+            
         }
-        .searchable(text: $searchText, prompt: "Removed Todos")
         .alert("Unremove All", isPresented: $alertToggle){
             Button("Unremove", role:.destructive, action: todoVM.unRemoveAll)
         } message: {
@@ -46,51 +61,12 @@ struct RemovedTodosView: View {
         } message: {
             Text("Do you really want to delete all removed Todos?")
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Menu("Edit", systemImage: "ellipsis.circle") {
-                    Button("Delete all", action: {deleteToggle.toggle()})
-                    Button("Unremove all", action: {alertToggle.toggle()})
-                }
-            }
-        }
-        .navigationTitle("Removed")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    @ViewBuilder
-    func rowForTodo(_ todo: Todo) -> some View {
-        let tagsArray = todo.tags?.allObjects as? [Tag] ?? []
-        VStack(alignment:.leading, spacing:5){
-            Text(todo.title ?? "Uknown title")
-                .strikethrough(todo.isDone)
-            if !tagsArray.isEmpty{
-                HStack{
-                    ForEach(tagsArray, id:\.hashValue) { tag in
-                        Text("#\(tag.name ?? "")")
-                            .font(.system(.caption, design: .rounded, weight: .light))
-                            .padding(3)
-                            .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
-                            .foregroundStyle(foregroundForTagColor(tag: tag))
-                    }
-                }
-                .frame(maxWidth: Constants.screenWidth - 40, maxHeight: 15, alignment:.leading)
-            }
-        }
-    }
-    
-    func foregroundForTagColor(tag: Tag) -> Color {
-        if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
-            return .black
-        } else {
-            return .white
-        }
     }
 }
 
 #Preview {
     NavigationStack{
-        RemovedTodosView(todoVM: TodoViewModel())
+        RemovedTodosView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
     }
 }
 

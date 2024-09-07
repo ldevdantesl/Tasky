@@ -11,7 +11,6 @@ import SwiftUI
 import Combine
 
 class TodoViewModel: ObservableObject {
-    @Published var allTodos: [Todo] = []
     @Published var todayTodos: [Todo] = []
     @Published var removedTodos: [Todo] = []
     @Published var archivedTodos: [Todo] = []
@@ -38,7 +37,7 @@ class TodoViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
+    // MARK: - CREATING
     func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag]){
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
@@ -58,28 +57,38 @@ class TodoViewModel: ObservableObject {
         saveContext()
     }
     
-    func fetchAllTodos(){
-        fetchTodayTodos(for: .now)
-        fetchTodos()
-        fetchArchivedTodos()
-        fetchRemovedTodos()
+    // MARK: - EDITING
+    func editTodos(_ todo: Todo, newTitle: String? = nil, newDesc: String? = nil, newIsDone: Bool? = nil, newPriority: Int16? = nil, newDueDate: Date? = nil, newTags: [Tag]? = nil){
+        if let newTitle, !newTitle.isEmpty {
+            todo.title = newTitle
+        }
+        if let newDesc{
+            if newDesc.trimmingCharacters(in: .newlines).isEmpty{
+                todo.desc = nil
+            } else {
+                todo.desc = newDesc.trimmingCharacters(in: .newlines).capitalized
+            }
+        }
+        if let newIsDone{
+            todo.isDone = newIsDone
+        }
+        if let newPriority{
+            todo.priority = newPriority
+        }
+        if let newDueDate{
+            todo.dueDate = newDueDate
+        }
+        if let newTags{
+            todo.tags = NSSet(array: newTags)
+        }
+        saveContext()
     }
     
-    func fetchTodos() {
-        let request: NSFetchRequest = Todo.fetchRequest()
-        let archivePredicate = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
-        let removedPredicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [archivePredicate, removedPredicate])
-        
-        if let sortDescriptor {
-            request.sortDescriptors = [sortDescriptor]
-        }
-        
-        do {
-            allTodos = try context.fetch(request)
-        } catch {
-            print("Error fetching removed Todos: \(error.localizedDescription)")
-        }
+    // MARK: - FETCHING
+    func fetchAllTodos(){
+        fetchArchivedTodos()
+        fetchRemovedTodos()
+        fetchTodayTodos(for: calendarSet.currentDay)
     }
     
     func fetchTodayTodos(for day: Date) {
@@ -126,96 +135,7 @@ class TodoViewModel: ObservableObject {
         }
     }
     
-    func archive(_ todo: Todo) {
-        todo.isArchived = true
-        saveContext()
-    }
-    
-    func unArchive(_ todo: Todo){
-        todo.isArchived = false
-        saveContext()
-    }
-    
-    func unArchiveAll() {
-        let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isArchived == %@", NSNumber(value: true))
-        
-        do {
-            let todos = try context.fetch(request)
-            todos.forEach { todo in
-                todo.isArchived = false
-            }
-            saveContext()
-        } catch {
-            print("Error Unarchiving All: \(error.localizedDescription)")
-        }
-    }
-    
-    func removeTodo(_ todo: Todo){
-        todo.isRemoved = true
-        saveContext()
-    }
-    
-    func unRemoveTodo(_ todo: Todo) {
-        todo.isRemoved = false
-        saveContext()
-    }
-    
-    func unRemoveAll() {
-        let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: true))
-        
-        do {
-            let todos = try context.fetch(request)
-            todos.forEach { todo in
-                todo.isRemoved = false
-            }
-            saveContext()
-        } catch {
-            print("Error Unremoving All: \(error.localizedDescription)")
-        }
-    }
-    
-    func editTodos(_ todo: Todo, newTitle: String? = nil, newDesc: String? = nil, newIsDone: Bool? = nil, newPriority: Int16? = nil, newDueDate: Date? = nil, newTags: [Tag]? = nil){
-        if let newTitle, !newTitle.isEmpty {
-            todo.title = newTitle
-        }
-        if let newDesc{
-            if newDesc.trimmingCharacters(in: .newlines).isEmpty{
-                todo.desc = nil
-            } else {
-                todo.desc = newDesc.trimmingCharacters(in: .newlines).capitalized
-            }
-        }
-        if let newIsDone{
-            todo.isDone = newIsDone
-        }
-        if let newPriority{
-            todo.priority = newPriority
-        }
-        if let newDueDate{
-            todo.dueDate = newDueDate
-        }
-        if let newTags{
-            todo.tags = NSSet(array: newTags)
-        }
-        saveContext()
-    }
-    
-    func completeTodo(_ todo: Todo){
-        todo.isDone = true
-        todo.completionDate = Date()
-        saveContext()
-        print("Complete todo: \(todo.title ?? "")")
-    }
-    
-    func uncompleteTodo(_ todo: Todo) {
-        todo.isDone = false
-        todo.completionDate = nil
-        saveContext()
-        print("Uncomplete todo: \(todo.title ?? "")")
-    }
-    
+    // MARK: - DELETING
     func deleteTodo(_ todo: Todo) {
         context.delete(todo)
         saveContext()
@@ -248,6 +168,76 @@ class TodoViewModel: ObservableObject {
         }
     }
     
+    // MARK: - ARCHIVE ACTIONS
+    func archive(_ todo: Todo) {
+        todo.isArchived = true
+        print("Archiving: \(todo.title ?? "")")
+        saveContext()
+    }
+    
+    func unArchive(_ todo: Todo){
+        todo.isArchived = false
+        print("Unarchiving: \(todo.title ?? "")")
+        saveContext()
+    }
+    
+    func unArchiveAll() {
+        let request: NSFetchRequest = Todo.fetchRequest()
+        request.predicate = NSPredicate(format: "isArchived == %@", NSNumber(value: true))
+        
+        do {
+            let todos = try context.fetch(request)
+            todos.forEach { todo in
+                todo.isArchived = false
+            }
+            saveContext()
+        } catch {
+            print("Error Unarchiving All: \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - REMOVING
+    func removeTodo(_ todo: Todo){
+        todo.isRemoved = true
+        saveContext()
+    }
+    
+    func unRemoveTodo(_ todo: Todo) {
+        todo.isRemoved = false
+        saveContext()
+    }
+    
+    func unRemoveAll() {
+        let request: NSFetchRequest = Todo.fetchRequest()
+        request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: true))
+        
+        do {
+            let todos = try context.fetch(request)
+            todos.forEach { todo in
+                todo.isRemoved = false
+            }
+            saveContext()
+        } catch {
+            print("Error Unremoving All: \(error.localizedDescription)")
+        }
+    }
+    
+    // MARK: - COMPLETING
+    func completeTodo(_ todo: Todo){
+        todo.isDone = true
+        todo.completionDate = Date()
+        saveContext()
+        print("Complete todo: \(todo.title ?? "")")
+    }
+    
+    func uncompleteTodo(_ todo: Todo) {
+        todo.isDone = false
+        todo.completionDate = nil
+        saveContext()
+        print("Uncomplete todo: \(todo.title ?? "")")
+    }
+    
+    // MARK: - DATE ACTIONS
     func addADayTodo(_ todo: Todo) {
         if let dueDate = todo.dueDate {
             if let newDueDate = Calendar.current.date(byAdding: .day, value: 1, to: dueDate) {
@@ -279,6 +269,7 @@ class TodoViewModel: ObservableObject {
         saveContext()
     }
     
+    // MARK: - SAVING
     private func saveContext(){
         PersistentController.shared.saveContext()
         fetchAllTodos()

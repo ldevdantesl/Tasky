@@ -54,19 +54,41 @@ struct TodoRowView: View {
         .frame(width: Constants.screenWidth - 20)
         .frame(minHeight: 130, maxHeight: 130)
         .contextMenu {
-            Button(todo.isDone ? "Uncomplete" : "Complete", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill"){
-                withAnimation {
-                    todo.isDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
+            if !todo.isRemoved && !todo.isArchived{
+                Button(todo.isDone ? "Uncomplete" : "Complete", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill"){
+                    withAnimation {
+                        todo.isDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
+                    }
+                }
+                Button("Remove", systemImage: "trash.fill"){
+                    withAnimation {
+                        todoVM.removeTodo(todo)
+                    }
+                }
+                Button("Archive", systemImage: "archivebox.fill"){
+                    withAnimation {
+                        todoVM.archive(todo)
+                    }
                 }
             }
-            Button("Delete", systemImage: "trash"){
-                withAnimation {
-                    todoVM.removeTodo(todo)
+            if todo.isRemoved {
+                Button("Unremove", systemImage: "trash.slash.fill"){
+                    withAnimation {
+                        todoVM.unRemoveTodo(todo)
+                    }
                 }
+                Button("Delete", systemImage: "trash.fill"){
+                    withAnimation {
+                        todoVM.deleteTodo(todo)
+                    }
+                }
+                .tint(.red)
             }
-            Button("Archive", systemImage:"archivebox"){
-                withAnimation {
-                    todoVM.archive(todo)
+            if todo.isArchived{
+                Button("Unarchive", systemImage: "archivebox"){
+                    withAnimation {
+                        todoVM.unArchive(todo)
+                    }
                 }
             }
         }

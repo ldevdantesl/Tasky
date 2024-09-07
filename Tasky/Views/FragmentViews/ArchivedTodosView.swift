@@ -9,80 +9,57 @@ import SwiftUI
 
 struct ArchivedTodosView: View {
     @ObservedObject var todoVM: TodoViewModel
+    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    
+    @Binding var path: NavigationPath
     
     @State private var alertToggle: Bool = false
     @State private var searchText: String = ""
     
-    var filteredTodos: [Todo] {
-        if searchText.isEmpty{
-            return todoVM.archivedTodos
-        } else {
-            return todoVM.archivedTodos.filter { $0.title!.localizedStandardContains(searchText) }
-        }
+    var archivedTodos: [Todo] {
+        return todoVM.archivedTodos
     }
     
     var body: some View {
-        List{
-            ForEach(filteredTodos){ todo in
-                NavigationLink(destination: ArchivedOrRemovedTodoDetailView(observedTodo: todo, todoVM: todoVM, isArchive: true)) {
-                    rowForTodo(todo)
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button("Unarchive", systemImage: "archivebox", action: {todoVM.unArchive(todo)})
-                                .tint(.secondary)
-                        }
+        VStack{
+            SettingsHeaderComponent(settingsMgrVM: settingsMgrVM, path: $path, title: "Archived Todos", buttonItems: [ButtonItem(systemImage: "archivebox", color: .blue, action: {
+                alertToggle.toggle()
+            })])
+            .padding(.horizontal, 10)
+            if !archivedTodos.isEmpty{
+                ScrollView{
+                    ForEach(archivedTodos){ todo in
+                        TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                    }
+                }
+                .scrollIndicators(.hidden)
+            } else {
+                VStack{
+                    Spacer()
+                    Image(systemName: "archivebox.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50)
+                        .foregroundStyle(.green)
+                    Text("No archived Todos")
+                        .font(.system(.title2, design: .rounded, weight: .bold))
+                    Text("You don't have archived Todos, archive any to see it here")
+                        .font(.system(.caption, design: .rounded, weight: .light))
+                        .foregroundStyle(.secondary)
+                    Spacer()
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Archived Search")
         .alert("Unarchive All", isPresented: $alertToggle){
             Button("Unarchive", role:.destructive, action: todoVM.unArchiveAll)
         } message: {
             Text("Do you really want to Unarchive all?")
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                EditButton()
-                Menu("Menu", systemImage: "ellipsis.circle") {
-                    Button("Unarchive All", action: {alertToggle.toggle()})
-                }
-            }
-        }
-        .navigationTitle("Archived")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    @ViewBuilder
-    func rowForTodo(_ todo: Todo) -> some View {
-        let tagsArray = todo.tags?.allObjects as? [Tag] ?? []
-        VStack(alignment:.leading, spacing:5){
-            Text(todo.title ?? "Uknown title")
-                .strikethrough(todo.isDone)
-            if !tagsArray.isEmpty{
-                HStack{
-                    ForEach(tagsArray, id:\.hashValue) { tag in
-                        Text("#\(tag.name ?? "")")
-                            .font(.system(.caption, design: .rounded, weight: .semibold))
-                            .padding(3)
-                            .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
-                            .foregroundStyle(.white)
-                    }
-                }
-                .frame(maxWidth: Constants.screenWidth - 40, maxHeight: 15, alignment:.leading)
-            }
-        }
-    }
-    
-    func foregroundForTagColor(tag: Tag) -> Color {
-        if areColorsEqual(color1: Tag.getColor(from: tag), color2: .gray.opacity(0.3)){
-            return .black
-        } else {
-            return .white
         }
     }
 }
 
 #Preview {
     NavigationStack{
-        ArchivedTodosView(todoVM: TodoViewModel())
+        ArchivedTodosView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
     }
 }

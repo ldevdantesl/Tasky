@@ -38,26 +38,7 @@ struct TagLazyFragmentView: View {
                 LazyHStack {
                     ForEach(tagVM.tags, id: \.self) { tag in
                         Button(action: {addToSelection(tag: tag)}){
-                            HStack{
-                                Text("#\(tag.name ?? "")")
-                                    .font(.system(.headline, design: .rounded, weight: .semibold))
-                                    .foregroundStyle(foregroundForTagColor(tag: tag))
-                                
-                                Image(systemName: tag.systemImage ?? "")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 15, height: 15)
-                                    .foregroundStyle(.white)
-                                
-                                if isSelected(tag: tag){
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .foregroundStyle(foregroundForTagColor(tag: tag))
-                                }
-                            }
-                            .padding(10)
-                            .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
+                            TagCapsuleView(tag: tag, showsSelection: true, selectedTags: $selectedTags)
                         }
                         .contextMenu {
                             if selectedTags.contains(where: { $0 == tag }) {
@@ -66,10 +47,9 @@ struct TagLazyFragmentView: View {
                             }
                             
                             Button(role:.destructive, action: {tagVM.deleteTag(tag: tag)}){
-                                    Text("Remove tag")
+                                Text("Remove tag")
                             }
                             .disabled(selectedTags.contains(where: { $0 == tag }))
-                            
                         }
                     }
                     Button(action: {isAddingTag.toggle()}){
@@ -87,7 +67,7 @@ struct TagLazyFragmentView: View {
             .frame(maxHeight: 40)
             .scrollIndicators(.hidden)
         }
-        .sheet(isPresented: $isAddingTag, onDismiss: tagVM.fetchTags) {
+        .sheet(isPresented: $isAddingTag) {
             AddingTagView(tagVM: tagVM, settingsMgrVm: settingsMgrVM)
                 .presentationDetents([.large])
                 .interactiveDismissDisabled()
@@ -95,11 +75,7 @@ struct TagLazyFragmentView: View {
     }
     
     func addToSelection(tag: Tag) {
-        if !selectedTags.contains(tag) && selectedTags.count <= 4{
-            selectedTags.append(tag)
-        } else {
-            selectedTags.removeAll(where: {$0 == tag})
-        }
+        !selectedTags.contains(tag) && selectedTags.count <= 4 ? selectedTags.append(tag) : selectedTags.removeAll(where: {$0 == tag})
     }
     
     func foregroundForTagColor(tag: Tag) -> Color {

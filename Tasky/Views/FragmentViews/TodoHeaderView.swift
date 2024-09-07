@@ -71,9 +71,10 @@ struct TodoHeaderView: View {
                     }
                 }
         }
+            
     }
 }
 
 #Preview {
-    TodoHeaderView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel, showingWholeMonth: .constant(false), selectedMonth: .constant("September"))
+    TodoView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel)
 }
