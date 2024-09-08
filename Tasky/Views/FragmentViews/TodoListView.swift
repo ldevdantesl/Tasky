@@ -33,46 +33,60 @@ struct TodoListView: View {
     
     var body: some View {
         if todoVM.todayTodos.isEmpty{
-            HStack{
-                Text("No todos for this day.")
-                    .font(.system(.headline, design: .rounded, weight: .regular))
-                Text("Add Todo")
-                    .font(.system(.headline, design: .rounded, weight: .bold))
+            VStack{
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
                     .foregroundStyle(colorTheme)
-                    .onTapGesture {
-                        path.append("AddTodoView")
-                    }
-                Spacer()
+                Text("No todos for this day")
+                    .font(.system(.title2, design: .rounded, weight: .bold))
+                Text("You don't have any todos for this day. Tap to add")
+                    .font(.system(.caption, design: .rounded, weight: .light))
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.top, Constants.screenHeight / 6)
+            .onTapGesture {
+                path.append("AddTodoView")
             }
         } else if isShowingActive && activeTodos.isEmpty {
-            HStack{
-                Text("No active todos for this day.")
-                    .font(.system(.headline, design: .rounded, weight: .regular))
-                Text("See Completed")
-                    .font(.system(.headline, design: .rounded, weight: .bold))
+            VStack{
+                Image(systemName: "checkmark.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
                     .foregroundStyle(colorTheme)
-                    .onTapGesture {
-                        withAnimation {
-                            isShowingActive = false
-                        }
-                    }
-                Spacer()
+                Text("No active todos for this day")
+                    .font(.system(.title2, design: .rounded, weight: .bold))
+                Text("You don't have any active todos for this day. Tap to see done")
+                    .font(.system(.caption, design: .rounded, weight: .light))
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.top, Constants.screenHeight / 6)
+            .onTapGesture {
+                withAnimation {
+                    isShowingActive = false
+                }
             }
         } else if !isShowingActive && doneTodos.isEmpty {
-            HStack{
-                Text("Nothing is done for this day.")
-                    .font(.system(.headline, design: .rounded, weight: .regular))
-                Text("See Active")
+            VStack{
+                Image(systemName: "checklist")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
                     .foregroundStyle(colorTheme)
-                    .font(.system(.headline, design: .rounded, weight: .bold))
-                    .onTapGesture {
-                        withAnimation {
-                            isShowingActive = true
-                        }
-                    }
-                Spacer()
+                Text("Nothing is done for this day.")
+                    .font(.system(.title2, design: .rounded, weight: .bold))
+                Text("You don't have done todos for this day. Tap to see active")
+                    .font(.system(.caption, design: .rounded, weight: .light))
+                    .foregroundStyle(.secondary)
             }
-            
+            .onTapGesture {
+                withAnimation {
+                    isShowingActive = true
+                }
+            }
+            .padding(.top, Constants.screenHeight / 6)
         } else {
             LazyVStack{
                 ForEach(todos, id: \.self){ todo in
@@ -83,7 +97,8 @@ struct TodoListView: View {
                 }
             }
             .navigationDestination(for: Todo.self){ todo in
-                TodoDetailView(observedTodo: todo, todoVM: todoVM, tagVM: tagVM, settingsManagerVM: settingsMgrVM)
+                TodoDetailView(observedTodo: todo, todoVM: todoVM, tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
+                    
             }
             .scrollIndicators(.hidden)
         }

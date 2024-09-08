@@ -38,7 +38,6 @@ struct TodoView: View {
             .toolbar{
                 ToolbarItem(placement: .bottomBar) {
                     TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
-                        .padding(.top, 10)
                 }
             }
             .background(Constants.backgroundColor)
@@ -47,27 +46,28 @@ struct TodoView: View {
                     case "SettingsView":
                         SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
                             .toolbar(.hidden, for: .navigationBar)
+                    
                     case "TagSettingsView":
                         TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
-                            .toolbar(.hidden, for: .navigationBar)
+                            
                     case "DataStorageSettingsView":
                         DataAndStorageView(settingsManagerVM: settingsMgrVM, todoVM: todoVM, path: $path)
-                            .toolbar(.hidden, for: .navigationBar)
+                            
                     case "ArchivedTodosView":
                         ArchivedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
-                            .toolbar(.hidden, for: .navigationBar)
+                            
                     case "RemovedTodosView":
                         RemovedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
-                            .toolbar(.hidden, for: .navigationBar)
+                            
                     case "NotificationSoundSettingsView":
-                        NotificationAndSoundsView(settingsMgrVM: settingsMgrVM)
-                            .toolbar(.hidden, for: .navigationBar)
+                        NotificationAndSoundsView(settingsMgrVM: settingsMgrVM, path: $path)
+                            
                     case "PrivacySecuritySettingsView":
-                        PrivacySecuritySettingsView(settingsMgrVM: settingsMgrVM)
-                            .toolbar(.hidden, for: .navigationBar)
+                        PrivacySecuritySettingsView(settingsMgrVM: settingsMgrVM, path: $path)
+                            
                     case "AppearanceSettingsView":
-                        AppearanceView(settingsManagerVM: settingsMgrVM)
-                            .toolbar(.hidden, for: .navigationBar)
+                        AppearanceSettingsView(settingsManagerVM: settingsMgrVM, path:$path)
+                            
                     default:
                         AddTodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
                             .toolbar(.hidden, for: .navigationBar)

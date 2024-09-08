@@ -12,19 +12,20 @@ struct SettingsHeaderComponent: View {
     @Binding var path: NavigationPath
     
     let title: String
-    let buttonItems: [ButtonItem]
+    var buttonItems: [ButtonItem]?
     let showingBackButton: Bool
     
     var colorTheme: Color {
         settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
     
-    init(settingsMgrVM: SettingsManagerViewModel, path: Binding<NavigationPath>, title: String, buttonItems: [ButtonItem], showingBackButton: Bool = true) {
+    init(settingsMgrVM: SettingsManagerViewModel, path: Binding<NavigationPath>, title: String, buttonItems: [ButtonItem]? = nil, showingBackButton: Bool = true) {
         self.settingsMgrVM = settingsMgrVM
         self._path = path
         self.title = title
         self.buttonItems = buttonItems
         self.showingBackButton = showingBackButton
+        self.buttonItems = buttonItems
     }
     
     var body: some View {
@@ -43,14 +44,15 @@ struct SettingsHeaderComponent: View {
                 .font(.system(.title, design: .rounded, weight: .bold))
             
             Spacer()
-            
-            ForEach(0..<buttonItems.count, id: \.self) { index in
-                Button(action: buttonItems[index].action) {
-                    Image(systemName: buttonItems[index].systemImage)
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundStyle(buttonItems[index].color)
-                        .frame(width: 25, height: 25)
+            if let buttonItems{
+                ForEach(0..<buttonItems.count, id: \.self) { index in
+                    Button(action: buttonItems[index].action) {
+                        Image(systemName: buttonItems[index].systemImage)
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundStyle(buttonItems[index].color)
+                            .frame(width: 25, height: 25)
+                    }
                 }
             }
         }
@@ -58,5 +60,5 @@ struct SettingsHeaderComponent: View {
 }
 
 #Preview {
-    SettingsHeaderComponent(settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()), title: "Tags", buttonItems: [ButtonItem(systemImage: "questionmark.circle",color: .yellow, action: {})])
+    SettingsHeaderComponent(settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()), title: "Tags")
 }

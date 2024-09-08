@@ -14,24 +14,35 @@ struct SettingsRowComponent: View {
     let color: Color
     let link: String?
     let action: (() -> ())?
+    let rightSideText: String?
+    
     @State private var showingDropDown: Bool = false
+    @State private var showingColorDropDown: Bool = false
+    @State private var showingToggleState: Bool
     
     @Binding var isDropDown: Int
     @Binding var toggler: Bool
+    @Binding var selectedColor: Color
     @Binding var path: NavigationPath
     
-    let dropDownVariations: [Int] = [5, 10, 15, 20]
+    let dropDownVariations: [Int]
     
-    init(title: String, subtitle: String? = nil, image: String, color: Color, toggler: Binding<Bool>) {
+    let dropDownColorVariations: [Color] = [.green, .blue, .red, .gray, .yellow, .teal, .mint, .brown, .orange, .cyan, .indigo]
+    
+    init(title: String, subtitle: String? = nil, image: String, color: Color, toggler: Binding<Bool>, showingToggleState: Bool = false) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
         self.color = color
+        self.dropDownVariations = []
         self.action = nil
         self.link = nil
         self._toggler = toggler
         self._path = .constant(NavigationPath())
         self._isDropDown = .constant(0)
+        self._showingToggleState = State(wrappedValue: showingToggleState)
+        self._selectedColor = .constant(.secondary)
+        self.rightSideText = nil
     }
     
     init(title: String, subtitle: String? = nil, image: String, color: Color, link: String, path: Binding<NavigationPath>) {
@@ -40,34 +51,62 @@ struct SettingsRowComponent: View {
         self.image = image
         self.color = color
         self.link = link
+        self.dropDownVariations = []
         self._path = path
         self.action = nil
         self._toggler = .constant(false)
         self._isDropDown = .constant(0)
+        self._showingToggleState = State(wrappedValue: false)
+        self._selectedColor = .constant(.secondary)
+        self.rightSideText = nil
     }
     
-    init(title: String, subtitle: String? = nil, image: String, color: Color, action: (() -> ())?) {
+    init(title: String, subtitle: String? = nil, image: String, color: Color, rightSideText: String? = nil, action: (() -> ())?) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
         self.color = color
-        self.link = nil
         self.action = action
+        self.dropDownVariations = []
+        self.link = nil
         self._toggler = .constant(false)
         self._path = .constant(NavigationPath())
         self._isDropDown = .constant(0)
+        self._showingToggleState = State(wrappedValue: false)
+        self._selectedColor = .constant(.secondary)
+        self.rightSideText = rightSideText
     }
     
-    init(title: String, subtitle: String? = nil, image: String, color: Color, isDropDown: Binding<Int>) {
+    init(title: String, subtitle: String? = nil, image: String, color: Color, isDropDown: Binding<Int>, dropDownVariations: [Int]) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
         self.color = color
         self._isDropDown = isDropDown
+        self.dropDownVariations = dropDownVariations
         self._toggler = .constant(false)
         self._path = .constant(NavigationPath())
         self.link = nil
         self.action = nil
+        self._showingToggleState = State(wrappedValue: false)
+        self._selectedColor = .constant(.secondary)
+        self.rightSideText = nil
+    }
+    
+    init(title: String, subtitle: String? = nil, image: String, color: Color, selectedColor: Binding<Color>) {
+        self.title = title
+        self.subtitle = subtitle
+        self.image = image
+        self.color = color
+        self._isDropDown = .constant(0)
+        self.dropDownVariations = []
+        self._toggler = .constant(false)
+        self._path = .constant(NavigationPath())
+        self.link = nil
+        self.action = nil
+        self._showingToggleState = State(wrappedValue: false)
+        self._selectedColor = selectedColor
+        self.rightSideText = nil
     }
     
     var body: some View {
@@ -80,8 +119,11 @@ struct SettingsRowComponent: View {
                         action()
                     } else if isDropDown != 0 {
                         showingDropDown.toggle()
+                    } else if selectedColor != .secondary {
+                        showingColorDropDown.toggle()
                     } else {
                         toggler.toggle()
+                        print(toggler)
                     }
                 }
             } label: {
@@ -115,11 +157,25 @@ struct SettingsRowComponent: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 15, height: 20)
-                            } else if isDropDown != 0 {
+                            } else if isDropDown != 0{
                                 Image(systemName: showingDropDown ? "chevron.up" : "chevron.down")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 15, height: 15)
+                            } else if selectedColor != .secondary{
+                                Image(systemName: showingColorDropDown ? "chevron.up" : "chevron.down")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 15, height: 15)
+                            } else if showingToggleState, toggler{
+                                Image(systemName: "checkmark.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 25, height: 25)
+                                    .foregroundStyle(.green)
+                            } else if let rightSideText{
+                                Text(rightSideText)
+                                    .font(.system(.subheadline, design: .rounded, weight: .bold))
                             }
                         }
                         .padding(.leading, 8)
@@ -150,11 +206,39 @@ struct SettingsRowComponent: View {
                     }
                 }
                 .padding(.top, 15)
+            } else if showingColorDropDown {
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: 20){
+                        ForEach(dropDownColorVariations, id:\.self){ color in
+                            Circle()
+                                .fill(color)
+                                .frame(width: 50, height: 58)
+                                .overlay {
+                                    if selectedColor == color {
+                                        Circle()
+                                            .fill(.white)
+                                            .frame(width: 20, height: 20)
+                                    }
+                                }
+                                .onTapGesture {
+                                    withAnimation {
+                                        selectedColor = color
+                                        showingColorDropDown.toggle()
+                                    }
+                                }
+                                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                }
+                .frame(height: 60)
+                .scrollIndicators(.hidden)
             }
         }
+        .padding([.horizontal, .bottom], 10)
     }
 }
 
 #Preview {
-    SettingsRowComponent(title: "Tags",subtitle: "Lets just see",image: "number", color: .blue, isDropDown: .constant(20))
+    SettingsRowComponent(title: "Tags",subtitle: "Lets just see",image: "number", color: .blue, selectedColor: .constant(.blue))
 }

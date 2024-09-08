@@ -21,21 +21,23 @@ struct ArchivedTodosView: View {
     }
     
     var body: some View {
-        VStack{
-            SettingsHeaderComponent(settingsMgrVM: settingsMgrVM, path: $path, title: "Archived Todos", buttonItems: [ButtonItem(systemImage: "archivebox", color: .blue, action: {
-                alertToggle.toggle()
-            })])
-            .padding(.horizontal, 10)
+        ScrollView{
             if !archivedTodos.isEmpty{
-                ScrollView{
-                    ForEach(archivedTodos){ todo in
-                        TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                ForEach(archivedTodos){ todo in
+                    TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Archive", systemImage: "archivebox.fill", action: {alertToggle.toggle()})
                     }
                 }
-                .scrollIndicators(.hidden)
+                .alert("Unarchive All", isPresented: $alertToggle){
+                    Button("Unarchive", role:.destructive, action: todoVM.unArchiveAll)
+                } message: {
+                    Text("Do you really want to Unarchive all?")
+                }
             } else {
                 VStack{
-                    Spacer()
                     Image(systemName: "archivebox.fill")
                         .resizable()
                         .scaledToFit()
@@ -46,15 +48,13 @@ struct ArchivedTodosView: View {
                     Text("You don't have archived Todos, archive any to see it here")
                         .font(.system(.caption, design: .rounded, weight: .light))
                         .foregroundStyle(.secondary)
-                    Spacer()
                 }
+                .padding(.top, Constants.screenHeight / 3)
             }
         }
-        .alert("Unarchive All", isPresented: $alertToggle){
-            Button("Unarchive", role:.destructive, action: todoVM.unArchiveAll)
-        } message: {
-            Text("Do you really want to Unarchive all?")
-        }
+        .scrollIndicators(.hidden)
+        .navigationTitle("Archived Todos")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

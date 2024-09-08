@@ -9,61 +9,37 @@ import SwiftUI
 
 struct PrivacySecuritySettingsView: View {
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    @Binding var path: NavigationPath
     @State private var resetAlert: Bool = false
     
-    var body: some View {
-        Form{
-            Section{
-                Toggle(isOn: $settingsMgrVM.settingsManager.privacyAndSecurityManager.lockWhenBackgrounded){
-                    rowLabel(imageName: "lock.rectangle.on.rectangle", title: "Lock in Background", headline: "Blur the app when it is backgrounded", color: .brown)
-                }
-            }
-            Section{
-                Toggle(isOn: $settingsMgrVM.settingsManager.privacyAndSecurityManager.useBiometrics){
-                    rowLabel(imageName: "lock.ipad", title: "Use Biometrics", headline: "Open only with Face ID or Touch ID", color: .red)
-                }
-            }
-            Section{
-                Button(action: {resetAlert.toggle()}){
-                    rowLabel(title: "Reset", headline: "Reset custom settings", color: .red)
-                }
-            }
-            .alert("Reset Settings", isPresented: $resetAlert) {
-                Button("Reset", role:.destructive){
-                    settingsMgrVM.settingsManager.privacyAndSecurityManager.resetSettings()
-                }
-            } message: {
-                Text("Do you want to reset the privacy and security settings?")
-            }
-
-        }
-        .navigationTitle("Privacy and Security")
-        .navigationBarTitleDisplayMode(.inline)
+    var colorTheme: Color {
+        settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
-    @ViewBuilder
-    func rowLabel(imageName: String? = nil, title: LocalizedStringKey, headline: LocalizedStringKey, color: Color) -> some View{
-        HStack{
-            if let imageName{
-                Image(systemName: imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 25, maxHeight: 25)
-                    .foregroundStyle(color)
-            }
-            VStack(alignment: .leading){
-                Text(title)
-                    .font(.system(.headline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(color)
-                Text(headline)
-                    .font(.system(.caption, design: .rounded, weight: .light))
-                    .foregroundStyle(.gray)
-            }
+    
+    var body: some View {
+        ScrollView{
+            SettingsRowComponent(title: "Lock App", subtitle: "Lock the app when it is backgrounded", image: "lock.square.stack.fill", color: .purple.opacity(0.8), toggler: $settingsMgrVM.settingsManager.privacyAndSecurityManager.lockWhenBackgrounded, showingToggleState: true)
+                .padding(.top, 10)
+            
+            SettingsRowComponent(title: "Use Biometrics", subtitle: "Open only with Face ID or Touch ID.", image: "faceid", color: .green, toggler: $settingsMgrVM.settingsManager.privacyAndSecurityManager.useBiometrics, showingToggleState: true)
+            
+            SettingsRowComponent(title: "Reset", subtitle: "Reset the custom settings", image: "arrow.triangle.2.circlepath", color: .red, toggler: $resetAlert)
+            
         }
+        .navigationTitle("Privacy & Security")
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Constants.backgroundColor)
+        .alert("Reset Settings", isPresented: $resetAlert) {
+            Button("Reset", role:.destructive, action:settingsMgrVM.settingsManager.privacyAndSecurityManager.resetSettings)
+        } message: {
+            Text("Reset all the custom Settings?")
+        }
+
     }
 }
 
 #Preview {
     NavigationStack{
-        PrivacySecuritySettingsView(settingsMgrVM: MockPreviews.viewModel)
+        PrivacySecuritySettingsView(settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
     }
 }

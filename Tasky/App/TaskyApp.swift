@@ -12,6 +12,7 @@ import BackgroundTasks
 struct TaskyApp: App {
     @StateObject var persistentController = PersistentController.shared
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
             MainView()

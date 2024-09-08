@@ -21,9 +21,7 @@ struct TagSettingsView: View {
     }
     
     var body: some View {
-        VStack(spacing: 20){
-            SettingsHeaderComponent(settingsMgrVM: settingsManagerVM, path: $path, title: "Tags", buttonItems: [.init(systemImage: "questionmark.circle", color: colorTheme, action: {})])
-                .padding(.horizontal, 10)
+        ScrollView{
             ScrollView(.horizontal){
                 LazyHStack(spacing: 15){
                     ForEach(tagVM.tags, id: \.self) { tag in
@@ -39,17 +37,21 @@ struct TagSettingsView: View {
                             .background(colorTheme, in:.circle)
                     }
                 }
-                .padding(.horizontal, 15)
+                .padding(.horizontal, 25)
             }
             .scrollIndicators(.hidden)
             .frame(height: 50)
-            .padding(.bottom, 15)
+            .padding(.vertical, 10)
             SettingsRowComponent(title: "Add New Tag", image: "plus", color: .yellow, toggler: $isAddingTag)
                 .padding(.horizontal, 10)
             SettingsRowComponent(title: "Remove All Tags", image: "trash.fill", color: .red, toggler: $deleteAllAlert)
                 .padding(.horizontal, 10)
             Spacer()
         }
+        .scrollIndicators(.hidden)
+        .navigationTitle("Tags")
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Constants.backgroundColor)
         .sheet(isPresented: $isAddingTag){
             AddingTagView(tagVM: tagVM, settingsMgrVm: settingsManagerVM)
                 .presentationDetents([.large])

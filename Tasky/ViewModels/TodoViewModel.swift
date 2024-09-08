@@ -237,6 +237,17 @@ class TodoViewModel: ObservableObject {
         print("Uncomplete todo: \(todo.title ?? "")")
     }
     
+    // MARK: - SAVING
+    func saveTodo(_ todo: Todo){
+        todo.isSaved = true
+        saveContext()
+    }
+    
+    func unsaveTodo(_ todo: Todo){
+        todo.isSaved = false
+        saveContext()
+    }
+    
     // MARK: - DATE ACTIONS
     func addADayTodo(_ todo: Todo) {
         if let dueDate = todo.dueDate {

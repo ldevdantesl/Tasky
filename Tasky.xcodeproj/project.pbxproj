@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA176CE02C8D88E600E15357 /* UIKitRepresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */; };
 		DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */; };
 		DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */; };
 		DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */; };
@@ -24,7 +25,7 @@
 		DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */; };
 		DA4B19882C7AD64900899303 /* AuthenticateUserFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */; };
 		DA4B19902C7AF19700899303 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DA4B198F2C7AF19700899303 /* Localizable.xcstrings */; };
-		DA6944692C7C2D330032437C /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6944682C7C2D330032437C /* AppearanceView.swift */; };
+		DA6944692C7C2D330032437C /* AppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6944682C7C2D330032437C /* AppearanceSettingsView.swift */; };
 		DA69446B2C7C3DB80032437C /* AppearanceSettingsManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446A2C7C3DB80032437C /* AppearanceSettingsManaging.swift */; };
 		DA69446D2C7C3E760032437C /* AppearanceSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */; };
 		DA69446F2C7C40A30032437C /* ColorThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446E2C7C40A30032437C /* ColorThemes.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitRepresentables.swift; sourceTree = "<group>"; };
 		DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTagsFragmentView.swift; sourceTree = "<group>"; };
 		DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewHelpers.swift; sourceTree = "<group>"; };
 		DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateFragmentView.swift; sourceTree = "<group>"; };
@@ -95,7 +97,7 @@
 		DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySecuritySettingsView.swift; sourceTree = "<group>"; };
 		DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUserFragmentView.swift; sourceTree = "<group>"; };
 		DA4B198F2C7AF19700899303 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		DA6944682C7C2D330032437C /* AppearanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceView.swift; sourceTree = "<group>"; };
+		DA6944682C7C2D330032437C /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
 		DA69446A2C7C3DB80032437C /* AppearanceSettingsManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsManaging.swift; sourceTree = "<group>"; };
 		DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsManager.swift; sourceTree = "<group>"; };
 		DA69446E2C7C40A30032437C /* ColorThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemes.swift; sourceTree = "<group>"; };
@@ -164,10 +166,11 @@
 			children = (
 				DAF063592C7D65FC00ADE7E8 /* TagSettingsView.swift */,
 				DA38A34F2C76D009007C3FB4 /* NotificationAndSoundsView.swift */,
+				DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */,
 				DA38A3512C76F30C007C3FB4 /* DataAndStorageView.swift */,
 				DA4B19802C79C46400899303 /* ArchivedTodoDetailView.swift */,
 				DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */,
-				DA6944682C7C2D330032437C /* AppearanceView.swift */,
+				DA6944682C7C2D330032437C /* AppearanceSettingsView.swift */,
 				DAF0635B2C7E85AB00ADE7E8 /* FAQView.swift */,
 			);
 			path = SettingsViews;
@@ -316,6 +319,7 @@
 				DA69CA002C8994AF00B3C511 /* TagImages.json */,
 				DA69CA022C8997A000B3C511 /* TagImagesModel.swift */,
 				DA9830B72C8BEAC900368C0A /* ButtonItem.swift */,
+				DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -346,7 +350,6 @@
 				DA38A3552C770C16007C3FB4 /* TagLazyFragmentView.swift */,
 				DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */,
 				DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */,
-				DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */,
 				DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */,
 				DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */,
 				DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */,
@@ -487,7 +490,7 @@
 				DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */,
 				DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */,
 				DAF0635E2C7EC43D00ADE7E8 /* TagsForTodoView.swift in Sources */,
-				DA6944692C7C2D330032437C /* AppearanceView.swift in Sources */,
+				DA6944692C7C2D330032437C /* AppearanceSettingsView.swift in Sources */,
 				DAC7554D2C844ED600112F40 /* TextFieldComponent.swift in Sources */,
 				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
 				DA69C9AD2C858DB100B3C511 /* YourTodosComponentView.swift in Sources */,
@@ -504,6 +507,7 @@
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
 				DA4B19812C79C46400899303 /* ArchivedTodoDetailView.swift in Sources */,
 				DA69446D2C7C3E760032437C /* AppearanceSettingsManager.swift in Sources */,
+				DA176CE02C8D88E600E15357 /* UIKitRepresentables.swift in Sources */,
 				DA9830B82C8BEAC900368C0A /* ButtonItem.swift in Sources */,
 				DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */,
 				DAC755472C82967000112F40 /* TodoRowView.swift in Sources */,

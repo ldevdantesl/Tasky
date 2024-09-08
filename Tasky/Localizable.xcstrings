@@ -107,9 +107,6 @@
     "Add Tag" : {
 
     },
-    "Add Todo" : {
-
-    },
     "Add todos to get started" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -264,7 +261,6 @@
       }
     },
     "Archived Todos" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -275,6 +271,7 @@
       }
     },
     "Blur the app when it is backgrounded" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -294,7 +291,11 @@
         }
       }
     },
+    "Check this App..." : {
+
+    },
     "Choose a theme for the app" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -361,6 +362,7 @@
       }
     },
     "Color Theme" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -377,6 +379,7 @@
 
     },
     "Daily Reminder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -387,6 +390,7 @@
       }
     },
     "Dark" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -395,6 +399,9 @@
           }
         }
       }
+    },
+    "Data & Storage" : {
+
     },
     "Data and Storage" : {
       "extractionState" : "stale",
@@ -411,6 +418,7 @@
 
     },
     "Define your app mode" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -612,6 +620,7 @@
       }
     },
     "Do you want to reset the privacy and security settings?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -709,7 +718,6 @@
       }
     },
     "FAQ" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -742,6 +750,9 @@
       }
     },
     "Go to Today" : {
+
+    },
+    "Hey Checkout this App" : {
 
     },
     "Hey checkout this app." : {
@@ -780,9 +791,6 @@
         }
       }
     },
-    "ldevdantesl@gmail.com" : {
-
-    },
     "Leave Description?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -795,6 +803,7 @@
       }
     },
     "Light" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -805,6 +814,7 @@
       }
     },
     "Lock in Background" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -828,6 +838,7 @@
       }
     },
     "Mode" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -879,7 +890,7 @@
         }
       }
     },
-    "No active todos for this day." : {
+    "No active todos for this day" : {
 
     },
     "No archived Todos" : {
@@ -909,7 +920,7 @@
         }
       }
     },
-    "No todos for this day." : {
+    "No todos for this day" : {
 
     },
     "No todos yet" : {
@@ -926,7 +937,11 @@
     "Nothing is done for this day." : {
 
     },
+    "Notification & Sounds" : {
+
+    },
     "Notification and Sounds" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -959,6 +974,7 @@
       }
     },
     "Open only with Face ID or Touch ID" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -969,6 +985,7 @@
       }
     },
     "Pause All" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1026,7 +1043,11 @@
         }
       }
     },
+    "Privacy & Security" : {
+
+    },
     "Privacy and Security" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1122,7 +1143,6 @@
       }
     },
     "Removed Todos" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1143,6 +1163,7 @@
       }
     },
     "Reset all" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1153,6 +1174,7 @@
       }
     },
     "Reset all settings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1162,7 +1184,11 @@
         }
       }
     },
+    "Reset all the custom Settings?" : {
+
+    },
     "Reset custom settings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1193,7 +1219,6 @@
       }
     },
     "Save" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1214,16 +1239,11 @@
         }
       }
     },
-    "See Active" : {
-
-    },
-    "See Completed" : {
-
-    },
     "Select a Date" : {
 
     },
     "Send a reminder %lld hours before scheduled" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1234,6 +1254,7 @@
       }
     },
     "Send Reminder: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1244,6 +1265,7 @@
       }
     },
     "Send total todos notification at 9 am everyday" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1306,6 +1328,7 @@
       }
     },
     "Status: " : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1316,6 +1339,7 @@
       }
     },
     "System" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1337,7 +1361,6 @@
       }
     },
     "Tags" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1371,6 +1394,7 @@
       }
     },
     "Temporarily pause all notifications" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1623,6 +1647,7 @@
       }
     },
     "Use Biometrics" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1675,10 +1700,19 @@
         }
       }
     },
+    "You don't have any active todos for this day. Tap to see done" : {
+
+    },
+    "You don't have any todos for this day. Tap to add" : {
+
+    },
     "You don't have archived Todos, archive any to see it here" : {
 
     },
     "You don't have deleted Todos, delete any to see it here" : {
+
+    },
+    "You don't have done todos for this day. Tap to see active" : {
 
     }
   },
