@@ -36,6 +36,13 @@ extension ColorScheme{
 }
 
 extension Date {
+    
+    var getTomorrowDay: Date {
+        var dateComponent = DateComponents()
+        dateComponent.day = 1
+        return Calendar.current.date(byAdding: dateComponent, to: self)!
+    }
+    
     var getDayDigit: Int {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd"

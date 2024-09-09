@@ -64,6 +64,16 @@
         }
       }
     },
+    "%lld of %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$@"
+          }
+        }
+      }
+    },
     "%lld/%lld" : {
       "localizations" : {
         "en" : {
@@ -205,6 +215,9 @@
         }
       }
     },
+    "Archive Todo? " : {
+
+    },
     "Archive Todos" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -280,6 +293,12 @@
           }
         }
       }
+    },
+    "By Custom Date" : {
+
+    },
+    "By Tomorrow" : {
+
     },
     "Can't remove it is used" : {
       "localizations" : {
@@ -470,6 +489,7 @@
       }
     },
     "Delete To-Do" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -480,6 +500,7 @@
       }
     },
     "Delete Todo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -511,6 +532,7 @@
       }
     },
     "Description:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -524,6 +546,7 @@
 
     },
     "Do you really want to %@ this Todo?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -543,6 +566,9 @@
           }
         }
       }
+    },
+    "Do you really want to archive this Todo?" : {
+
     },
     "Do you really want to clear all the cache?" : {
       "extractionState" : "stale",
@@ -669,6 +695,7 @@
       }
     },
     "Due Date:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -690,7 +717,6 @@
       }
     },
     "Edit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -699,6 +725,9 @@
           }
         }
       }
+    },
+    "Edit Todo" : {
+
     },
     "fair_key" : {
       "extractionState" : "manual",
@@ -828,6 +857,7 @@
 
     },
     "Menu" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -890,15 +920,6 @@
         }
       }
     },
-    "No active todos for this day" : {
-
-    },
-    "No archived Todos" : {
-
-    },
-    "No deleted todos" : {
-
-    },
     "No tags for this todo" : {
       "localizations" : {
         "ru" : {
@@ -920,9 +941,6 @@
         }
       }
     },
-    "No todos for this day" : {
-
-    },
     "No todos yet" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -933,9 +951,6 @@
           }
         }
       }
-    },
-    "Nothing is done for this day." : {
-
     },
     "Notification & Sounds" : {
 
@@ -1100,6 +1115,7 @@
       }
     },
     "Remove To-Do? " : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1119,6 +1135,9 @@
           }
         }
       }
+    },
+    "Remove Todo? " : {
+
     },
     "Remove Todos" : {
       "extractionState" : "stale",
@@ -1151,6 +1170,9 @@
           }
         }
       }
+    },
+    "Repeat" : {
+
     },
     "Reset" : {
       "localizations" : {
@@ -1318,6 +1340,7 @@
       }
     },
     "Status:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1555,6 +1578,7 @@
       }
     },
     "Unarchive To-Do" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1568,7 +1592,6 @@
 
     },
     "Undone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1637,6 +1660,7 @@
       }
     },
     "Unremove Todo" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1699,21 +1723,6 @@
           }
         }
       }
-    },
-    "You don't have any active todos for this day. Tap to see done" : {
-
-    },
-    "You don't have any todos for this day. Tap to add" : {
-
-    },
-    "You don't have archived Todos, archive any to see it here" : {
-
-    },
-    "You don't have deleted Todos, delete any to see it here" : {
-
-    },
-    "You don't have done todos for this day. Tap to see active" : {
-
     }
   },
   "version" : "1.0"

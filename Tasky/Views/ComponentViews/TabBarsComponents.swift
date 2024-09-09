@@ -47,11 +47,12 @@ struct TabBarsComponent: View {
                                 .padding(.leading, 5)
                             Text("Home")
                                 .font(.system(.headline, design: .rounded, weight: .semibold))
-                                .foregroundStyle(.black.opacity(0.8))
+                                .foregroundStyle(.primary.opacity(0.8))
                                 .padding(.trailing, 10)
                         }
                     }
             }
+            .buttonStyle(.plain)
             Button{
                 withAnimation {
                     path.append("AddTodoView")
@@ -82,7 +83,7 @@ struct TabBarsComponent: View {
                         HStack{
                             Text("Settings")
                                 .font(.system(.headline, design: .rounded, weight: .semibold))
-                                .foregroundStyle(.black.opacity(0.8))
+                                .foregroundStyle(.primary.opacity(0.8))
                             
                             Circle()
                                 .fill(!isSelectedHome ? colorTheme : .gray.opacity(0.4))
@@ -98,6 +99,7 @@ struct TabBarsComponent: View {
                         }
                     }
             }
+            .buttonStyle(.plain)
             .disabled(path.count > 0)
         }
         .padding(.horizontal,10)

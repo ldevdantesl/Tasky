@@ -37,21 +37,12 @@ struct ArchivedTodosView: View {
                     Text("Do you really want to Unarchive all?")
                 }
             } else {
-                VStack{
-                    Image(systemName: "archivebox.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                        .foregroundStyle(.green)
-                    Text("No archived Todos")
-                        .font(.system(.title2, design: .rounded, weight: .bold))
-                    Text("You don't have archived Todos, archive any to see it here")
-                        .font(.system(.caption, design: .rounded, weight: .light))
-                        .foregroundStyle(.secondary)
-                }
+                NoFoundComponentView(image: "archivebox.fill", color: .green, title: "No archived Todos", subtitle: "You don't have archived Todos, archive any to see it here")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.top, Constants.screenHeight / 3)
             }
         }
+        .background(Color.background)
         .scrollIndicators(.hidden)
         .navigationTitle("Archived Todos")
         .navigationBarTitleDisplayMode(.inline)

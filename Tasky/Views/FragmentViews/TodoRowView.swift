@@ -19,13 +19,23 @@ struct TodoRowView: View {
                 .fill(TodoViewHelpers(todo: todo).priorityColor.gradient.opacity(0.8))
             
             VStack(alignment:.leading){
-                
-                Text(todo.title ?? "Uknown title")
-                    .font(.system(.title3, design: .rounded, weight: .bold))
-                    .lineLimit(1)
-                
+                HStack{
+                    Text(todo.title ?? "Uknown title")
+                        .font(.system(.title3, design: .rounded, weight: .bold))
+                        .lineLimit(1)
+                    Spacer()
+                    if todo.isSaved {
+                        Image(systemName: "bookmark.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .foregroundStyle(.white)
+                    }
+                }
                 Text(todo.desc ?? "No description")
                     .font(.system(.subheadline, design: .rounded, weight: .regular))
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
                 
                 Spacer()
                 

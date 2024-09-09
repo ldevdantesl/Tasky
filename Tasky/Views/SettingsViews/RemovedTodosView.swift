@@ -48,21 +48,12 @@ struct RemovedTodosView: View {
                     Text("Do you really want to delete all removed Todos?")
                 }
             } else {
-                VStack{
-                    Image(systemName: "trash.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50, height: 50)
-                        .foregroundStyle(.red)
-                    Text("No deleted todos")
-                        .font(.system(.title2, design: .rounded, weight: .bold))
-                    Text("You don't have deleted Todos, delete any to see it here")
-                        .font(.system(.caption, design: .rounded, weight: .light))
-                        .foregroundStyle(.secondary)
-                }
+                NoFoundComponentView(image: "trash.fill", color: .red, title: "No deleted todos", subtitle: "You don't have deleted Todos, delete any to see it here")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.top, Constants.screenHeight / 3)
             }
         }
+        .background(Color.background)
         .navigationTitle("Removed Todos")
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -33,58 +33,19 @@ struct TodoListView: View {
     
     var body: some View {
         if todoVM.todayTodos.isEmpty{
-            VStack{
-                Image(systemName: "plus.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .foregroundStyle(colorTheme)
-                Text("No todos for this day")
-                    .font(.system(.title2, design: .rounded, weight: .bold))
-                Text("You don't have any todos for this day. Tap to add")
-                    .font(.system(.caption, design: .rounded, weight: .light))
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.top, Constants.screenHeight / 6)
-            .onTapGesture {
+            NoFoundComponentView(image: "plus.circle.fill", color: colorTheme, title: "No todos for this day", subtitle: "You don't have any todos for this day. Tap to add") {
                 path.append("AddTodoView")
             }
+            .padding(.top, Constants.screenHeight / 6)
+        
         } else if isShowingActive && activeTodos.isEmpty {
-            VStack{
-                Image(systemName: "checkmark.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .foregroundStyle(colorTheme)
-                Text("No active todos for this day")
-                    .font(.system(.title2, design: .rounded, weight: .bold))
-                Text("You don't have any active todos for this day. Tap to see done")
-                    .font(.system(.caption, design: .rounded, weight: .light))
-                    .foregroundStyle(.secondary)
+            NoFoundComponentView(image: "checkmark.circle.fill", color: colorTheme, title: "No active todos for this day", subtitle: "You don't have any active todos for this day. Tap to see done") {
+                isShowingActive = false
             }
             .padding(.top, Constants.screenHeight / 6)
-            .onTapGesture {
-                withAnimation {
-                    isShowingActive = false
-                }
-            }
         } else if !isShowingActive && doneTodos.isEmpty {
-            VStack{
-                Image(systemName: "checklist")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-                    .foregroundStyle(colorTheme)
-                Text("Nothing is done for this day.")
-                    .font(.system(.title2, design: .rounded, weight: .bold))
-                Text("You don't have done todos for this day. Tap to see active")
-                    .font(.system(.caption, design: .rounded, weight: .light))
-                    .foregroundStyle(.secondary)
-            }
-            .onTapGesture {
-                withAnimation {
-                    isShowingActive = true
-                }
+            NoFoundComponentView(image: "checklist", color: colorTheme, title: "Nothing is done for this day", subtitle: "You don't have done todos for this day. Tap to see active") {
+                isShowingActive = true
             }
             .padding(.top, Constants.screenHeight / 6)
         } else {
@@ -98,7 +59,6 @@ struct TodoListView: View {
             }
             .navigationDestination(for: Todo.self){ todo in
                 TodoDetailView(observedTodo: todo, todoVM: todoVM, tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
-                    
             }
             .scrollIndicators(.hidden)
         }

@@ -26,13 +26,13 @@ struct CapsuleDateComponent: View {
         VStack{
             Capsule()
                 .stroke(Color.gray, lineWidth: 1)
-                .background(isItCurrentDay ? colorTheme : Color.clear, in:.capsule)
+                .background(isItCurrentDay ? colorTheme : Color.background, in:.capsule)
                 .frame(width: 50, height: isSmall ? 70 : 90)
                 .foregroundStyle(.clear)
                 .overlay{
                     Text("\(day.getDayDigit)")
                         .font(.system(.headline, design: .rounded, weight: isItCurrentDay ? .bold : .regular))
-                        .foregroundStyle(isItCurrentDay ? .white : .black)
+                        .foregroundStyle(isItCurrentDay ? .white : .primary)
                 }
             
             Text(day.getWeekName.prefix(3).capitalized)

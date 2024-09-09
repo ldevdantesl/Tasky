@@ -95,7 +95,7 @@ struct AddTodoView: View {
                     .scrollDismissesKeyboard(.immediately)
                     .padding(10)
                     .frame(maxWidth: Constants.screenWidth - 30)
-                    .background(Constants.textFieldColor, in: .capsule)
+                    .background(Constants.textFieldColor, in: .rect(cornerRadius: 25))
                     .shadow(color: Color.black.opacity(focusedField == .description ? 0.2 : 0), radius: 10, x: 0, y: 5)
             }
             .padding(.bottom,15)
