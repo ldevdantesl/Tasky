@@ -38,7 +38,7 @@ struct TagLazyFragmentView: View {
                 LazyHStack {
                     ForEach(tagVM.tags, id: \.self) { tag in
                         Button(action: {addToSelection(tag: tag)}){
-                            TagCapsuleView(tag: tag, showsSelection: true, selectedTags: $selectedTags)
+                            TagCapsuleView(tag: tag, showsSelection: true, selectedTags: $selectedTags, tagVM: tagVM)
                         }
                         .contextMenu {
                             if selectedTags.contains(where: { $0 == tag }) {

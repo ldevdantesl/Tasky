@@ -24,7 +24,7 @@ struct CapsuleWeekStackComponent: View {
     }
     
     var currentMonth: [Date] {
-        calendar.getWholeMonth(for: selectedMonth) ?? []
+        calendar.getWholeMonth(for: selectedMonth, locale: settingsManagerVM.currentLanguage) ?? []
     }
     
     var body: some View {

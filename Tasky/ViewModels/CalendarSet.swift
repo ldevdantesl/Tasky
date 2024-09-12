@@ -35,10 +35,10 @@ class CalendarSet: ObservableObject{
         return currentWeekDates
     }
     
-    func getWholeMonth(for monthName: String) -> [Date]? {
+    func getWholeMonth(for monthName: String, locale: String = "en_US") -> [Date]? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM" // Full month name format
-        dateFormatter.locale = Locale(identifier: "en_US") // Locale (adjust if necessary)
+        dateFormatter.locale = Locale(identifier: locale)
         
         // Convert month name to a Date
         if let monthDate = dateFormatter.date(from: monthName) {
@@ -78,5 +78,32 @@ class CalendarSet: ObservableObject{
     
     func returnToToday() {
         currentDay = .now
+    }
+    
+    func showHowManyDaysLeft(for futureDate: Date) -> String {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        guard futureDate.getDayAndMonth != currentDate.getDayAndMonth else {
+            return "Today"
+        }
+        
+        // Ensure the future date is indeed in the future
+        guard futureDate > currentDate else {
+            return "The date has passed"
+        }
+        
+        // Calculate the difference in components (days, months, years)
+        let components = calendar.dateComponents([.year, .month, .day], from: currentDate, to: futureDate)
+        
+        if let years = components.year, years > 0 {
+            return years == 1 ? "1 year left" : "\(years) years left"
+        } else if let months = components.month, months > 0 {
+            return months == 1 ? "1 month left" : "\(months) months left"
+        }else if let days = components.day, days > 0 {
+            return days == 1 ? "1 day left" : "\(days) days left"
+        } else {
+            return "Less than a day left"
+        }
     }
 }

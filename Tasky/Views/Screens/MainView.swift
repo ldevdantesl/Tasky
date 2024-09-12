@@ -9,10 +9,14 @@ import SwiftUI
 import LocalAuthentication
 
 struct MainView: View {
+    @AppStorage("isFirstEntry") var isFirstEntry: Bool = true
+    
     @Environment(\.scenePhase) var scenePhase
+    
     @StateObject var settingsManagerVM: SettingsManagerViewModel
     @StateObject var todoVM: TodoViewModel = TodoViewModel()
     @StateObject var tagVM: TagViewModel = TagViewModel()
+    
     @State var showAutenticationView: Bool = false
     @State var showLaunchScreen: Bool = true
     
@@ -39,6 +43,16 @@ struct MainView: View {
                             self.showLaunchScreen = false
                         }
                     }
+                }
+        } else if isFirstEntry {
+            AppIntroScreen()
+                .onAppear{
+                    tagVM.createTag("Work", color: .purple, systemImage: "bag.fill")
+                    tagVM.createTag("Personal", color: .yellow, systemImage: "person")
+                    
+                    todoVM.createTodo(title: "Explore the app", description: "Explore the Tasky app for myself. Be excited.", priority: 1, dueDate: .now, tags: tagVM.tags)
+                    
+                    todoVM.createTodo(title: "Create CV", description: nil, priority: 2, dueDate: .now, tags: [tagVM.tags[0]], isSaved: true)
                 }
         } else {
             TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)

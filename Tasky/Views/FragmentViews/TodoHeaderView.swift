@@ -33,7 +33,7 @@ struct TodoHeaderView: View {
                     }
                 } label: {
                     HStack{
-                        Text("\(selectedMonth)")
+                        Text("\(selectedMonth.capitalized)")
                             .font(.system(.title, design: .rounded, weight: .bold))
                         Image(systemName: "chevron.up.chevron.down")
                             .resizable()

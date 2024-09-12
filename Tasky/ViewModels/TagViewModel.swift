@@ -106,13 +106,15 @@ extension TagViewModel{
     static func mockTags() -> [Tag]{
         let newTag = Tag(context: PersistentController.shared.context)
         newTag.id = UUID()
-        newTag.name = "Kitchen Work and bla bla bla bla bla bla"
-        newTag.color = Color.gray.opacity(0.3).toData()
+        newTag.name = "Work"
+        newTag.systemImage = "bag.fill"
+        newTag.color = Color.blue.toData()
         
         let newTag2 = Tag(context: PersistentController.shared.context)
         newTag2.id = UUID()
-        newTag2.name = "Home Work"
-        newTag2.color = Color.blue.toData()
+        newTag2.name = "Personal"
+        newTag2.systemImage = "person"
+        newTag2.color = Color.purple.toData()
         
         return [newTag, newTag2]
     }

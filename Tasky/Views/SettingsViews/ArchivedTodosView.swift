@@ -25,6 +25,7 @@ struct ArchivedTodosView: View {
             if !archivedTodos.isEmpty{
                 ForEach(archivedTodos){ todo in
                     TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                        .padding(.horizontal, 10)
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {

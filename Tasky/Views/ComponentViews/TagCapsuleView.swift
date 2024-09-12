@@ -8,21 +8,27 @@
 import SwiftUI
 
 struct TagCapsuleView: View {
-    let tag: Tag
-    let showsSelection: Bool
+    @ObservedObject var tagVM: TagViewModel
     
     @Binding var selectedTags: [Tag]
     
-    init(tag: Tag, showsSelection: Bool = true, selectedTags: Binding<[Tag]>) {
+    @State private var showTodoForTag: Bool = false
+    
+    let tag: Tag
+    let showsSelection: Bool
+    
+    init(tag: Tag, showsSelection: Bool = true, selectedTags: Binding<[Tag]>, tagVM: TagViewModel) {
         self.tag = tag
         self.showsSelection = showsSelection
         self._selectedTags = selectedTags
+        self.tagVM = tagVM
     }
     
-    init(tag: Tag) {
+    init(tag: Tag, tagVM: TagViewModel) {
         self.tag = tag
         self.showsSelection = false
         self._selectedTags = .constant([])
+        self.tagVM = tagVM
     }
     
     var body: some View {
@@ -48,6 +54,19 @@ struct TagCapsuleView: View {
         }
         .padding(10)
         .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
+        .contextMenu{
+            if !showsSelection{
+                Button("See All todos", systemImage: "checklist", action: {showTodoForTag.toggle()})
+            }
+            Button("Delete tag", systemImage: "trash.fill"){
+                withAnimation {
+                    tagVM.deleteTag(tag: tag)
+                }
+            }
+        }
+        .sheet(isPresented: $showTodoForTag){
+            TodosForTagFragmentView(tag: tag)
+        }
     }
     
     func isSelected(tag: Tag) -> Bool{
@@ -56,5 +75,5 @@ struct TagCapsuleView: View {
 }
 
 #Preview {
-    TagCapsuleView(tag: TagViewModel.mockTags()[0], showsSelection: true, selectedTags: .constant([]))
+    TagCapsuleView(tag: TagViewModel.mockTags()[0], showsSelection: true, selectedTags: .constant([]),tagVM: TagViewModel())
 }

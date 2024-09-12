@@ -46,7 +46,7 @@ struct TabBarsComponent: View {
                                 }
                                 .padding(.leading, 5)
                             Text("Home")
-                                .font(.system(.headline, design: .rounded, weight: .semibold))
+                                .font(.system(.subheadline, design: .rounded, weight: .semibold))
                                 .foregroundStyle(.primary.opacity(0.8))
                                 .padding(.trailing, 10)
                         }
@@ -82,7 +82,7 @@ struct TabBarsComponent: View {
                     .overlay(alignment:.trailing) {
                         HStack{
                             Text("Settings")
-                                .font(.system(.headline, design: .rounded, weight: .semibold))
+                                .font(.system(.subheadline, design: .rounded, weight: .semibold))
                                 .foregroundStyle(.primary.opacity(0.8))
                             
                             Circle()

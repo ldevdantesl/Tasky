@@ -34,6 +34,10 @@ class AppearanceSettingsManager: AppearanceSettingsManaging {
         }
     }
     
+    func reset() {
+        colorTheme = .green
+    }
+    
     init() {
         self.context = PersistentController.shared.context
         if let data = userDefaults.data(forKey: colorThemeKey), let color = Color.fromData(data){

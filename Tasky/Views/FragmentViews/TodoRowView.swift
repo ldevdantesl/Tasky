@@ -8,10 +8,26 @@
 import SwiftUI
 
 struct TodoRowView: View {
-    @State var todo: Todo
+    @ObservedObject var todo: Todo
     
     @ObservedObject var settingsManagerVM: SettingsManagerViewModel
     @ObservedObject var todoVM: TodoViewModel
+    
+    private var isFullInitType: Bool
+    
+    init(todo: Todo, settingsManagerVM: SettingsManagerViewModel, todoVM: TodoViewModel) {
+        self.todo = todo
+        self.settingsManagerVM = settingsManagerVM
+        self.todoVM = todoVM
+        self.isFullInitType = true
+    }
+    
+    init(todo: Todo) {
+        self.todo = todo
+        self.todoVM = TodoViewModel()
+        self.settingsManagerVM = MockPreviews.viewModel
+        self.isFullInitType = false
+    }
     
     var body: some View {
         ZStack(alignment:.topLeading){
@@ -64,40 +80,49 @@ struct TodoRowView: View {
         .frame(width: Constants.screenWidth - 20)
         .frame(minHeight: 130, maxHeight: 130)
         .contextMenu {
-            if !todo.isRemoved && !todo.isArchived{
-                Button(todo.isDone ? "Uncomplete" : "Complete", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill"){
-                    withAnimation {
-                        todo.isDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
+            if isFullInitType{
+                if !todo.isRemoved && !todo.isArchived{
+                    Button(todo.isDone ? "Uncomplete" : "Complete", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill"){
+                        withAnimation {
+                            todo.isDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
+                        }
+                    }
+                    Button("Remove", systemImage: "trash.fill"){
+                        withAnimation {
+                            todoVM.removeTodo(todo)
+                        }
+                    }
+                    Button("Archive", systemImage: "archivebox.fill"){
+                        withAnimation {
+                            todoVM.archive(todo)
+                        }
                     }
                 }
-                Button("Remove", systemImage: "trash.fill"){
-                    withAnimation {
-                        todoVM.removeTodo(todo)
+                if todo.isRemoved {
+                    Button("Unremove", systemImage: "trash.slash.fill"){
+                        withAnimation {
+                            todoVM.unRemoveTodo(todo)
+                        }
+                    }
+                    Button("Delete", systemImage: "trash.fill"){
+                        withAnimation {
+                            todoVM.deleteTodo(todo)
+                        }
+                    }
+                    .tint(.red)
+                }
+                if todo.isArchived{
+                    Button("Unarchive", systemImage: "archivebox"){
+                        withAnimation {
+                            todoVM.unArchive(todo)
+                        }
                     }
                 }
-                Button("Archive", systemImage: "archivebox.fill"){
-                    withAnimation {
-                        todoVM.archive(todo)
-                    }
-                }
-            }
-            if todo.isRemoved {
-                Button("Unremove", systemImage: "trash.slash.fill"){
-                    withAnimation {
-                        todoVM.unRemoveTodo(todo)
-                    }
-                }
-                Button("Delete", systemImage: "trash.fill"){
-                    withAnimation {
-                        todoVM.deleteTodo(todo)
-                    }
-                }
-                .tint(.red)
-            }
-            if todo.isArchived{
-                Button("Unarchive", systemImage: "archivebox"){
-                    withAnimation {
-                        todoVM.unArchive(todo)
+                if todo.isSaved{
+                    Button("Unsave", systemImage: "bookmark.circle.fill"){
+                        withAnimation {
+                            todoVM.unsaveTodo(todo)
+                        }
                     }
                 }
             }

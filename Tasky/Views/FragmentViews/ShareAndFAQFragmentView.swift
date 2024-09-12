@@ -14,7 +14,7 @@ struct ShareAndFAQFragmentView: View {
         HStack{
             ShareLink(item: appStoreLink, subject: Text("Hey Checkout this App"), message: Text("Check this App...")){
                 Capsule().fill(Color.gray)
-                    .frame(width: Constants.screenWidth / 2.7, height: 55)
+                    .frame(width: Constants.screenWidth / 2, height: 55)
                     .overlay{
                         HStack(spacing: 10){
                             Image(systemName: "paperplane")

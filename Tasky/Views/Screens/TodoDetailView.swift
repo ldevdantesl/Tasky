@@ -14,10 +14,12 @@ struct TodoDetailView: View {
     @ObservedObject private var tagVM: TagViewModel
     @ObservedObject private var settingsManagerVM: SettingsManagerViewModel
     @ObservedObject var todo: Todo
+    @ObservedObject var calendarSet: CalendarSet
     
     @Binding var path: NavigationPath
     
     @State private var showAlert: Bool = false
+    @State private var showHowManyDaysLeft: Bool = false
     @State private var showArchiveAlert: Bool = false
     @State private var showRepeat: Bool = false
     @State private var showCustomDate: Bool = false
@@ -32,6 +34,7 @@ struct TodoDetailView: View {
         self.tagVM = tagVM
         self.settingsManagerVM = settingsManagerVM
         self._path = path
+        self._calendarSet = ObservedObject(wrappedValue: CalendarSet.instance)
     }
     
     var body: some View {
@@ -65,7 +68,8 @@ struct TodoDetailView: View {
                         Spacer()
                         
                         Capsule()
-                            .frame(width: 90, height: 30)
+                            .frame(minWidth: 90, maxWidth: 120)
+                            .frame(height: 30)
                             .foregroundStyle(TodoViewHelpers(todo: todo).priorityColor)
                             .overlay {
                                 Text(TodoViewHelpers(todo: todo).priorityName)
@@ -77,31 +81,79 @@ struct TodoDetailView: View {
                 .padding(.bottom, 15)
             
             HStack{
+                Text("Double click to change")
+                    .font(.system(.subheadline, design: .rounded, weight: .bold))
+                    .foregroundStyle(.secondary)
+                    .padding(.leading, 5)
+                    
                 Spacer()
-                Capsule()
-                    .fill(todo.isDone ? Color.green.gradient : Color.gray.gradient)
-                    .frame(width: 120, height: 35)
-                    .overlay {
-                        HStack(spacing: 5){
-                            Text(todo.isDone ? "Done" : "Undone")
-                                .font(.system(.headline, design: .rounded, weight: .bold))
-                                .foregroundStyle(.white)
-                            Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill" )
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .foregroundStyle(.white)
+                    
+                VStack{
+                    Capsule()
+                        .fill(todo.isDone ? Color.green.gradient : Color.gray.gradient)
+                        .frame(minWidth: 120, maxWidth: 150)
+                        .frame(height: 35)
+                        .overlay {
+                            HStack(spacing: 5){
+                                Text(todo.isDone ? "Done" : "Undone")
+                                    .font(.system(.headline, design: .rounded, weight: .bold))
+                                    .foregroundStyle(.white)
+                                Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill" )
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundStyle(.white)
+                            }
                         }
-                    }
-                    .onTapGesture(count: 2){
-                        withAnimation{
-                            todo.isDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
-                            dismiss()
+                        .onTapGesture(count: 2, perform: {doneOrUndoneTodo(makeDone: todo.isDone)})
+                        .contextMenu {
+                            if todo.isDone {
+                                Button("Mark as undone", systemImage: "xmark.circle.fill", action:{doneOrUndoneTodo(makeDone: false)})
+                            } else {
+                                Button("Remind me", systemImage: "bell.circle.fill", action: {})
+                                Button("\(showHowManyDaysLeft ? "Hide" : "Show") days left", systemImage: "exclamationmark.circle.fill", action:{showHowManyDaysLeft.toggle()})
+                                Button("Mark as done", systemImage: "checkmark.circle.fill", action: { doneOrUndoneTodo() })
+                            }
                         }
+                    if showHowManyDaysLeft && !todo.isDone {
+                        Text(calendarSet.showHowManyDaysLeft(for: todo.dueDate ?? .now))
+                            .font(.system(.caption, design: .rounded, weight: .semibold))
+                            .foregroundStyle(.secondary)
                     }
+                }
             }
             .padding(.horizontal, 15)
         }
+        .safeAreaInset(edge: .bottom) {
+            HStack(spacing: 20){
+                if todo.isDone {
+                    Menu{
+                        Button("By Custom Date", systemImage: "calendar", action: {withAnimation{showCustomDate.toggle()}})
+                        Button("By Tomorrow", systemImage: "sun.max.fill", action: {repeatByTomorrowOR()})
+                    } label: {
+                        Text("Repeat")
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                            .foregroundStyle(.white)
+                            .frame(width: Constants.screenWidth / 2.5, height: 40)
+                            .background(.green, in: .capsule)
+                    }
+                } else {
+                    Text("Repeat")
+                        .font(.system(.headline, design: .rounded, weight: .regular))
+                        .foregroundStyle(.gray)
+                        .frame(width: Constants.screenWidth / 2.5, height: 40)
+                        .background(Color.textField, in: .capsule)
+                }
+                Button(action: { withAnimation { isEditing.toggle() } } ){
+                    Text("Edit")
+                        .font(.system(.headline, design: .rounded, weight: .bold))
+                        .foregroundStyle(.white)
+                        .frame(width: Constants.screenWidth / 2.5, height: 40)
+                        .background(Color.blue.opacity(0.8), in:.capsule)
+                }
+            }
+        }
+        
         .alert("Remove Todo? ", isPresented: $showAlert) {
             Button("Remove", role:.destructive){
                 withAnimation {
@@ -138,35 +190,6 @@ struct TodoDetailView: View {
                     }
                     Button("Delete",systemImage: "trash.fill", action: {showAlert.toggle()})
                         .tint(.red)
-                }
-            }
-            ToolbarItem(placement: .bottomBar){
-                HStack(spacing: 20){
-                    if todo.isDone {
-                        Menu{
-                            Button("By Custom Date", systemImage: "calendar", action: {withAnimation{showCustomDate.toggle()}})
-                            Button("By Tomorrow", systemImage: "sun.max.fill", action: {repeatByTomorrowOR()})
-                        } label: {
-                            Text("Repeat")
-                                .font(.system(.headline, design: .rounded, weight: .bold))
-                                .foregroundStyle(.white)
-                                .frame(width: Constants.screenWidth / 2.5, height: 40)
-                                .background(.green, in: .capsule)
-                        }
-                    } else {
-                        Text("Repeat")
-                            .font(.system(.headline, design: .rounded, weight: .regular))
-                            .foregroundStyle(.gray)
-                            .frame(width: Constants.screenWidth / 2.5, height: 40)
-                            .background(Color.textField, in: .capsule)
-                    }
-                    Button(action: { withAnimation { isEditing.toggle() } } ){
-                        Text("Edit")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .foregroundStyle(.white)
-                            .frame(width: Constants.screenWidth / 2.5, height: 40)
-                            .background(Color.blue.opacity(0.8), in:.capsule)
-                    }
                 }
             }
         }
@@ -215,6 +238,13 @@ struct TodoDetailView: View {
                 }
                 isLoading = false
             }
+        }
+    }
+    
+    func doneOrUndoneTodo(makeDone: Bool = true) {
+        withAnimation {
+            makeDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
+            dismiss()
         }
     }
 }

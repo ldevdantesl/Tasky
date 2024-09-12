@@ -114,19 +114,18 @@ struct AddTodoView: View {
             TagLazyFragmentView(tagVM: tagVM, settingsMgrVM: settingsMgrVM ,selectedTags: $selectedTags)
                         
         }
+        .scrollDismissesKeyboard(.immediately)
         .background(Constants.backgroundColor)
         .scrollIndicators(.never)
-        .toolbar{
-            ToolbarItem(placement: .bottomBar) {
-                Button(action: save){
-                    Text("Add + ")
-                        .font(.system(.title2, design: .rounded, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(width: Constants.screenWidth - 40, height: 50)
-                        .background(colorTheme, in: .capsule)
-                }
-                .padding(.bottom, 10)
+        .safeAreaInset(edge: .bottom){
+            Button(action: save){
+                Text("Add + ")
+                    .font(.system(.title2, design: .rounded, weight: .bold))
+                    .foregroundStyle(.white)
+                    .frame(width: Constants.screenWidth - 40, height: 50)
+                    .background(colorTheme, in: .capsule)
             }
+            .padding(.bottom, 10)
         }
         .overlay{
             if showProgressView {
@@ -138,9 +137,7 @@ struct AddTodoView: View {
         }
         .disabled(showProgressView)
         .onTapGesture {
-            if focusedField == .description {
-                focusedField = nil
-            }
+            focusedField = nil
         }
         .onAppear {
             focusedField = .title

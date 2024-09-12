@@ -22,10 +22,15 @@ struct AppearanceSettingsView: View {
             SettingsRowComponent(title: "Appearance", subtitle: "Choose  a theme for the app", image: "paintpalette.fill", color: colorTheme, selectedColor: $settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme)
                 .padding(.top, 10)
             
-            SettingsRowComponent(title: "Language", subtitle: "Language of the app", image: "globe", color: .blue.opacity(0.8), rightSideText: Locale(identifier: settingsManagerVM.currentLanguage).localizedString(forIdentifier: settingsManagerVM.currentLanguage), action: openSettings)
+            SettingsRowComponent(title: "Language", subtitle: "Language of the app", image: "globe", color: .blue.opacity(0.8), rightSideText: Locale(identifier: settingsManagerVM.currentLanguage).localizedString(forIdentifier: settingsManagerVM.currentLanguage)?.capitalized, action: openSettings)
             
             SettingsRowComponent(title: "Reset", subtitle: "Reset all the custom Settings", image: "arrow.triangle.2.circlepath", color: .red, toggler: $resetAlert)
             
+        }
+        .alert("Reset Settings", isPresented: $resetAlert) {
+            Button("Reset", role:.destructive, action:settingsManagerVM.settingsManager.appearanceSettingsManager.reset)
+        } message: {
+            Text("Reset all the custom Settings?")
         }
         .navigationTitle("Privacy & Security")
         .navigationBarTitleDisplayMode(.inline)

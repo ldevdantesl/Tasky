@@ -10,11 +10,11 @@ import SwiftUI
 struct NoFoundComponentView: View {
     let image: String
     let color: Color
-    let title: String
-    let subtitle: String
+    let title: LocalizedStringKey
+    let subtitle: LocalizedStringKey
     let action: (() -> ())?
     
-    init(image: String, color: Color, title: String, subtitle: String, action: (() -> Void)? = nil) {
+    init(image: String, color: Color, title: LocalizedStringKey, subtitle: LocalizedStringKey, action: (() -> Void)? = nil) {
         self.image = image
         self.color = color
         self.title = title

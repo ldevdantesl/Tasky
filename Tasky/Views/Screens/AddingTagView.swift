@@ -14,7 +14,7 @@ struct AddingTagView: View {
     
     @State var name: String = ""
     @State var selectedColor: Color = .blue
-    @State var selectedImage: String = "bookmark.fill"
+    @State var selectedImage: String = "folder"
     @State private var nameError: String?
     @State private var tagError: String?
     @State private var isLoading: Bool = false
@@ -101,6 +101,8 @@ struct AddingTagView: View {
             }
             .padding(.vertical, 10)
         }
+        .scrollDismissesKeyboard(.immediately)
+        .scrollIndicators(.hidden)
         .onAppear(perform: {isFocused = true})
         .background(Constants.backgroundColor)
         .disabled(isLoading)

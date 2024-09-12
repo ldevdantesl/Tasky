@@ -49,14 +49,14 @@ struct PickSystemImageCompView: View {
                                     withAnimation {selectedImage = symbol}
                                 } label: {
                                     Circle()
-                                        .fill(selectedImage == symbol ? selectedColor : Color.white)
+                                        .fill(selectedImage == symbol ? selectedColor : .customSecondary.opacity(0.3))
                                         .frame(width: Constants.screenWidth * 0.12, height: Constants.screenHeight * 0.07)
                                         .overlay{
                                             Image(systemName: symbol)
                                                 .resizable()
                                                 .scaledToFit()
                                                 .frame(width: 20, height: 20)
-                                                .foregroundStyle(selectedImage == symbol ? .white : .black)
+                                                .foregroundStyle(selectedImage == symbol ? Color.white : Color.primary)
                                         }
                                 }
                             }
@@ -72,6 +72,6 @@ struct PickSystemImageCompView: View {
 }
 
 #Preview {
-    PickSystemImageCompView(selectedImage: .constant("bookmark.fill"), selectedColor: .constant(.blue))
+    PickSystemImageCompView(selectedImage: .constant("folder"), selectedColor: .constant(.blue))
         .previewLayout(.sizeThatFits)
 }

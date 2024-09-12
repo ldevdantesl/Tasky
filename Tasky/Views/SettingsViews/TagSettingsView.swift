@@ -25,7 +25,7 @@ struct TagSettingsView: View {
             ScrollView(.horizontal){
                 LazyHStack(spacing: 15){
                     ForEach(tagVM.tags, id: \.self) { tag in
-                        TagCapsuleView(tag: tag)
+                        TagCapsuleView(tag: tag, tagVM: tagVM)
                     }
                     Button(action: {isAddingTag.toggle()}){
                         Image(systemName: "plus")

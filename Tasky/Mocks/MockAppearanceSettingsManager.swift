@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 class MockAppearanceSettingsManager: AppearanceSettingsManaging {
+    func reset() {}
+    
     var colorScheme: ColorScheme? = nil
 
     var colorTheme: Color = .blue

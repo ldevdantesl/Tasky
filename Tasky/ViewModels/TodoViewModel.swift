@@ -11,9 +11,13 @@ import SwiftUI
 import Combine
 
 class TodoViewModel: ObservableObject {
+    @AppStorage("isFirstEntry") var isFirstEntry = false
+    
     @Published var todayTodos: [Todo] = []
+    @Published var savedTodos: [Todo] = []
     @Published var removedTodos: [Todo] = []
     @Published var archivedTodos: [Todo] = []
+    
     @Published var sortDescriptor: NSSortDescriptor? {
         didSet {
             fetchAllTodos()
@@ -38,7 +42,7 @@ class TodoViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     // MARK: - CREATING
-    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag]){
+    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag], isSaved: Bool = false){
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
         newTodo.title = title
@@ -49,6 +53,7 @@ class TodoViewModel: ObservableObject {
         newTodo.isDone = false
         newTodo.isArchived = false
         newTodo.isRemoved = false
+        newTodo.isSaved = isSaved
         
         if !tags.isEmpty{
             newTodo.tags = NSSet(array: tags)
@@ -88,6 +93,7 @@ class TodoViewModel: ObservableObject {
     func fetchAllTodos(){
         fetchArchivedTodos()
         fetchRemovedTodos()
+        fetchSavedTodos()
         fetchTodayTodos(for: calendarSet.currentDay)
     }
     
@@ -110,6 +116,18 @@ class TodoViewModel: ObservableObject {
             todayTodos = try context.fetch(request)
         } catch {
             print("Error fetching removed Todos: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchSavedTodos() {
+        let request: NSFetchRequest = Todo.fetchRequest()
+        request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
+        request.predicate = NSPredicate(format: "isSaved == %@", NSNumber(value: true))
+        
+        do {
+            savedTodos = try context.fetch(request)
+        } catch {
+            print("Error fetching saved Todos: \(error.localizedDescription)")
         }
     }
     
@@ -292,10 +310,11 @@ extension TodoViewModel{
     static func mockToDo() -> Todo{
         let mocktodo = Todo(context: PersistentController.shared.context)
         mocktodo.id = UUID()
-        mocktodo.title = "Make a coffee"
-        mocktodo.desc = "Make a cofee for my friend which comes tomorrow"
-        mocktodo.priority = 2
+        mocktodo.title = "Manage the schedule"
+        mocktodo.desc = "Schedule the time for my co-worker"
+        mocktodo.priority = 1
         mocktodo.dueDate = Date.now
+        mocktodo.isSaved = true
         mocktodo.tags = NSSet(array: TagViewModel.mockTags())
         
         return mocktodo

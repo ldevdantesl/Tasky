@@ -26,6 +26,7 @@ struct RemovedTodosView: View {
             if !removedTodos.isEmpty{
                 ForEach(removedTodos) { todo in
                     TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                        .padding(.horizontal, 10)
                 }
                 .scrollIndicators(.hidden)
                 .toolbar{

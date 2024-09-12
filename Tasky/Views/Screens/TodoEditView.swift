@@ -138,6 +138,7 @@ struct TodoEditView: View {
                 }
                 isTitleValid() ? todoVM.editTodos(todo, newTitle: title, newDesc: description, newPriority: priority, newDueDate: dueDate, newTags: tags) : ()
                 isLoading = false
+                todoVM.fetchTodayTodos(for: CalendarSet.instance.currentDay)
                 dismiss()
             }
         }

@@ -109,6 +109,6 @@ class DataAndStorageManager: DataStorageManaging {
     
     func resetDataAndStorageSettings() {
         isArchiveAfterCompletionEnabled = true
-        archiveAfterDays = 25
+        archiveAfterDays = 20
     }
 }

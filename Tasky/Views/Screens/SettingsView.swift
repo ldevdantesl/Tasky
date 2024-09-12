@@ -15,7 +15,6 @@ struct SettingsView: View {
     
     @Binding var path: NavigationPath
     
-    
     var colorTheme: Color {
         settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
@@ -28,22 +27,23 @@ struct SettingsView: View {
                 Spacer()
             }
             .padding(.horizontal)
-            SettingsRowComponent(title: "Tags", image: "number", color: .teal, link: "TagSettingsView", path: $path)
-            SettingsRowComponent(title: "Data & Storage", image: "folder.fill", color: .yellow, link: "DataStorageSettingsView", path: $path)
-            SettingsRowComponent(title: "Notification & Sound", image: "bell.fill", color: .blue.opacity(0.8), link: "NotificationSoundSettingsView", path: $path)
-            SettingsRowComponent(title: "Privacy & Security", image: "checkerboard.shield", color: .red.opacity(0.8), link: "PrivacySecuritySettingsView", path: $path)
-            SettingsRowComponent(title: "Appearance", image: "drop.degreesign.fill", color: .purple, link: "AppearanceSettingsView", path: $path)
             
+            SettingsRowComponent(title: "Tags", image: "number", color: .teal, link: "TagSettingsView", path: $path)
+            
+            SettingsRowComponent(title: "Data & Storage", image: "folder.fill", color: .yellow, link: "DataStorageSettingsView", path: $path)
+            
+            SettingsRowComponent(title: "Notification & Sound", image: "bell.fill", color: .blue.opacity(0.8), link: "NotificationSoundSettingsView", path: $path)
+            
+            SettingsRowComponent(title: "Privacy & Security", image: "checkerboard.shield", color: .red.opacity(0.8), link: "PrivacySecuritySettingsView", path: $path)
+            
+            SettingsRowComponent(title: "Appearance", image: "drop.degreesign.fill", color: .purple, link: "AppearanceSettingsView", path: $path)
             
             ShareAndFAQFragmentView()
             Spacer()
         }
         .background(Color.background)
-        .toolbar{
-            ToolbarItem(placement: .bottomBar) {
-                TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM: tagVM, path: $path)
-                    .padding(.horizontal,20)
-            }
+        .safeAreaInset(edge: .bottom) {
+            TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
         }
     }
 }

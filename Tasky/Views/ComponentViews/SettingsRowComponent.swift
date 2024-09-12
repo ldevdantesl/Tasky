@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SettingsRowComponent: View {
-    let title: String
-    let subtitle: String?
+    let title: LocalizedStringKey
+    let subtitle: LocalizedStringKey?
     let image: String
     let color: Color
     let link: String?
@@ -29,7 +29,7 @@ struct SettingsRowComponent: View {
     
     let dropDownColorVariations: [Color] = [.green, .blue, .red, .gray, .yellow, .teal, .mint, .brown, .orange, .cyan, .indigo]
     
-    init(title: String, subtitle: String? = nil, image: String, color: Color, toggler: Binding<Bool>, showingToggleState: Bool = false) {
+    init(title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, image: String, color: Color, toggler: Binding<Bool>, showingToggleState: Bool = false) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -45,7 +45,7 @@ struct SettingsRowComponent: View {
         self.rightSideText = nil
     }
     
-    init(title: String, subtitle: String? = nil, image: String, color: Color, link: String, path: Binding<NavigationPath>) {
+    init(title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, image: String, color: Color, link: String, path: Binding<NavigationPath>) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -61,7 +61,7 @@ struct SettingsRowComponent: View {
         self.rightSideText = nil
     }
     
-    init(title: String, subtitle: String? = nil, image: String, color: Color, rightSideText: String? = nil, action: (() -> ())?) {
+    init(title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, image: String, color: Color, rightSideText: String? = nil, action: (() -> ())?) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -77,7 +77,7 @@ struct SettingsRowComponent: View {
         self.rightSideText = rightSideText
     }
     
-    init(title: String, subtitle: String? = nil, image: String, color: Color, isDropDown: Binding<Int>, dropDownVariations: [Int]) {
+    init(title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, image: String, color: Color, isDropDown: Binding<Int>, dropDownVariations: [Int]) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -93,7 +93,7 @@ struct SettingsRowComponent: View {
         self.rightSideText = nil
     }
     
-    init(title: String, subtitle: String? = nil, image: String, color: Color, selectedColor: Binding<Color>) {
+    init(title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, image: String, color: Color, selectedColor: Binding<Color>) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -194,7 +194,7 @@ struct SettingsRowComponent: View {
                             .overlay{
                                 Text("\(variation)")
                                     .font(.system(.subheadline, design: .rounded, weight: .light))
-                                    .foregroundStyle(isDropDown == variation ? .white : .black)
+                                    .foregroundStyle(isDropDown == variation ? Color.white : Color.primary)
                             }
                             .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                             .onTapGesture {
@@ -240,5 +240,5 @@ struct SettingsRowComponent: View {
 }
 
 #Preview {
-    SettingsRowComponent(title: "Tags",subtitle: "Lets just see",image: "number", color: .blue, selectedColor: .constant(.blue))
+    SettingsRowComponent(title: "Tags",subtitle: "Lets just see",image: "number", color: .blue, isDropDown: .constant(15), dropDownVariations: [5,10,15,20])
 }

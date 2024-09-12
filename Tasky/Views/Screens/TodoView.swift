@@ -25,8 +25,6 @@ struct TodoView: View {
     var body: some View {
         NavigationStack(path: $path){
             ScrollView{
-                TodoHeaderView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
-                    .padding(.horizontal,10)
                 CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
                 
                 if !showingWholeMonth{
@@ -36,9 +34,61 @@ struct TodoView: View {
                 Spacer()
             }
             .toolbar{
-                ToolbarItem(placement: .bottomBar) {
-                    TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
+                ToolbarItem(placement: .topBarLeading) {
+                    if !showingWholeMonth{
+                        Text("\(calendar.currentDay.getWeekName.capitalized), \(calendar.currentDay.getDayDigit) \(String(calendar.currentDay.getDayMonthString.prefix(3)))")
+                            .font(.system(.title, design: .rounded, weight: .bold))
+                    } else {
+                        Menu{
+                            ForEach(Date.getEveryMonths(startingFrom: Date().getDayMonthInt, locale: settingsMgrVM.currentLanguage), id:\.self) { date in
+                                Button(action: {selectedMonth = date.getDayMonthString}){
+                                    Text("\(date.getDayMonthString) \(Date.now.getYear != date.getYear ? date.getYear : "")")
+                                }
+                            }
+                        } label: {
+                            HStack{
+                                Text("\(selectedMonth.capitalized)")
+                                    .font(.system(.title, design: .rounded, weight: .bold))
+                                Image(systemName: "chevron.up.chevron.down")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 15, height: 15)
+                            }
+                        }
+                    }
                 }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    if calendar.currentDay.getDayAndMonth != Date.now.getDayAndMonth && !showingWholeMonth{
+                        Image(systemName: "sun.max.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 20)
+                            .foregroundStyle(colorTheme)
+                            .onTapGesture {
+                                withAnimation {
+                                    calendar.returnToToday()
+                                    selectedMonth = calendar.currentDay.getDayMonthString
+                                }
+                            }
+                            .padding(.trailing, 10)
+                    }
+                    Image(systemName: "calendar")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 20)
+                        .foregroundStyle(colorTheme)
+                        .onTapGesture {
+                            withAnimation(.bouncy) {
+                                showingWholeMonth.toggle()
+                            }
+                        }
+                }
+            }
+            .safeAreaInset(edge: .bottom){
+                TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
+                    .frame(height: 60)
+                    .padding(.top, 10)
+                    .background(Color.background.opacity(0.9))
             }
             .background(Constants.backgroundColor)
             .navigationDestination(for: String.self) { view in
@@ -58,6 +108,9 @@ struct TodoView: View {
                             
                     case "RemovedTodosView":
                         RemovedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
+                    
+                    case "SavedTodosView":
+                        SavedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
                             
                     case "NotificationSoundSettingsView":
                         NotificationAndSoundsView(settingsMgrVM: settingsMgrVM, path: $path)

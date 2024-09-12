@@ -31,6 +31,9 @@ struct DataAndStorageView: View {
                 .padding(.top, 10)
             
             SettingsRowComponent(title: "Removed Todos", subtitle: "Show all Removed Todos", image: "trash.fill", color: .red.opacity(0.8), link: "RemovedTodosView", path: $path)
+            
+            SettingsRowComponent(title: "Saved Todos", subtitle: "Show all saved Todos", image: "bookmark.fill", color: .yellow, link: "SavedTodosView", path: $path)
+            
             SettingsRowComponent(title: "Clear Cache", subtitle: "Clear all the Cache", image: "doc.zipper", color: .pink, toggler: $clearCacheAlert)
                 
             SettingsRowComponent(title: "Auto-Archive After: \(autoArchiveAfter)", subtitle: "Arvchive completed Todos after: \(autoArchiveAfter) days", image: "autostartstop", color: .green.opacity(0.8), isDropDown: $settingsManagerVM.settingsManager.dataAndStorageManager.archiveAfterDays, dropDownVariations: [5,10,15,20])
