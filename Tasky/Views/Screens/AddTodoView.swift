@@ -117,15 +117,17 @@ struct AddTodoView: View {
         .scrollDismissesKeyboard(.immediately)
         .background(Constants.backgroundColor)
         .scrollIndicators(.never)
-        .safeAreaInset(edge: .bottom){
-            Button(action: save){
-                Text("Add + ")
-                    .font(.system(.title2, design: .rounded, weight: .bold))
-                    .foregroundStyle(.white)
-                    .frame(width: Constants.screenWidth - 40, height: 50)
-                    .background(colorTheme, in: .capsule)
+        .toolbar{
+            ToolbarItem(placement:.bottomBar) {
+                Button(action: save){
+                    Text("Add + ")
+                        .font(.system(.title2, design: .rounded, weight: .bold))
+                        .foregroundStyle(.white)
+                        .frame(width: Constants.screenWidth - 40, height: 50)
+                        .background(colorTheme, in: .capsule)
+                }
+                .padding(.bottom, 10)
             }
-            .padding(.bottom, 10)
         }
         .overlay{
             if showProgressView {

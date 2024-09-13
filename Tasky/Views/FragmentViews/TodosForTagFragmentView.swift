@@ -19,8 +19,14 @@ struct TodosForTagFragmentView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
-                ForEach(todos, id: \.self){ todo in
-                    TodoRowView(todo: todo)
+                if todos.isEmpty{
+                    NoFoundComponentView(image: "number.square.fill", color: .blue, title: "No todos found", subtitle: "No todos attached to this tag. Attach this tag to any to see it here")
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, Constants.screenHeight / 4)
+                } else {
+                    ForEach(todos, id: \.self){ todo in
+                        TodoRowView(todo: todo)
+                    }
                 }
             }
             .navigationTitle(tag.name ?? "Tag")

@@ -15,7 +15,7 @@ struct TodoRowView: View {
     
     private var isFullInitType: Bool
     
-    init(todo: Todo, settingsManagerVM: SettingsManagerViewModel, todoVM: TodoViewModel) {
+    init(todo: Todo, settingsManagerVM: SettingsManagerViewModel, todoVM: TodoViewModel, offsetY: CGFloat? = nil) {
         self.todo = todo
         self.settingsManagerVM = settingsManagerVM
         self.todoVM = todoVM
@@ -32,7 +32,7 @@ struct TodoRowView: View {
     var body: some View {
         ZStack(alignment:.topLeading){
             RoundedRectangle(cornerRadius: 25)
-                .fill(TodoViewHelpers(todo: todo).priorityColor.gradient.opacity(0.8))
+                .fill(TodoViewHelpers(todo: todo).priorityColor.gradient)
             
             VStack(alignment:.leading){
                 HStack{

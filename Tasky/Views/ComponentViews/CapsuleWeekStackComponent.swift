@@ -86,5 +86,5 @@ struct CapsuleWeekStackComponent: View {
 }
 
 #Preview {
-    CapsuleWeekStackComponent(settingsManagerVM: MockPreviews.viewModel, showingWholeMonth: .constant(true), selectedMonth: .constant("January"))
+    CapsuleWeekStackComponent(settingsManagerVM: MockPreviews.viewModel, showingWholeMonth: .constant(false), selectedMonth: .constant("January"))
 }

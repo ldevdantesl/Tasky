@@ -26,18 +26,19 @@ struct TodoView: View {
         NavigationStack(path: $path){
             ScrollView{
                 CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
-                
+                Divider()
+                    .padding(.horizontal, 10)
                 if !showingWholeMonth{
                     YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
                         .padding(.horizontal, 10)
                 }
-                Spacer()
             }
             .toolbar{
                 ToolbarItem(placement: .topBarLeading) {
                     if !showingWholeMonth{
                         Text("\(calendar.currentDay.getWeekName.capitalized), \(calendar.currentDay.getDayDigit) \(String(calendar.currentDay.getDayMonthString.prefix(3)))")
                             .font(.system(.title, design: .rounded, weight: .bold))
+                            
                     } else {
                         Menu{
                             ForEach(Date.getEveryMonths(startingFrom: Date().getDayMonthInt, locale: settingsMgrVM.currentLanguage), id:\.self) { date in

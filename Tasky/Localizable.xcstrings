@@ -58,6 +58,7 @@
       }
     },
     "%@ Todos" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1325,6 +1326,9 @@
         }
       }
     },
+    "No todos attached to this tag. Attach this tag to any to see it here" : {
+
+    },
     "No todos for this day" : {
       "localizations" : {
         "ru" : {
@@ -1334,6 +1338,9 @@
           }
         }
       }
+    },
+    "No todos found" : {
+
     },
     "No todos yet" : {
       "extractionState" : "stale",

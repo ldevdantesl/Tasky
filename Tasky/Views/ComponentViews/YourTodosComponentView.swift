@@ -21,8 +21,9 @@ struct YourTodosComponentView: View {
     var body: some View {
         VStack{
             HStack{
-                Text("\(isShowingActive ? "Active" : "Done") Todos")
+                Text("\(isShowingActive ? "Active" : "Done")")
                     .font(.system(.title, design: .rounded, weight: .bold))
+                    
                 Spacer()
                 Button{
                     withAnimation {
@@ -57,6 +58,7 @@ struct YourTodosComponentView: View {
                         }
                 }
             }
+            .frame(height: 50)
 
             TodoListView(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM: tagVM, path: $path, isShowingActive: $isShowingActive)
                 .zIndex(0)

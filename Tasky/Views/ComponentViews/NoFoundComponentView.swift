@@ -34,6 +34,7 @@ struct NoFoundComponentView: View {
             Text(subtitle)
                 .font(.system(.caption, design: .rounded, weight: .light))
                 .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
         }
         .onTapGesture {
             withAnimation {
