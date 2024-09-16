@@ -93,6 +93,7 @@ struct DueDateFragmentView: View {
                                 dueDate = .now
                                 isAddingDate = false
                             }
+                            print("\(dueDate ?? Date()) day: \(String(describing: dueDate?.getDayDigit))")
                         }
                     
                     Capsule()
@@ -116,6 +117,7 @@ struct DueDateFragmentView: View {
                                 dueDate = Calendar.current.date(byAdding: .day, value: 1, to: .now)
                                 isAddingDate = false
                             }
+                            print("\(dueDate ?? Date()) day: \(String(describing: dueDate?.getDayDigit))")
                         }
                     
                     Button(action: {isPickingCustomDate.toggle()}){
@@ -151,10 +153,12 @@ struct DueDateFragmentView: View {
         }
         .sheet(isPresented: $isPickingCustomDate){
             VStack {
+                
                 // DatePicker inside a sheet
                 DatePicker(
                     "Select a Date",
                     selection: $settingDate,
+                    in: Date()...,
                     displayedComponents: .date
                 )
                 .datePickerStyle(.graphical) // Or use another style like .wheel, .compact, etc.

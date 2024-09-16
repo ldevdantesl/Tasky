@@ -133,10 +133,15 @@ struct TodoEditView: View {
         withAnimation {
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                isTitleValid() ? todoVM.editTodos(todo, newTitle: title, newDesc: description, newPriority: priority, newDueDate: dueDate, newTags: tags) : ()
+                
                 if dueDate?.getDayAndMonth != todo.dueDate?.getDayAndMonth {
                     path.removeLast()
+                    settingsMgrVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
                 }
-                isTitleValid() ? todoVM.editTodos(todo, newTitle: title, newDesc: description, newPriority: priority, newDueDate: dueDate, newTags: tags) : ()
+                
+                settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? Date())
+                
                 isLoading = false
                 todoVM.fetchTodayTodos(for: CalendarSet.instance.currentDay)
                 dismiss()

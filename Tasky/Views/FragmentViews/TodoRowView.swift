@@ -84,12 +84,19 @@ struct TodoRowView: View {
                 if !todo.isRemoved && !todo.isArchived{
                     Button(todo.isDone ? "Uncomplete" : "Complete", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill"){
                         withAnimation {
-                            todo.isDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
+                            if todo.isDone {
+                                todoVM.uncompleteTodo(todo)
+                                settingsManagerVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: todo.dueDate ?? .now)
+                            } else {
+                                todoVM.completeTodo(todo)
+                                settingsManagerVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
+                            }
                         }
                     }
                     Button("Remove", systemImage: "trash.fill"){
                         withAnimation {
                             todoVM.removeTodo(todo)
+                            settingsManagerVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
                         }
                     }
                     Button("Archive", systemImage: "archivebox.fill"){

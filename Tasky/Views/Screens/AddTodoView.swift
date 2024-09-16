@@ -152,7 +152,11 @@ struct AddTodoView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1){
             withAnimation {
                 if title.count > 2 && !title.trimmingCharacters(in: .whitespaces).isEmpty && dueDate != nil {
-                    todoVM.createTodo(title: title, description: desc.isEmpty ? nil : desc, priority: priority, dueDate: dueDate, tags:selectedTags)
+                    
+                    let todo = todoVM.createTodo(title: title, description: desc.isEmpty ? nil : desc, priority: priority, dueDate: dueDate, tags:selectedTags)
+                    
+                    settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? .now)
+                    
                     withAnimation {
                         showProgressView = false
                         path.removeLast()
@@ -173,7 +177,6 @@ struct AddTodoView: View {
                 }
             }
         }
-        
     }
 }
 

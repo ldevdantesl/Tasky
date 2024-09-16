@@ -25,34 +25,49 @@ struct RemovedTodosView: View {
         ScrollView{
             if !removedTodos.isEmpty{
                 ForEach(removedTodos) { todo in
-                    TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
-                        .padding(.horizontal, 10)
-                }
-                .scrollIndicators(.hidden)
-                .toolbar{
-                    ToolbarItem(placement: .topBarTrailing) {
-                        HStack{
-                            Button("Unremove All", systemImage: "trash.slash.fill", action: {alertToggle.toggle()})
-                            Button("Delete All", systemImage: "trash.fill", action: {deleteToggle.toggle()})
-                                .tint(.red)
+                    Menu{
+                        Button("Delete", systemImage: "trash.fill") {
+                            withAnimation {
+                                todoVM.deleteTodo(todo)
+                            }
                         }
+                        Button("Unremove", systemImage: "trash.slash.fill") {
+                            withAnimation {
+                                todoVM.unRemoveTodo(todo)
+                            }
+                        }
+                    } label: {
+                        TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
+                            .padding(.horizontal, 10)
                     }
-                }
-                .alert("Unremove All", isPresented: $alertToggle){
-                    Button("Unremove", role:.destructive, action: todoVM.unRemoveAll)
-                } message: {
-                    Text("Do you really want to Unremove all?")
-                }
-                .alert("Delete All", isPresented: $deleteToggle){
-                    Button("Delete all", role:.destructive, action: todoVM.deleteAllRemovedTodos)
-                } message: {
-                    Text("Do you really want to delete all removed Todos?")
                 }
             } else {
                 NoFoundComponentView(image: "trash.fill", color: .red, title: "No deleted todos", subtitle: "You don't have deleted Todos, delete any to see it here")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(.top, Constants.screenHeight / 3)
             }
+        }
+        .scrollIndicators(.hidden)
+        .toolbar{
+            if !removedTodos.isEmpty{
+                ToolbarItem(placement: .topBarTrailing) {
+                    HStack{
+                        Button("Unremove All", systemImage: "trash.slash.fill", action: {alertToggle.toggle()})
+                        Button("Delete All", systemImage: "trash.fill", action: {deleteToggle.toggle()})
+                            .tint(.red)
+                    }
+                }
+            }
+        }
+        .alert("Unremove All", isPresented: $alertToggle){
+            Button("Unremove", role:.destructive, action: todoVM.unRemoveAll)
+        } message: {
+            Text("Do you really want to Unremove all?")
+        }
+        .alert("Delete All", isPresented: $deleteToggle){
+            Button("Delete all", role:.destructive, action: todoVM.deleteAllRemovedTodos)
+        } message: {
+            Text("Do you really want to delete all removed Todos?")
         }
         .background(Color.background)
         .navigationTitle("Removed Todos")

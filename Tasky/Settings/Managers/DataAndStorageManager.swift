@@ -15,7 +15,7 @@ class DataAndStorageManager: DataStorageManaging {
     private weak var todoVM: TodoViewModel?
     
     private let isArchiveAfterCompletionEnabledKey = "isArchiveAfterCompletionEnabled"
-    private let archiveAfterDaysKey = "archiveAfterDaysKey"
+    private let archiveAfterDaysKey = "archiveAfterDays"
     
     init(context: NSManagedObjectContext = PersistentController.shared.context, todoVM: TodoViewModel?) {
         self.context = context

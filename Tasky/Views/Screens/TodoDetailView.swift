@@ -158,6 +158,7 @@ struct TodoDetailView: View {
             Button("Remove", role:.destructive){
                 withAnimation {
                     todoVM.removeTodo(todo)
+                    settingsManagerVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
                     dismiss()
                 }
             }
@@ -206,6 +207,7 @@ struct TodoDetailView: View {
                 DatePicker(
                     "Select a Date",
                     selection: $settingCustomDate,
+                    in: Calendar.current.date(byAdding: .day, value: 1, to: Date())!...,
                     displayedComponents: .date
                 )
                 .datePickerStyle(.graphical) // Or use another style like .wheel, .compact, etc.
@@ -215,6 +217,7 @@ struct TodoDetailView: View {
                 Button("Repeat") {
                     withAnimation {
                         repeatByTomorrowOR(byCustomDate: settingCustomDate)
+                        settingsManagerVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: settingCustomDate)
                         showCustomDate.toggle()
                     }
                 }
@@ -232,9 +235,9 @@ struct TodoDetailView: View {
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                 if let byCustomDate {
-                    todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: byCustomDate, tags: todo.tags?.allObjects as? [Tag] ?? [])
+                   let _ = todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: byCustomDate, tags: todo.tags?.allObjects as? [Tag] ?? [])
                 } else {
-                    todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: todo.dueDate?.getTomorrowDay, tags: todo.tags?.allObjects as? [Tag] ?? [])
+                    let _ = todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: todo.dueDate?.getTomorrowDay, tags: todo.tags?.allObjects as? [Tag] ?? [])
                 }
                 isLoading = false
             }
@@ -243,7 +246,13 @@ struct TodoDetailView: View {
     
     func doneOrUndoneTodo(makeDone: Bool = true) {
         withAnimation {
-            makeDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
+            if makeDone{
+                todoVM.uncompleteTodo(todo)
+                settingsManagerVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: todo.dueDate ?? .now)
+            }  else {
+                todoVM.completeTodo(todo)
+                settingsManagerVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
+            }
             dismiss()
         }
     }

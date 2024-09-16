@@ -45,6 +45,7 @@ struct SettingsView: View {
         .safeAreaInset(edge: .bottom) {
             TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
         }
+        .onAppear(perform: settingsMgrVM.settingsManager.notificationSettingsManager.checkAuthorizationStatus)
     }
 }
 

@@ -130,11 +130,13 @@ struct SettingsRowComponent: View {
                 Capsule()
                     .fill(Constants.textFieldColor)
                     .frame(width: Constants.screenWidth - 20, height: 55)
+                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                     .overlay{
                         HStack(spacing: 10){
                             Circle()
                                 .fill(color.gradient)
                                 .frame(height: 45)
+                                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 2)
                                 .overlay {
                                     Image(systemName: image)
                                         .resizable()
@@ -181,7 +183,7 @@ struct SettingsRowComponent: View {
                         .padding(.leading, 8)
                         .padding(.trailing, 20)
                     }
-                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                    
             }
             .buttonStyle(.plain)
             

@@ -13,24 +13,24 @@ struct MainView: View {
     
     @Environment(\.scenePhase) var scenePhase
     
+    @ObservedObject var todoVM: TodoViewModel
+    
     @StateObject var settingsManagerVM: SettingsManagerViewModel
-    @StateObject var todoVM: TodoViewModel = TodoViewModel()
     @StateObject var tagVM: TagViewModel = TagViewModel()
     
     @State var showAutenticationView: Bool = false
     @State var showLaunchScreen: Bool = true
     
-    init(){
-        let todoViewModel = TodoViewModel()
+    init(todoVM: TodoViewModel){
+        self.todoVM = todoVM
         let settingsManager = SettingsManager(
             notificationSettingsManager: NotificationSettingsManager(),
-            dataAndStorageManager: DataAndStorageManager(todoVM: todoViewModel),
+            dataAndStorageManager: DataAndStorageManager(todoVM: todoVM),
             privacyAndSecurityManager: PrivacyAndSecuritySettingsManager(), appearanceSettingsManager: AppearanceSettingsManager()
         )
         // Initialize settingsManagerVM with the constructed settingsManager
         _settingsManagerVM = StateObject(wrappedValue: SettingsManagerViewModel(settingsManager: settingsManager))
         // Initialize todoVM and tagVM separately
-        _todoVM = StateObject(wrappedValue: todoViewModel)
         _tagVM = StateObject(wrappedValue: TagViewModel())
     }
     
@@ -50,9 +50,9 @@ struct MainView: View {
                     tagVM.createTag("Work", color: .purple, systemImage: "bag.fill")
                     tagVM.createTag("Personal", color: .yellow, systemImage: "person")
                     
-                    todoVM.createTodo(title: "Explore the app", description: "Explore the Tasky app for myself. Be excited.", priority: 1, dueDate: .now, tags: tagVM.tags)
+                   let _ = todoVM.createTodo(title: "Explore the app", description: "Explore the Tasky app for myself. Be excited.", priority: 1, dueDate: .now, tags: tagVM.tags)
                     
-                    todoVM.createTodo(title: "Create CV", description: nil, priority: 2, dueDate: .now, tags: [tagVM.tags[0]], isSaved: true)
+                    let _ = todoVM.createTodo(title: "Create CV", description: nil, priority: 2, dueDate: .now, tags: [tagVM.tags[0]], isSaved: true)
                 }
         } else {
             TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)
@@ -70,6 +70,9 @@ struct MainView: View {
                         .interactiveDismissDisabled()
                 }
                 .tint(settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme)
+                .onAppear{
+                    settingsManagerVM.settingsManager.notificationSettingsManager.requestAuthorizationPermission()
+                }
         }
     }
     
@@ -80,5 +83,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    MainView(todoVM: TodoViewModel())
 }

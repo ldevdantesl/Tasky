@@ -52,9 +52,14 @@ struct TodoListView: View {
             LazyVStack{
                 ForEach(todos, id: \.self){ todo in
                     TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
-                    .onTapGesture {
-                        path.append(todo)
-                    }
+                        .onTapGesture(count: 2) {
+                            withAnimation {
+                                todo.isDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
+                            }
+                        }
+                        .onTapGesture {
+                            path.append(todo)
+                        }
                 }
             }
             .navigationDestination(for: Todo.self){ todo in

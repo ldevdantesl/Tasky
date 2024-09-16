@@ -21,7 +21,7 @@ struct YourTodosComponentView: View {
     var body: some View {
         VStack{
             HStack{
-                Text("\(isShowingActive ? "Active" : "Done")")
+                Text("\(String(localized: isShowingActive ? "Active" : "Done"))")
                     .font(.system(.title, design: .rounded, weight: .bold))
                     
                 Spacer()

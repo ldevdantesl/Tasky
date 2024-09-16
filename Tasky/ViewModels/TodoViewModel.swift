@@ -42,7 +42,7 @@ class TodoViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     // MARK: - CREATING
-    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag], isSaved: Bool = false){
+    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag], isSaved: Bool = false) -> Todo {
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
         newTodo.title = title
@@ -58,8 +58,10 @@ class TodoViewModel: ObservableObject {
         if !tags.isEmpty{
             newTodo.tags = NSSet(array: tags)
         }
-        
+    
         saveContext()
+        
+        return newTodo
     }
     
     // MARK: - EDITING
@@ -153,6 +155,30 @@ class TodoViewModel: ObservableObject {
         }
     }
     
+    func fetchCompletedTodos() {
+        let request: NSFetchRequest = Todo.fetchRequest()
+        let isDonePredicate = NSPredicate(format: "isDone == %@", NSNumber(value: true))
+        
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let archiveAfterDays: Int = UserDefaults.standard.integer(forKey: "archiveAfterDays")
+        print("Archive After: \(archiveAfterDays) days")
+        
+        guard let pastDate = calendar.date(byAdding: .day, value: -archiveAfterDays, to: currentDate) else { return }
+        
+        let archiveAfterPredicate = NSPredicate(format: "completionDate <= %@", pastDate as NSDate)
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [isDonePredicate, archiveAfterPredicate])
+        
+        do {
+            let todos = try context.fetch(request)
+            todos.forEach { todo in
+                archive(todo)
+            }
+        } catch {
+            print("Error fetching completed todos: \(error.localizedDescription)")
+        }
+    }
     // MARK: - DELETING
     func deleteTodo(_ todo: Todo) {
         context.delete(todo)
@@ -263,38 +289,6 @@ class TodoViewModel: ObservableObject {
     
     func unsaveTodo(_ todo: Todo){
         todo.isSaved = false
-        saveContext()
-    }
-    
-    // MARK: - DATE ACTIONS
-    func addADayTodo(_ todo: Todo) {
-        if let dueDate = todo.dueDate {
-            if let newDueDate = Calendar.current.date(byAdding: .day, value: 1, to: dueDate) {
-                todo.dueDate = newDueDate
-            }
-        } else {
-            if let newDueDate = Calendar.current.date(byAdding: .day, value: 1, to: .now){
-                todo.dueDate = newDueDate
-            }
-        }
-        saveContext()
-    }
-    
-    func makeTodoToday(_ todo: Todo){
-        todo.dueDate = .now
-        saveContext()
-    }
-    
-    func removeADayTodo(_ todo: Todo) {
-        if let dueDate = todo.dueDate{
-            if let newDueDate = Calendar.current.date(byAdding: .day, value: -1, to: dueDate){
-                todo.dueDate = newDueDate
-            }
-        } else {
-            if let newDueDate = Calendar.current.date(byAdding: .day, value: -1, to: .now){
-                todo.dueDate = newDueDate
-            }
-        }
         saveContext()
     }
     

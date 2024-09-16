@@ -11,45 +11,52 @@ import BackgroundTasks
 @main
 struct TaskyApp: App {
     @StateObject var persistentController = PersistentController.shared
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject var todoVM = TodoViewModel()
 
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainView(todoVM: todoVM)
                 .environment(\.managedObjectContext, persistentController.context)
+        }
+        .backgroundTask(.appRefresh("Dantes.Tasky.archiveTodos")) { task in
+            scheduleArchiveTodoTask()
+            await todoVM.fetchCompletedTodos()
         }
     }
 }
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "Dantes.TaskyManage.archiveTodos", using: nil) { task in
-            self.handleArchiveTodosTask(task: task as! BGProcessingTask)
-        }
-    }
-    func handleArchiveTodosTask(task: BGProcessingTask) {
-        scheduleArchiveTodoTask()
-        
-        let dataAndStorageManager = DataAndStorageManager(todoVM: nil)
-        
-        task.expirationHandler = {
-            task.setTaskCompleted(success: false)
-        }
-        
-        dataAndStorageManager.archiveOldCompletedTodos()
-        
-        task.setTaskCompleted(success: true)
-    }
+func scheduleArchiveTodoTask() {
+    print("Scheduling background task for archiving todos")
     
-    func scheduleArchiveTodoTask() {
-        let request = BGProcessingTaskRequest(identifier: "Dantes.Tasky.archiveTodos")
-        request.requiresNetworkConnectivity = false // No need to be connected to the internet to make this background proccess
-        request.requiresExternalPower = false // No need to be powering to make this background process
+    let request = BGAppRefreshTaskRequest(identifier: "Dantes.Tasky.archiveTodos")
+    request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // 15 minutes from now
+    
+    do {
+        try BGTaskScheduler.shared.submit(request)
+        print("Scheduling succeeded")
         
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            print("Failed to tschedule todo archiving task: \(error.localizedDescription)")
+        // Check pending tasks
+        BGTaskScheduler.shared.getPendingTaskRequests { requests in
+            if requests.isEmpty {
+                print("No pending task requests found.")
+            } else {
+                print("Pending task requests after scheduling: \(requests)")
+            }
         }
+    } catch let error as BGTaskScheduler.Error {
+        print("Failed to schedule todo archiving task: \(error.localizedDescription)")
+        
+        switch error.code {
+        case .unavailable:
+            print("BGTaskScheduler unavailable: \(error.localizedDescription)")
+        case .tooManyPendingTaskRequests:
+            print("Too many pending tasks: \(error.localizedDescription)")
+        case .notPermitted:
+            print("Not permitted to schedule tasks: \(error.localizedDescription)")
+        default:
+            print("Unknown error: \(error.localizedDescription)")
+        }
+    } catch {
+        print("Unexpected error: \(error.localizedDescription)")
     }
 }

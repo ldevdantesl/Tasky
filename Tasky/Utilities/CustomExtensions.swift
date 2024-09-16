@@ -58,7 +58,7 @@ extension Date {
     var getDayMonthString: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
-        return dateFormatter.string(from: self)
+        return dateFormatter.string(from: self).capitalized
     }
     
     var getDayMonthInt: Int {
@@ -76,7 +76,7 @@ extension Date {
     var getDayAndMonth: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMMM" // Format: Day and full month (e.g., "1 September")
-        return dateFormatter.string(from: self)
+        return dateFormatter.string(from: self).capitalized
     }
     
     static func getEveryMonths(startingFrom month: Int, locale: String) -> [Date] {
