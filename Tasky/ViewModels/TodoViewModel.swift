@@ -156,20 +156,10 @@ class TodoViewModel: ObservableObject {
     }
     
     func fetchCompletedTodos() {
+        
         let request: NSFetchRequest = Todo.fetchRequest()
         let isDonePredicate = NSPredicate(format: "isDone == %@", NSNumber(value: true))
-        
-        let calendar = Calendar.current
-        let currentDate = Date()
-        let archiveAfterDays: Int = UserDefaults.standard.integer(forKey: "archiveAfterDays")
-        print("Archive After: \(archiveAfterDays) days")
-        
-        guard let pastDate = calendar.date(byAdding: .day, value: -archiveAfterDays, to: currentDate) else { return }
-        
-        let archiveAfterPredicate = NSPredicate(format: "completionDate <= %@", pastDate as NSDate)
-        
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [isDonePredicate, archiveAfterPredicate])
-        
+        request.predicate = isDonePredicate
         do {
             let todos = try context.fetch(request)
             todos.forEach { todo in
@@ -178,6 +168,7 @@ class TodoViewModel: ObservableObject {
         } catch {
             print("Error fetching completed todos: \(error.localizedDescription)")
         }
+        
     }
     // MARK: - DELETING
     func deleteTodo(_ todo: Todo) {

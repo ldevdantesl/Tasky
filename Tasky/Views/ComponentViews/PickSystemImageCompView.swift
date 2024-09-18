@@ -73,5 +73,4 @@ struct PickSystemImageCompView: View {
 
 #Preview {
     PickSystemImageCompView(selectedImage: .constant("folder"), selectedColor: .constant(.blue))
-        .previewLayout(.sizeThatFits)
 }

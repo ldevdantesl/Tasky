@@ -4,8 +4,12 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>Dantes.TaskyManage.archiveTodos</string>
-		<string>Dantes.TaskyManage.tomorrowReminder</string>
+		<string>com.tasky.simpletask</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
 	</array>
 </dict>
 </plist>
