@@ -7,6 +7,9 @@
 
 import Foundation
 import SwiftUI
+import OSLog
+
+public let logger = Logger()
 
 public enum Constants{
     static let screenWidth = UIScreen.main.bounds.size.width

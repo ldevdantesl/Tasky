@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "931C1332-55CF-44AB-9B89-6664BA5F27E8",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:Tasky.xcodeproj",
+        "identifier" : "DA4423DD2C9B91B200BFE2B0",
+        "name" : "TaskyTests"
+      }
+    }
+  ],
+  "version" : 2
+}

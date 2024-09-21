@@ -6,29 +6,42 @@
 //
 
 import Foundation
+import NotificationCenter
 
 class MockNotificationSettingsManager: NotificationSettingsManaging {
-    func requestAuthorizationPermission() {}
-    
-    func removeScheduledNotificationFor(_ todo: Todo) {}
-    
-    func sendEverydayNotification() {}
-    
-    func scheduleNotificationFor(_ todo: Todo, at taskDate: Date) {}
-    
     var isPaused: Bool = false
     
     var dailyReminder: Bool = true
     
     var remindedHoursBefore: Int = 21
     
-    var isAuthorized: Bool = true
+    var isAuthorized: Bool = false
     
-    func checkAuthorizationStatus() {}
+    func requestAuthorizationPermission() {
+        logger.log("Permission is granted")
+        self.isAuthorized = true
+    }
+    
+    func removeScheduledNotificationFor(_ todo: Todo) {
+        print("Removed notification for todo.")
+    }
+    
+    func sendEverydayNotification() {
+        logger.log("Scheduled notification for tomorrow.")
+    }
+    
+    func scheduleNotificationFor(_ todo: Todo, at taskDate: Date) {
+        logger.log("Scheduled notification for todo: \(todo.title ?? "")")
+    }
+    
+    func checkAuthorizationStatus() {
+        logger.log("Checked notifcation settings.")
+        isAuthorized = true
+    }
     
     func resetAllSettings() {
         isPaused = false
         dailyReminder = true
-        remindedHoursBefore = 2
+        remindedHoursBefore = 21
     }
 }

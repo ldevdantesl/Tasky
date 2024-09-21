@@ -170,6 +170,7 @@ class TodoViewModel: ObservableObject {
         }
         
     }
+    
     // MARK: - DELETING
     func deleteTodo(_ todo: Todo) {
         context.delete(todo)
@@ -177,18 +178,8 @@ class TodoViewModel: ObservableObject {
     }
     
     func deleteAllRemovedTodos() {
-        let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: true))
-        
-        do {
-            let todos = try context.fetch(request)
-            todos.forEach { todo in
-                context.delete(todo)
-            }
-            saveContext()
-        } catch {
-            print("Error Deleting All Removed Todos: \(error.localizedDescription)")
-        }
+        removedTodos.forEach { context.delete($0) }
+        saveContext()
     }
     
     func deleteAllTodos(){
@@ -203,32 +194,21 @@ class TodoViewModel: ObservableObject {
         }
     }
     
+    
     // MARK: - ARCHIVE ACTIONS
     func archive(_ todo: Todo) {
         todo.isArchived = true
-        print("Archiving: \(todo.title ?? "")")
         saveContext()
     }
     
     func unArchive(_ todo: Todo){
         todo.isArchived = false
-        print("Unarchiving: \(todo.title ?? "")")
         saveContext()
     }
     
     func unArchiveAll() {
-        let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isArchived == %@", NSNumber(value: true))
-        
-        do {
-            let todos = try context.fetch(request)
-            todos.forEach { todo in
-                todo.isArchived = false
-            }
-            saveContext()
-        } catch {
-            print("Error Unarchiving All: \(error.localizedDescription)")
-        }
+        archivedTodos.forEach { $0.isArchived = false}
+        saveContext()
     }
     
     // MARK: - REMOVING
@@ -243,18 +223,8 @@ class TodoViewModel: ObservableObject {
     }
     
     func unRemoveAll() {
-        let request: NSFetchRequest = Todo.fetchRequest()
-        request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: true))
-        
-        do {
-            let todos = try context.fetch(request)
-            todos.forEach { todo in
-                todo.isRemoved = false
-            }
-            saveContext()
-        } catch {
-            print("Error Unremoving All: \(error.localizedDescription)")
-        }
+        removedTodos.forEach { $0.isRemoved = false }
+        saveContext()
     }
     
     // MARK: - COMPLETING

@@ -20,7 +20,6 @@
 		DA4B197B2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B197A2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift */; };
 		DA4B197D2C7999F900899303 /* ArchivedTodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */; };
 		DA4B197F2C79AC8300899303 /* RemovedTodosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */; };
-		DA4B19842C7ABE6800899303 /* MockPrivacySecurityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19832C7ABE6800899303 /* MockPrivacySecurityManager.swift */; };
 		DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */; };
 		DA4B19882C7AD64900899303 /* AuthenticateUserFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */; };
 		DA4B19902C7AF19700899303 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DA4B198F2C7AF19700899303 /* Localizable.xcstrings */; };
@@ -28,7 +27,6 @@
 		DA69446B2C7C3DB80032437C /* AppearanceSettingsManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446A2C7C3DB80032437C /* AppearanceSettingsManaging.swift */; };
 		DA69446D2C7C3E760032437C /* AppearanceSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */; };
 		DA69446F2C7C40A30032437C /* ColorThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69446E2C7C40A30032437C /* ColorThemes.swift */; };
-		DA6944712C7C45BA0032437C /* MockAppearanceSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6944702C7C45BA0032437C /* MockAppearanceSettingsManager.swift */; };
 		DA69C9A72C858B9200B3C511 /* CapsuleWeekStackComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9A62C858B9200B3C511 /* CapsuleWeekStackComponent.swift */; };
 		DA69C9A92C858BF600B3C511 /* CalendarSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9A82C858BF600B3C511 /* CalendarSet.swift */; };
 		DA69C9AB2C858C1C00B3C511 /* CapsuleDateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA69C9AA2C858C1C00B3C511 /* CapsuleDateComponent.swift */; };
@@ -57,7 +55,6 @@
 		DA9409F22C787BA8004D054E /* MockPreviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F12C787BA8004D054E /* MockPreviews.swift */; };
 		DA9409F42C787C4C004D054E /* DataStorageManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F32C787C4C004D054E /* DataStorageManaging.swift */; };
 		DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */; };
-		DA9409F82C78822A004D054E /* MockDataAndStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */; };
 		DA9830B22C8ADA7900368C0A /* TodoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */; };
 		DA9830B42C8BD71900368C0A /* SettingsRowComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B32C8BD71900368C0A /* SettingsRowComponent.swift */; };
 		DA9830B82C8BEAC900368C0A /* ButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9830B72C8BEAC900368C0A /* ButtonItem.swift */; };
@@ -109,7 +106,6 @@
 		DA4B197C2C7999F900899303 /* ArchivedTodosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedTodosView.swift; sourceTree = "<group>"; };
 		DA4B197E2C79AC8300899303 /* RemovedTodosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovedTodosView.swift; sourceTree = "<group>"; };
 		DA4B19822C7AB26D00899303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		DA4B19832C7ABE6800899303 /* MockPrivacySecurityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPrivacySecurityManager.swift; sourceTree = "<group>"; };
 		DA4B19852C7ABED300899303 /* PrivacySecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySecuritySettingsView.swift; sourceTree = "<group>"; };
 		DA4B19872C7AD64900899303 /* AuthenticateUserFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUserFragmentView.swift; sourceTree = "<group>"; };
 		DA4B198F2C7AF19700899303 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -117,7 +113,6 @@
 		DA69446A2C7C3DB80032437C /* AppearanceSettingsManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsManaging.swift; sourceTree = "<group>"; };
 		DA69446C2C7C3E760032437C /* AppearanceSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsManager.swift; sourceTree = "<group>"; };
 		DA69446E2C7C40A30032437C /* ColorThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemes.swift; sourceTree = "<group>"; };
-		DA6944702C7C45BA0032437C /* MockAppearanceSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAppearanceSettingsManager.swift; sourceTree = "<group>"; };
 		DA69C9A62C858B9200B3C511 /* CapsuleWeekStackComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleWeekStackComponent.swift; sourceTree = "<group>"; };
 		DA69C9A82C858BF600B3C511 /* CalendarSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSet.swift; sourceTree = "<group>"; };
 		DA69C9AA2C858C1C00B3C511 /* CapsuleDateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleDateComponent.swift; sourceTree = "<group>"; };
@@ -146,7 +141,6 @@
 		DA9409F12C787BA8004D054E /* MockPreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPreviews.swift; sourceTree = "<group>"; };
 		DA9409F32C787C4C004D054E /* DataStorageManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorageManaging.swift; sourceTree = "<group>"; };
 		DA9409F52C787D9A004D054E /* DataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAndStorageManager.swift; sourceTree = "<group>"; };
-		DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataAndStorageManager.swift; sourceTree = "<group>"; };
 		DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoHeaderView.swift; sourceTree = "<group>"; };
 		DA9830B32C8BD71900368C0A /* SettingsRowComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowComponent.swift; sourceTree = "<group>"; };
 		DA9830B72C8BEAC900368C0A /* ButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonItem.swift; sourceTree = "<group>"; };
@@ -267,9 +261,6 @@
 			children = (
 				DA9409ED2C787981004D054E /* MockSettingsManager.swift */,
 				DA9409EF2C7879BE004D054E /* MockNotificationSettingsManager.swift */,
-				DA9409F72C78822A004D054E /* MockDataAndStorageManager.swift */,
-				DA4B19832C7ABE6800899303 /* MockPrivacySecurityManager.swift */,
-				DA6944702C7C45BA0032437C /* MockAppearanceSettingsManager.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -468,7 +459,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					DA4423DD2C9B91B200BFE2B0 = {
 						CreatedOnToolsVersion = 16.0;
@@ -534,7 +525,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA9409F82C78822A004D054E /* MockDataAndStorageManager.swift in Sources */,
 				DAF659F42C730707004D8ACA /* TodoViewModel.swift in Sources */,
 				DA38A3582C771E8E007C3FB4 /* AddingTagView.swift in Sources */,
 				DA69C9AF2C85A33400B3C511 /* TabBarsComponents.swift in Sources */,
@@ -559,7 +549,6 @@
 				DAF659EE2C730284004D8ACA /* TodoModel.xcdatamodeld in Sources */,
 				DA883A8E2C8EB8F700FC2E79 /* SinglePropertyComponent.swift in Sources */,
 				DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */,
-				DA4B19842C7ABE6800899303 /* MockPrivacySecurityManager.swift in Sources */,
 				DA9409EE2C787981004D054E /* MockSettingsManager.swift in Sources */,
 				DAF65A002C732950004D8ACA /* TodoDetailView.swift in Sources */,
 				DA9409E72C78772F004D054E /* SettingsManaging.swift in Sources */,
@@ -583,7 +572,6 @@
 				DAC7554D2C844ED600112F40 /* TextFieldComponent.swift in Sources */,
 				DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */,
 				DA69C9AD2C858DB100B3C511 /* YourTodosComponentView.swift in Sources */,
-				DA6944712C7C45BA0032437C /* MockAppearanceSettingsManager.swift in Sources */,
 				DAF659EB2C72FFE5004D8ACA /* PersistentController.swift in Sources */,
 				DA883A8A2C8EB2A000FC2E79 /* TodoEditView.swift in Sources */,
 				DA4B19882C7AD64900899303 /* AuthenticateUserFragmentView.swift in Sources */,
@@ -626,13 +614,17 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UJQW6TGS7Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Dantes.TaskyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tasky.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tasky";
 			};
 			name = Debug;
@@ -645,13 +637,17 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UJQW6TGS7Z;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Dantes.TaskyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tasky.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Tasky";
 			};
 			name = Release;
@@ -661,6 +657,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -724,6 +721,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

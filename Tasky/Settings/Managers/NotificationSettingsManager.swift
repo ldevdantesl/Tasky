@@ -37,7 +37,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
     
     var remindedHoursBefore: Int {
         get {
-            return userDefaults.integer(forKey: reminderHoursBeforeKey) == 0 ? 2 : userDefaults.integer(forKey: reminderHoursBeforeKey)
+            return userDefaults.integer(forKey: reminderHoursBeforeKey) == 0 ? 21 : userDefaults.integer(forKey: reminderHoursBeforeKey)
         }
         set{
             userDefaults.set(newValue, forKey: reminderHoursBeforeKey)

@@ -25,6 +25,7 @@ class PersistentController: ObservableObject {
                 print("Failed to load Core Data: \(error.localizedDescription)")
             }
         }
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
     func saveContext(){
