@@ -13,6 +13,7 @@ import Combine
 class TodoViewModel: ObservableObject {
     @AppStorage("isFirstEntry") var isFirstEntry = false
     
+    @Published var standardTodos: [Todo] = []
     @Published var todayTodos: [Todo] = []
     @Published var savedTodos: [Todo] = []
     @Published var removedTodos: [Todo] = []
