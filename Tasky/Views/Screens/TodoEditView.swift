@@ -103,7 +103,9 @@ struct TodoEditView: View {
             }
             .toolbar{
                 ToolbarItem(placement: .bottomBar) {
-                    Button(action: save){
+                    Button{
+                        Task{ await save() }
+                    } label: {
                         Text("Save")
                             .font(.system(.title3, design: .rounded, weight: .bold))
                             .frame(width: Constants.screenWidth - 40, height: 50)
@@ -120,6 +122,7 @@ struct TodoEditView: View {
                 }
             }
             .disabled(isLoading)
+            .animation(.bouncy, value: isLoading)
         }
     }
     
@@ -129,24 +132,25 @@ struct TodoEditView: View {
         return title.count > 2 || !title.trimmingCharacters(in: .whitespaces).isEmpty
     }
     
-    func save() {
-        withAnimation {
-            isLoading = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                isTitleValid() ? todoVM.editTodos(todo, newTitle: title, newDesc: description, newPriority: priority, newDueDate: dueDate, newTags: tags) : ()
-                
-                if dueDate?.getDayAndMonth != todo.dueDate?.getDayAndMonth {
-                    path.removeLast()
-                    settingsMgrVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
-                }
-                
-                settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? Date())
-                
-                isLoading = false
-                todoVM.fetchTodayTodos(for: CalendarSet.instance.currentDay)
-                dismiss()
-            }
+    func save() async {
+        isLoading = true
+        do {
+            guard isTitleValid() else { return }
+            try todoVM.editTodos(todo, newTitle: title, newDesc: description, newPriority: priority, newDueDate: dueDate, newTags: tags)
+        } catch {
+            logger.log("Error editing todo")
         }
+        
+        if dueDate?.getDayAndMonth != todo.dueDate?.getDayAndMonth {
+            path.removeLast()
+            settingsMgrVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
+        }
+        
+        settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? Date())
+    
+        await todoVM.fetchTodayTodos(for: CalendarSet.instance.currentDay)
+        isLoading = false
+        dismiss()
     }
 }
 

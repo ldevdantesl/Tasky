@@ -146,27 +146,33 @@ struct AddingTagView: View {
         .scrollIndicators(.hidden)
     }
     
+    func tagErrorCheck() {
+        if name.count < 3 {
+            nameError = "Tag should be more than 3 characters"
+        } else if name.trimmingCharacters(in: .whitespaces).isEmpty {
+            nameError = "Tag can't be only the spaces"
+        } else if tagVM.isTagByNameReserved(name) {
+            nameError = "Tag with this name is already exists."
+        }
+        if tagVM.isTagByImageReserved(selectedImage) {
+            tagError = "Tag with this icon is already exists"
+        }
+    }
+    
     func addTag() {
         isLoading = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             isLoading = false
             if name.count > 2 && !name.trimmingCharacters(in: .whitespaces).isEmpty && !tagVM.isTagByImageReserved(selectedImage) && !tagVM.isTagByNameReserved(name) {
-                print("Creating the tag...")
-                tagVM.createTag(name, color: selectedColor, systemImage: selectedImage)
+                do {
+                    try tagVM.createTag(name, color: selectedColor, systemImage: selectedImage)
+                } catch {
+                    logger.log("Error creating the tag: \(error.localizedDescription)")
+                }
                 dismiss()
             } else {
-                print("Something went wrong while creating tags")
                 withAnimation {
-                    if name.count < 3 {
-                        nameError = "Tag should be more than 3 characters"
-                    } else if name.trimmingCharacters(in: .whitespaces).isEmpty {
-                        nameError = "Tag can't be only the spaces"
-                    } else if tagVM.isTagByNameReserved(name) {
-                        nameError = "Tag with this name is already exists."
-                    }
-                    if tagVM.isTagByImageReserved(selectedImage) {
-                        tagError = "Tag with this icon is already exists"
-                    }
+                    tagErrorCheck()
                 }
             }
         }

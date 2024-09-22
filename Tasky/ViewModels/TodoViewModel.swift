@@ -10,6 +10,7 @@ import CoreData
 import SwiftUI
 import Combine
 
+@MainActor
 class TodoViewModel: ObservableObject {
     @AppStorage("isFirstEntry") var isFirstEntry = false
     
@@ -38,12 +39,14 @@ class TodoViewModel: ObservableObject {
     private func observeCurrentDay() {
         calendarSet.$currentDay
             .sink { [weak self] newDay in
-                self?.fetchTodayTodos(for: newDay)
+                Task{
+                    await self?.fetchTodayTodos(for: newDay)
+                }
             }
             .store(in: &cancellables)
     }
     // MARK: - CREATING
-    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag], isSaved: Bool = false) -> Todo {
+    func createTodo(title: String, description: String?, priority: Int16, dueDate: Date?, tags: [Tag], isSaved: Bool = false) async throws -> Todo {
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
         newTodo.title = title
@@ -60,13 +63,13 @@ class TodoViewModel: ObservableObject {
             newTodo.tags = NSSet(array: tags)
         }
     
-        saveContext()
+        try saveContext()
         
         return newTodo
     }
     
     // MARK: - EDITING
-    func editTodos(_ todo: Todo, newTitle: String? = nil, newDesc: String? = nil, newIsDone: Bool? = nil, newPriority: Int16? = nil, newDueDate: Date? = nil, newTags: [Tag]? = nil){
+    func editTodos(_ todo: Todo, newTitle: String? = nil, newDesc: String? = nil, newIsDone: Bool? = nil, newPriority: Int16? = nil, newDueDate: Date? = nil, newTags: [Tag]? = nil) throws {
         if let newTitle, !newTitle.isEmpty {
             todo.title = newTitle
         }
@@ -89,18 +92,20 @@ class TodoViewModel: ObservableObject {
         if let newTags{
             todo.tags = NSSet(array: newTags)
         }
-        saveContext()
+        try saveContext()
     }
     
     // MARK: - FETCHING
-    func fetchAllTodos(){
-        fetchArchivedTodos()
-        fetchRemovedTodos()
-        fetchSavedTodos()
-        fetchTodayTodos(for: calendarSet.currentDay)
+    func fetchAllTodos() {
+        Task{
+            await fetchArchivedTodos()
+            await fetchRemovedTodos()
+            await fetchSavedTodos()
+            await fetchTodayTodos(for: calendarSet.currentDay)
+        }
     }
     
-    func fetchTodayTodos(for day: Date) {
+    func fetchTodayTodos(for day: Date) async {
         let request: NSFetchRequest = Todo.fetchRequest()
         let archivePredicate = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
         let removedPredicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
@@ -111,152 +116,224 @@ class TodoViewModel: ObservableObject {
         let datePredicate = NSPredicate(format: "dueDate >= %@ AND dueDate < %@", startOfDay as NSDate, endOfDay as NSDate)
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [archivePredicate, removedPredicate, datePredicate])
         
-        if let sortDescriptor {
-            request.sortDescriptors = [sortDescriptor]
-        }
-        
         do {
             todayTodos = try context.fetch(request)
         } catch {
-            print("Error fetching removed Todos: \(error.localizedDescription)")
+            logger.log("Couldn't fetch todos for the day: \(day). Error: \(error.localizedDescription)")
         }
+        
     }
     
-    func fetchSavedTodos() {
+    func fetchSavedTodos() async {
         let request: NSFetchRequest = Todo.fetchRequest()
+        
         request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
         request.predicate = NSPredicate(format: "isSaved == %@", NSNumber(value: true))
         
         do {
             savedTodos = try context.fetch(request)
         } catch {
-            print("Error fetching saved Todos: \(error.localizedDescription)")
+            logger.log("Couldn't fetch saved todos: \(error.localizedDescription)")
         }
+        
     }
     
-    func fetchRemovedTodos() {
+    func fetchRemovedTodos() async {
         let request: NSFetchRequest = Todo.fetchRequest()
         request.predicate = NSPredicate(format: "isRemoved == %@", NSNumber(value: true))
-        
+    
         do {
             removedTodos = try context.fetch(request)
         } catch {
-            print("Error fetching removed Todos: \(error.localizedDescription)")
+            logger.log("Couldn't fetch removed todos: \(error.localizedDescription)")
         }
     }
     
-    func fetchArchivedTodos() {
+    func fetchArchivedTodos() async {
         let request: NSFetchRequest = Todo.fetchRequest()
         request.predicate = NSPredicate(format: "isArchived == %@", NSNumber(value: true))
-        
         do {
             archivedTodos = try context.fetch(request)
         } catch {
-            print("Error fetching removed Todos: \(error.localizedDescription)")
+            logger.log("Couldn't fetch archived todos: \(error.localizedDescription)")
         }
     }
     
-    func fetchCompletedTodos() {
-        
+    func fetchCompletedTodos() async {
         let request: NSFetchRequest = Todo.fetchRequest()
         let isDonePredicate = NSPredicate(format: "isDone == %@", NSNumber(value: true))
         request.predicate = isDonePredicate
+     
         do {
             let todos = try context.fetch(request)
             todos.forEach { todo in
                 archive(todo)
             }
         } catch {
-            print("Error fetching completed todos: \(error.localizedDescription)")
+            logger.log("Couldn't fetch completed todos: \(error.localizedDescription)")
         }
-        
     }
     
     // MARK: - DELETING
     func deleteTodo(_ todo: Todo) {
         context.delete(todo)
-        saveContext()
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't delete todo: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     func deleteAllRemovedTodos() {
         removedTodos.forEach { context.delete($0) }
-        saveContext()
-    }
-    
-    func deleteAllTodos(){
-        let request: NSFetchRequest<NSFetchRequestResult> = Todo.fetchRequest()
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-        
         do {
-            try context.execute(deleteRequest)
-            saveContext()
+            try saveContext()
         } catch {
-            print("Error deleting all todos: \(error.localizedDescription)")
+            logger.log("Couldn't delete all removed todos: Eror while saving the context: \(error.localizedDescription)")
         }
     }
     
+    func deleteAllTodos() {
+        let request: NSFetchRequest<NSFetchRequestResult> = Todo.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        do {
+            try context.execute(deleteRequest)
+            try saveContext()
+        } catch {
+            logger.log("Couldn't delete all todos: Eror while saving the context or executing delete request: \(error.localizedDescription)")
+        }
+        
+    }
     
     // MARK: - ARCHIVE ACTIONS
     func archive(_ todo: Todo) {
         todo.isArchived = true
-        saveContext()
+        
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't archive todo: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
-    func unArchive(_ todo: Todo){
+    func unArchive(_ todo: Todo) {
         todo.isArchived = false
-        saveContext()
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't unarchive todo: Eror while saving the context: \(error.localizedDescription)")
+        }
+    }
+    
+    func archiveOldCompletedTodos() async {
+        let isArchiveAfterCompletionEnabled = UserDefaults.standard.bool(forKey: "isArchiveAfterCompletionEnabled")
+        guard isArchiveAfterCompletionEnabled else { return }
+        let archiveAfterDays = UserDefaults.standard.integer(forKey: "archiveAfterDays")
+        logger.log("Archive completed todos after: \(archiveAfterDays)")
+        let request: NSFetchRequest = Todo.fetchRequest()
+        let xDaysAgo = Calendar.current.date(byAdding: .day, value: -archiveAfterDays, to: Date())!
+        logger.log("Xdays Ago: \(xDaysAgo)")
+        let predicate1 = NSPredicate(format: "isDone == %@", NSNumber(value: true))
+        let predicate2 = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
+        let predicate3 = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
+        let predicate4 = NSPredicate(format: "completionDate <= %@", xDaysAgo as NSDate)
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2, predicate3, predicate4])
+        
+        do {
+            let todosToArchive = try context.fetch(request)
+            todosToArchive.forEach { todo in
+                logger.log("Found old completed todo: \(todo.title ?? "Test Title")")
+                todo.isArchived = true
+            }
+            try saveContext()
+        } catch {
+            print("Failed to archive old completed Todo:\(error.localizedDescription)")
+        }
     }
     
     func unArchiveAll() {
         archivedTodos.forEach { $0.isArchived = false}
-        saveContext()
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't unarchive all archived todos: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - REMOVING
-    func removeTodo(_ todo: Todo){
+    func removeTodo(_ todo: Todo) {
         todo.isRemoved = true
-        saveContext()
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't remove todo: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     func unRemoveTodo(_ todo: Todo) {
         todo.isRemoved = false
-        saveContext()
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't unarchive todo: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     func unRemoveAll() {
         removedTodos.forEach { $0.isRemoved = false }
-        saveContext()
+        
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't unremove all todos: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - COMPLETING
-    func completeTodo(_ todo: Todo){
+    func completeTodo(_ todo: Todo) {
         todo.isDone = true
         todo.completionDate = Date()
-        saveContext()
-        print("Complete todo: \(todo.title ?? "")")
+        
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't complete todo: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     func uncompleteTodo(_ todo: Todo) {
         todo.isDone = false
         todo.completionDate = nil
-        saveContext()
-        print("Uncomplete todo: \(todo.title ?? "")")
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't uncomplete todo: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - SAVING
     func saveTodo(_ todo: Todo){
         todo.isSaved = true
-        saveContext()
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't save todo: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     func unsaveTodo(_ todo: Todo){
         todo.isSaved = false
-        saveContext()
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't unsave todo: Eror while saving the context: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - SAVING
-    private func saveContext(){
-        PersistentController.shared.saveContext()
+    private func saveContext() throws {
+        try PersistentController.shared.saveContext()
         fetchAllTodos()
     }
     

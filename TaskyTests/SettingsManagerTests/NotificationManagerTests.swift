@@ -10,8 +10,6 @@ import SwiftUICore
 @testable import Tasky
 
 struct NotificationSettingsManagerTests {
-    let todoVM = TodoViewModel()
-    
     var mockNotificationManager: NotificationSettingsManaging = MockNotificationSettingsManager()
     var realNotificationManager: NotificationSettingsManaging = NotificationSettingsManager()
     
@@ -42,12 +40,12 @@ struct NotificationSettingsManagerTests {
     }
     
     @Test func scheduleNotificationForTodo() async throws {
-        mockNotificationManager.scheduleNotificationFor(TodoViewModel.mockToDo(), at: TodoViewModel.mockToDo().dueDate ?? .now)
+        await mockNotificationManager.scheduleNotificationFor(TodoViewModel.mockToDo(), at: TodoViewModel.mockToDo().dueDate ?? .now)
         #expect(true)
     }
     
     @Test func removeScheduledNotficationForTodo() async throws {
-        mockNotificationManager.removeScheduledNotificationFor(TodoViewModel.mockToDo())
+        await mockNotificationManager.removeScheduledNotificationFor(TodoViewModel.mockToDo())
         #expect(true)
     }
     

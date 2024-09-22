@@ -23,15 +23,15 @@ struct MainView: View {
     
     init(todoVM: TodoViewModel){
         self.todoVM = todoVM
+        
         let settingsManager = SettingsManager(
             notificationSettingsManager: NotificationSettingsManager(),
-            dataAndStorageManager: DataAndStorageManager(todoVM: todoVM),
-            privacyAndSecurityManager: PrivacyAndSecuritySettingsManager(), appearanceSettingsManager: AppearanceSettingsManager()
+            dataAndStorageManager: DataAndStorageManager(),
+            privacyAndSecurityManager: PrivacyAndSecuritySettingsManager(),
+            appearanceSettingsManager: AppearanceSettingsManager()
         )
-        // Initialize settingsManagerVM with the constructed settingsManager
+        
         _settingsManagerVM = StateObject(wrappedValue: SettingsManagerViewModel(settingsManager: settingsManager))
-        // Initialize todoVM and tagVM separately
-        _tagVM = StateObject(wrappedValue: TagViewModel())
     }
     
     var body: some View {
@@ -47,38 +47,45 @@ struct MainView: View {
         } else if isFirstEntry {
             AppIntroScreen()
                 .onAppear{
-                    tagVM.createTag("Work", color: .purple, systemImage: "bag.fill")
-                    tagVM.createTag("Personal", color: .yellow, systemImage: "person")
-                    
-                   let _ = todoVM.createTodo(title: "Explore the app", description: "Explore the Tasky app for myself. Be excited.", priority: 1, dueDate: .now, tags: tagVM.tags)
-                    
-                    let _ = todoVM.createTodo(title: "Create CV", description: nil, priority: 2, dueDate: .now, tags: [tagVM.tags[0]], isSaved: true)
+                    Task{
+                        do {
+                            try tagVM.createTag("Work", color: .purple, systemImage: "bag.fill")
+                            try tagVM.createTag("Personal", color: .yellow, systemImage: "person")
+                            let _ = try await todoVM.createTodo(title: "Explore the app", description: "Explore the Tasky app for myself. Be excited.", priority: 1, dueDate: .now, tags: tagVM.tags)
+                            
+                            let _ = try await todoVM.createTodo(title: "Create CV", description: nil, priority: 2, dueDate: .now, tags: [tagVM.tags[0]], isSaved: true)
+                        } catch {
+                            print("Error creating new todos for the new user.")
+                        }
+                    }
                 }
         } else {
             TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)
                 .blur(radius: blurView() ? 10 : 0)
                 .blur(radius: showAutenticationView ? 20 : 0)
                 .preferredColorScheme(settingsManagerVM.settingsManager.appearanceSettingsManager.colorScheme)
-                .onAppear{
+                .onAppear {
                     if settingsManagerVM.settingsManager.privacyAndSecurityManager.useBiometrics {
                         showAutenticationView.toggle()
                     }
+                    Task{
+                        await todoVM.archiveOldCompletedTodos()
+                    }
                 }
-                .sheet(isPresented: $showAutenticationView){
+                .sheet(isPresented: $showAutenticationView) {
                     AuthenticateUserFragmentView(settingsManagerViewModel: settingsManagerVM, isAuthenticated: $showAutenticationView)
                         .presentationDetents([.medium])
                         .interactiveDismissDisabled()
                 }
                 .tint(settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme)
-                .onAppear{
+                .onAppear {
                     settingsManagerVM.settingsManager.notificationSettingsManager.requestAuthorizationPermission()
                 }
         }
     }
     
     func blurView() -> Bool {
-        let result = settingsManagerVM.settingsManager.privacyAndSecurityManager.lockWhenBackgrounded && scenePhase == .inactive
-        return result
+        return settingsManagerVM.settingsManager.privacyAndSecurityManager.lockWhenBackgrounded && scenePhase == .inactive
     }
 }
 

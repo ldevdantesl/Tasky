@@ -119,7 +119,9 @@ struct AddTodoView: View {
         .scrollIndicators(.never)
         .toolbar{
             ToolbarItem(placement:.bottomBar) {
-                Button(action: save){
+                Button{
+                    Task{ await save() }
+                } label: {
                     Text("Add + ")
                         .font(.system(.title2, design: .rounded, weight: .bold))
                         .foregroundStyle(.white)
@@ -147,34 +149,34 @@ struct AddTodoView: View {
         .toolbar(.hidden, for: .navigationBar)
     }
     
-    func save() {
+    func save() async {
         showProgressView = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-            withAnimation {
-                if title.count > 2 && !title.trimmingCharacters(in: .whitespaces).isEmpty && dueDate != nil {
-                    
-                    let todo = todoVM.createTodo(title: title, description: desc.isEmpty ? nil : desc, priority: priority, dueDate: dueDate, tags:selectedTags)
-                    
-                    settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? .now)
-                    
-                    withAnimation {
-                        showProgressView = false
-                        path.removeLast()
-                    }
-                } else {
-                    print("Something went wrong while creating the todo")
-                    withAnimation {
-                        if title.count < 2{
-                            titleErrorMessage = "Title should be more than 2 characters"
-                        } else if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                            titleErrorMessage = "Title can't only be the spaces"
-                        }
-                        if dueDate == nil{
-                            dateErrorMessage = "Specify a day"
-                        }
-                        showProgressView = false
-                    }
+        if title.count > 2 && !title.trimmingCharacters(in: .whitespaces).isEmpty && dueDate != nil {
+            do {
+                let todo = try await todoVM.createTodo(title: title, description: desc.isEmpty ? nil : desc, priority: priority, dueDate: dueDate, tags:selectedTags)
+                
+                settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? .now)
+                
+                withAnimation {
+                    showProgressView = false
+                    path.removeLast()
                 }
+            } catch {
+                logger.log("Error creating todo: \(error.localizedDescription)")
+            }
+            
+        } else {
+            logger.log("Something went wrong while creating the todo")
+            withAnimation {
+                if title.count < 2{
+                    titleErrorMessage = "Title should be more than 2 characters"
+                } else if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    titleErrorMessage = "Title can't only be the spaces"
+                }
+                if dueDate == nil{
+                    dateErrorMessage = "Specify a day"
+                }
+                showProgressView = false
             }
         }
     }

@@ -45,25 +45,34 @@ class TagViewModel: ObservableObject {
         }
     }
     
-    func createTag(_ name: String, color: Color, systemImage: String) {
+    func createTag(_ name: String, color: Color, systemImage: String) throws {
         let newTag = Tag(context: context)
         newTag.id = UUID()
         newTag.name = name
         newTag.color = color.toData()
         newTag.systemImage = systemImage
         
-        saveContext()
+        try saveContext()
     }
     
     func editTag(tag: Tag, newName: String, newColor: Color){
         tag.name = newName
         tag.color = newColor.toData()
-        saveContext()
+
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't edit tag. Error while saving the context: \(error.localizedDescription)")
+        }
     }
     
     func deleteTag(tag: Tag){
         context.delete(tag)
-        saveContext()
+        do {
+            try saveContext()
+        } catch {
+            logger.log("Couldn't delete tag. Error while saving the context: \(error.localizedDescription)")
+        }
     }
     
     func deleteAllTags() {
@@ -79,8 +88,8 @@ class TagViewModel: ObservableObject {
         }
     }
     
-    private func saveContext(){
-        PersistentController.shared.saveContext()
+    private func saveContext() throws {
+        try PersistentController.shared.saveContext()
         fetchTags()
     }
 }

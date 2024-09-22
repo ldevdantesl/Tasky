@@ -129,7 +129,11 @@ struct TodoDetailView: View {
                 if todo.isDone {
                     Menu{
                         Button("By Custom Date", systemImage: "calendar", action: {withAnimation{showCustomDate.toggle()}})
-                        Button("By Tomorrow", systemImage: "sun.max.fill", action: {repeatByTomorrowOR()})
+                        Button("By Tomorrow", systemImage: "sun.max.fill") {
+                            Task {
+                                await repeatByTomorrowOR()
+                            }
+                        }
                     } label: {
                         Text("Repeat")
                             .font(.system(.headline, design: .rounded, weight: .bold))
@@ -215,10 +219,12 @@ struct TodoDetailView: View {
                 .padding()
                 
                 Button("Repeat") {
-                    withAnimation {
-                        repeatByTomorrowOR(byCustomDate: settingCustomDate)
+                    Task{
+                        await repeatByTomorrowOR(byCustomDate: settingCustomDate)
                         settingsManagerVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: settingCustomDate)
-                        showCustomDate.toggle()
+                        withAnimation {
+                            showCustomDate.toggle()
+                        }
                     }
                 }
                 .padding()
@@ -230,17 +236,19 @@ struct TodoDetailView: View {
         }
     }
     
-    func repeatByTomorrowOR(byCustomDate: Date? = nil) {
-        withAnimation {
-            isLoading = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
-                if let byCustomDate {
-                   let _ = todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: byCustomDate, tags: todo.tags?.allObjects as? [Tag] ?? [])
-                } else {
-                    let _ = todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: todo.dueDate?.getTomorrowDay, tags: todo.tags?.allObjects as? [Tag] ?? [])
-                }
+    func repeatByTomorrowOR(byCustomDate: Date? = nil) async {
+        isLoading = true
+        do{
+            guard let byCustomDate else {
+                let _ = try await todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: todo.dueDate?.getTomorrowDay, tags: todo.tags?.allObjects as? [Tag] ?? [])
+                return
+            }
+            let _ = try await todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: byCustomDate, tags: todo.tags?.allObjects as? [Tag] ?? [])
+            withAnimation {
                 isLoading = false
             }
+        } catch {
+            print("Can't repeat the task: \(error.localizedDescription)")
         }
     }
     

@@ -28,11 +28,9 @@ class PersistentController: ObservableObject {
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
-    func saveContext(){
+    func saveContext() throws {
         if context.hasChanges{
-            do { try context.save() } catch {
-                print("Cant save context: \(error.localizedDescription)")
-            }
+            try context.save()
         }
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 struct MockPreviews{
     static let mockNotificationManager = MockNotificationSettingsManager()
-    static let mockDataAndStorageManager = DataAndStorageManager(todoVM: nil)
+    static let mockDataAndStorageManager = DataAndStorageManager()
     static let mockPrivacyAndSecurityManager = PrivacyAndSecuritySettingsManager()
     static let mockAppearanceSettingsManager = AppearanceSettingsManager()
     static let mockSettingsManager = MockSettingsManager(dataAndStorageManager: mockDataAndStorageManager, notificationSettingsManager: mockNotificationManager, privacyAndSecurityManager: mockPrivacyAndSecurityManager, appearanceSettingsManager: mockAppearanceSettingsManager)
