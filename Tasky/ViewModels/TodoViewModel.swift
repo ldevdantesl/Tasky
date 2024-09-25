@@ -227,12 +227,16 @@ class TodoViewModel: ObservableObject {
     
     func archiveOldCompletedTodos() async {
         let isArchiveAfterCompletionEnabled = UserDefaults.standard.bool(forKey: "isArchiveAfterCompletionEnabled")
-        guard isArchiveAfterCompletionEnabled else { return }
+        guard isArchiveAfterCompletionEnabled else { logger.log("Archiving after completion is not enabled."); return }
+        logger.log("Archive old completed Todos: \(isArchiveAfterCompletionEnabled ? "Yes" : "No")")
+        
         let archiveAfterDays = UserDefaults.standard.integer(forKey: "archiveAfterDays")
         logger.log("Archive completed todos after: \(archiveAfterDays)")
-        let request: NSFetchRequest = Todo.fetchRequest()
+        
         let xDaysAgo = Calendar.current.date(byAdding: .day, value: -archiveAfterDays, to: Date())!
         logger.log("Xdays Ago: \(xDaysAgo)")
+        
+        let request: NSFetchRequest = Todo.fetchRequest()
         let predicate1 = NSPredicate(format: "isDone == %@", NSNumber(value: true))
         let predicate2 = NSPredicate(format: "isArchived == %@", NSNumber(value: false))
         let predicate3 = NSPredicate(format: "isRemoved == %@", NSNumber(value: false))
@@ -242,6 +246,7 @@ class TodoViewModel: ObservableObject {
         
         do {
             let todosToArchive = try context.fetch(request)
+            guard !todosToArchive.isEmpty else { logger.log("Didn't find old completed todos."); return }
             todosToArchive.forEach { todo in
                 logger.log("Found old completed todo: \(todo.title ?? "Test Title")")
                 todo.isArchived = true

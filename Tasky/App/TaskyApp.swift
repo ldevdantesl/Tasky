@@ -9,13 +9,15 @@ import SwiftUI
 
 @main
 struct TaskyApp: App {
-    @StateObject var persistentController = PersistentController.shared
     @StateObject var todoVM = TodoViewModel()
     
     var body: some Scene {
         WindowGroup {
             MainView(todoVM: todoVM)
-                .environment(\.managedObjectContext, persistentController.context)
+                .environment(\.managedObjectContext, PersistentController.shared.context)
+        }
+        .backgroundTask(.appRefresh("com.TaskyManage.everydayNotifcation")) { task in
+            
         }
     }
 }

@@ -96,7 +96,6 @@ struct TodoView: View {
                 switch view{
                     case "SettingsView":
                         SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
-                            .toolbar(.hidden, for: .navigationBar)
                     
                     case "TagSettingsView":
                         TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
@@ -105,7 +104,7 @@ struct TodoView: View {
                         DataAndStorageView(settingsManagerVM: settingsMgrVM, todoVM: todoVM, path: $path)
                             
                     case "ArchivedTodosView":
-                        ArchivedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
+                        ArchivedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM)
                             
                     case "RemovedTodosView":
                         RemovedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)

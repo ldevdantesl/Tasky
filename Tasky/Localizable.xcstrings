@@ -535,6 +535,16 @@
         }
       }
     },
+    "Do you want to reset all the custom settings?" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы хотите полностью сбросить все настройки?"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "ru" : {
@@ -785,6 +795,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Нет удаленных задач"
+          }
+        }
+      }
+    },
+    "No Description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Без описания"
           }
         }
       }
@@ -1062,6 +1083,16 @@
         }
       }
     },
+    "Reset All Settings" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сбросить все настройки"
+          }
+        }
+      }
+    },
     "Reset all the custom Settings" : {
       "localizations" : {
         "ru" : {
@@ -1212,6 +1243,23 @@
         }
       }
     },
+    "specify_day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specify A Day"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назначьте день"
+          }
+        }
+      }
+    },
     "Tags" : {
       "localizations" : {
         "ru" : {
@@ -1301,6 +1349,34 @@
           }
         }
       }
+    },
+    "Title can't be only the spaces" : {
+
+    },
+    "Title can't only be the spaces" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название не может быть пустым"
+          }
+        }
+      }
+    },
+    "Title should be more than 2 characters" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название должно быть больше 2 знаков"
+          }
+        }
+      }
+    },
+    "Title should be more than 3 characters" : {
+
     },
     "Today" : {
       "localizations" : {

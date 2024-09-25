@@ -11,8 +11,6 @@ struct ArchivedTodosView: View {
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
     
-    @Binding var path: NavigationPath
-    
     @State private var alertToggle: Bool = false
     @State private var searchText: String = ""
     
@@ -62,6 +60,6 @@ struct ArchivedTodosView: View {
 
 #Preview {
     NavigationStack{
-        ArchivedTodosView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        ArchivedTodosView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel)
     }
 }

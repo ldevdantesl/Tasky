@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TodoRowView: View {
-    @ObservedObject var todo: Todo
+    @StateObject var todo: Todo
     
     @ObservedObject var settingsManagerVM: SettingsManagerViewModel
     @ObservedObject var todoVM: TodoViewModel
@@ -16,14 +16,14 @@ struct TodoRowView: View {
     private var isFullInitType: Bool
     
     init(todo: Todo, settingsManagerVM: SettingsManagerViewModel, todoVM: TodoViewModel, offsetY: CGFloat? = nil) {
-        self.todo = todo
+        self._todo = StateObject(wrappedValue: todo)
         self.settingsManagerVM = settingsManagerVM
         self.todoVM = todoVM
         self.isFullInitType = true
     }
     
     init(todo: Todo) {
-        self.todo = todo
+        self._todo = StateObject(wrappedValue: todo)
         self.todoVM = TodoViewModel()
         self.settingsManagerVM = MockPreviews.viewModel
         self.isFullInitType = false

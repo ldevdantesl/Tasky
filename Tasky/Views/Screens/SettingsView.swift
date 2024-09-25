@@ -15,19 +15,14 @@ struct SettingsView: View {
     
     @Binding var path: NavigationPath
     
+    @State private var showAlert: Bool = false
+    
     var colorTheme: Color {
         settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
     
     var body: some View {
-        VStack{
-            HStack{
-                Text("Settings")
-                    .font(.system(.title, design: .rounded, weight: .bold))
-                Spacer()
-            }
-            .padding(.horizontal)
-            
+        ScrollView{
             SettingsRowComponent(title: "Tags", image: "number", color: .teal, link: "TagSettingsView", path: $path)
             
             SettingsRowComponent(title: "Data & Storage", image: "folder.fill", color: .yellow, link: "DataStorageSettingsView", path: $path)
@@ -39,7 +34,33 @@ struct SettingsView: View {
             SettingsRowComponent(title: "Appearance", image: "drop.degreesign.fill", color: .purple, link: "AppearanceSettingsView", path: $path)
             
             ShareAndFAQFragmentView()
-            Spacer()
+        }
+        .padding(.top, 5)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Text("Settings")
+                    .font(.system(.title, design: .rounded, weight: .bold))
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .foregroundStyle(.red)
+                    .onTapGesture{
+                        withAnimation {
+                            showAlert.toggle()
+                        }
+                    }
+            }
+        }
+        .navigationBarBackButtonHidden()
+        .alert("Reset All Settings", isPresented: $showAlert) {
+            Button("Reset", role:.destructive) {
+                settingsMgrVM.settingsManager.resetAllSettings()
+            }
+        } message: {
+            Text("Do you want to reset all the custom settings?")
         }
         .background(Color.background)
         .safeAreaInset(edge: .bottom) {

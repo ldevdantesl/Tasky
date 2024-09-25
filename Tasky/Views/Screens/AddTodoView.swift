@@ -169,12 +169,12 @@ struct AddTodoView: View {
             logger.log("Something went wrong while creating the todo")
             withAnimation {
                 if title.count < 2{
-                    titleErrorMessage = "Title should be more than 2 characters"
+                    titleErrorMessage = String(localized: "Title should be more than 2 characters")
                 } else if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    titleErrorMessage = "Title can't only be the spaces"
+                    titleErrorMessage = String(localized: "Title can't only be the spaces")
                 }
                 if dueDate == nil{
-                    dateErrorMessage = "Specify a day"
+                    dateErrorMessage = String(localized: "specify_day")
                 }
                 showProgressView = false
             }

@@ -38,12 +38,14 @@ struct MainView: View {
         if showLaunchScreen{
             LaunchScreen()
                 .onAppear{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    Task{
+                        try await Task.sleep(for: .seconds(0.5))
                         withAnimation {
                             self.showLaunchScreen = false
                         }
                     }
                 }
+            
         } else if isFirstEntry {
             AppIntroScreen()
                 .onAppear{
@@ -51,14 +53,16 @@ struct MainView: View {
                         do {
                             try tagVM.createTag("Work", color: .purple, systemImage: "bag.fill")
                             try tagVM.createTag("Personal", color: .yellow, systemImage: "person")
-                            let _ = try await todoVM.createTodo(title: "Explore the app", description: "Explore the Tasky app for myself. Be excited.", priority: 1, dueDate: .now, tags: tagVM.tags)
                             
+                            let _ = try await todoVM.createTodo(title: "Explore the app", description: "Explore the Tasky app for myself. Be excited.", priority: 1, dueDate: .now, tags: tagVM.tags)
                             let _ = try await todoVM.createTodo(title: "Create CV", description: nil, priority: 2, dueDate: .now, tags: [tagVM.tags[0]], isSaved: true)
+                            
                         } catch {
                             print("Error creating new todos for the new user.")
                         }
                     }
                 }
+            
         } else {
             TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)
                 .blur(radius: blurView() ? 10 : 0)
@@ -67,6 +71,9 @@ struct MainView: View {
                 .onAppear {
                     if settingsManagerVM.settingsManager.privacyAndSecurityManager.useBiometrics {
                         showAutenticationView.toggle()
+                    }
+                    if !settingsManagerVM.settingsManager.notificationSettingsManager.isAuthorized {
+                        settingsManagerVM.settingsManager.notificationSettingsManager.requestAuthorizationPermission()
                     }
                     Task{
                         await todoVM.archiveOldCompletedTodos()
@@ -78,9 +85,6 @@ struct MainView: View {
                         .interactiveDismissDisabled()
                 }
                 .tint(settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme)
-                .onAppear {
-                    settingsManagerVM.settingsManager.notificationSettingsManager.requestAuthorizationPermission()
-                }
         }
     }
     

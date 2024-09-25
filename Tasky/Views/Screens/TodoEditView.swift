@@ -66,7 +66,7 @@ struct TodoEditView: View {
                 
                 VStack(alignment:.leading){
                     TextFieldComponent(text: $title, placeholder: "Title", maxChars: 25)
-                        .padding(10)
+                        .padding(.vertical, 10)
                         .background(Color.textField, in:.capsule)
                         .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                     
@@ -104,7 +104,8 @@ struct TodoEditView: View {
             .toolbar{
                 ToolbarItem(placement: .bottomBar) {
                     Button{
-                        Task{ await save() }
+                        save()
+                        Task{ await todoVM.fetchTodayTodos(for: CalendarSet.instance.currentDay) }
                     } label: {
                         Text("Save")
                             .font(.system(.title3, design: .rounded, weight: .bold))
@@ -127,28 +128,23 @@ struct TodoEditView: View {
     }
     
     func isTitleValid() -> Bool{
-        titleErrorMessage = title.count < 3 ? "Title should be more than 3 characters" : nil
-        titleErrorMessage = title.trimmingCharacters(in: .whitespaces).isEmpty ? "Title can't be only the spaces" : nil
+        titleErrorMessage = title.count < 3 ? String(localized:"Title should be more than 3 characters") : nil
+        titleErrorMessage = title.trimmingCharacters(in: .whitespaces).isEmpty ? String(localized: "Title can't be only the spaces") : nil
         return title.count > 2 || !title.trimmingCharacters(in: .whitespaces).isEmpty
     }
     
-    func save() async {
+    func save() {
         isLoading = true
         do {
-            guard isTitleValid() else { return }
+            guard isTitleValid() else { isLoading = false; return }
             try todoVM.editTodos(todo, newTitle: title, newDesc: description, newPriority: priority, newDueDate: dueDate, newTags: tags)
         } catch {
             logger.log("Error editing todo")
         }
         
-        if dueDate?.getDayAndMonth != todo.dueDate?.getDayAndMonth {
-            path.removeLast()
-            settingsMgrVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
-        }
-        
+        settingsMgrVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
         settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? Date())
-    
-        await todoVM.fetchTodayTodos(for: CalendarSet.instance.currentDay)
+        
         isLoading = false
         dismiss()
     }

@@ -123,14 +123,12 @@ struct SettingsRowComponent: View {
                         showingColorDropDown.toggle()
                     } else {
                         toggler.toggle()
-                        print(toggler)
                     }
                 }
             } label: {
                 Capsule()
                     .fill(Constants.textFieldColor)
                     .frame(width: Constants.screenWidth - 20, height: 55)
-                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                     .overlay{
                         HStack(spacing: 10){
                             Circle()
@@ -183,7 +181,6 @@ struct SettingsRowComponent: View {
                         .padding(.leading, 8)
                         .padding(.trailing, 20)
                     }
-                    
             }
             .buttonStyle(.plain)
             

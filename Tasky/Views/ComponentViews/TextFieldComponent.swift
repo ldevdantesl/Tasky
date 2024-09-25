@@ -10,7 +10,7 @@ import SwiftUI
 struct TextFieldComponent: View {
     @Binding var text: String
     @State private var oldText: String = ""
-    let placeholder: String
+    let placeholder: LocalizedStringKey
     let maxChars: Int?
     var body: some View {
         ZStack(alignment:.trailing){
