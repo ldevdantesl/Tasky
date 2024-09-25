@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct SettingsView: View {
     @ObservedObject var todoVM: TodoViewModel

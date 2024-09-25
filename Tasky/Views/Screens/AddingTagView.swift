@@ -42,7 +42,7 @@ struct AddingTagView: View {
             .padding(.horizontal, 20)
             .padding(.top, 20)
             
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 Text("Name")
                     .font(.system(.subheadline, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
@@ -70,7 +70,7 @@ struct AddingTagView: View {
             .padding(.vertical, 10)
             .padding(.horizontal, 20)
             
-            VStack(alignment: .leading, spacing: 0){
+            VStack(alignment: .leading, spacing: 0) {
                 PickSystemImageCompView(selectedImage: $selectedImage, selectedColor: $selectedColor)
                     .padding(.bottom, 15)
                 
@@ -82,7 +82,7 @@ struct AddingTagView: View {
                 }
             }
             
-            VStack(alignment: .leading){
+            VStack(alignment: .leading) {
                 Text("Color of tag")
                     .font(.system(.subheadline, design: .rounded, weight: .semibold))
                     .foregroundStyle(.secondary)
@@ -91,7 +91,9 @@ struct AddingTagView: View {
             }
             .padding(.vertical, 10)
             
-            Button(action: addTag){
+            Button {
+                Task { await addTag() }
+            } label: {
                 Text("+ Tag")
                     .font(.system(.title3, design: .rounded, weight: .medium))
                     .frame(maxWidth: Constants.screenWidth - 40)
@@ -148,32 +150,33 @@ struct AddingTagView: View {
     
     func tagErrorCheck() {
         if name.count < 3 {
-            nameError = "Tag should be more than 3 characters"
+            nameError = String(localized: "Tag should be more than 3 characters")
         } else if name.trimmingCharacters(in: .whitespaces).isEmpty {
-            nameError = "Tag can't be only the spaces"
+            nameError = String(localized: "Tag can't be only the spaces")
         } else if tagVM.isTagByNameReserved(name) {
-            nameError = "Tag with this name is already exists."
+            nameError = String(localized: "Tag with this name is already exists.")
         }
         if tagVM.isTagByImageReserved(selectedImage) {
-            tagError = "Tag with this icon is already exists"
+            tagError = String(localized: "Tag with this icon is already exists")
         }
     }
     
-    func addTag() {
+    func addTag() async {
         isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            isLoading = false
-            if name.count > 2 && !name.trimmingCharacters(in: .whitespaces).isEmpty && !tagVM.isTagByImageReserved(selectedImage) && !tagVM.isTagByNameReserved(name) {
-                do {
-                    try tagVM.createTag(name, color: selectedColor, systemImage: selectedImage)
-                } catch {
-                    logger.log("Error creating the tag: \(error.localizedDescription)")
-                }
-                dismiss()
-            } else {
-                withAnimation {
-                    tagErrorCheck()
-                }
+     
+        try? await Task.sleep(for: .seconds(0.5))
+        isLoading = false
+        
+        if name.count > 2 && !name.trimmingCharacters(in: .whitespaces).isEmpty && !tagVM.isTagByImageReserved(selectedImage) && !tagVM.isTagByNameReserved(name) {
+            do {
+                try tagVM.createTag(name, color: selectedColor, systemImage: selectedImage)
+            } catch {
+                logger.log("Error creating the tag: \(error.localizedDescription)")
+            }
+            dismiss()
+        } else {
+            withAnimation {
+                tagErrorCheck()
             }
         }
     }
