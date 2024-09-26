@@ -17,7 +17,7 @@ struct PrivacyAndSecurityManagerTests {
         #expect(privacySecurityManager.useBiometrics == UserDefaults.standard.bool(forKey: "useBiometrics"))
     }
     
-    @Test func propertiesSetter() async throws {
+    @Test func propertiesSetter() throws {
         UserDefaults.standard.set(false, forKey: "lockWhenBackgrounded")
         UserDefaults.standard.set(true, forKey: "useBiometrics")
         
