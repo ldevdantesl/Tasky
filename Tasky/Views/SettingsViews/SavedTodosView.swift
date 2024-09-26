@@ -22,21 +22,16 @@ struct SavedTodosView: View {
     
     var body: some View {
         ScrollView{
-            if !todoVM.savedTodos.isEmpty{
-                ForEach(todoVM.savedTodos){ todo in
-                    TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
-                        .padding(.horizontal, 10)
-                }
-            } else {
-                NoFoundComponentView(image: "bookmark.fill", color: .green, title: "No Saved Todos", subtitle: "You don't have saved Todos, save any to see it here")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.top, Constants.screenHeight / 3)
-            }
+            TodoListFragmentView(todoVM: todoVM,todos: savedTodos, tapAction: tapAction, noFoundImage: "bookmark.fill", noFoundColor: .green, noFoundTitle: "No Saved Todos", noFoundSubtitle: "You don't have saved Todos, save any to see it here")
         }
         .background(Color.background)
         .scrollIndicators(.hidden)
         .navigationTitle("Saved Todos")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    func tapAction(todo: Todo) {
+        path.append(todo)
     }
 }
 

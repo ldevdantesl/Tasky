@@ -165,6 +165,16 @@
         }
       }
     },
+    "Add new tag to the tag list." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить тэг в тэг лист"
+          }
+        }
+      }
+    },
     "Add Tag" : {
       "localizations" : {
         "ru" : {
@@ -346,6 +356,7 @@
       }
     },
     "Complete" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -719,7 +730,11 @@
         }
       }
     },
+    "Mark as %@" : {
+
+    },
     "Mark as done" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -730,6 +745,7 @@
       }
     },
     "Mark as undone" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -1033,6 +1049,16 @@
         }
       }
     },
+    "Remove all tags from the tag list." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить все тэги из тэг листа"
+          }
+        }
+      }
+    },
     "Remove tag" : {
       "localizations" : {
         "ru" : {
@@ -1260,6 +1286,46 @@
         }
       }
     },
+    "Tag can't be only the spaces" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тэг не может быть пустым"
+          }
+        }
+      }
+    },
+    "Tag should be more than 3 characters" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тэг должен быть больше 3 знаков"
+          }
+        }
+      }
+    },
+    "Tag with this icon is already exists" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тэг с такой иконкой уже сушествует"
+          }
+        }
+      }
+    },
+    "Tag with this name is already exists." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тэг с таким названием уже сушествует"
+          }
+        }
+      }
+    },
     "Tags" : {
       "localizations" : {
         "ru" : {
@@ -1351,7 +1417,14 @@
       }
     },
     "Title can't be only the spaces" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название не может быть пустым"
+          }
+        }
+      }
     },
     "Title can't only be the spaces" : {
       "extractionState" : "manual",
@@ -1376,7 +1449,14 @@
       }
     },
     "Title should be more than 3 characters" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Название должно быть больше 3 знаков"
+          }
+        }
+      }
     },
     "Today" : {
       "localizations" : {
@@ -1431,16 +1511,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Разархивировать все"
-          }
-        }
-      }
-    },
-    "Uncomplete" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Невыполнять"
           }
         }
       }
@@ -1503,6 +1573,7 @@
       }
     },
     "Unsave" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {

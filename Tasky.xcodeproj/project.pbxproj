@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DA176CE02C8D88E600E15357 /* UIKitRepresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */; };
 		DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */; };
+		DA35249D2CA48EC00026E23B /* TodoListFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */; };
+		DA35249F2CA4956B0026E23B /* YourTodosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */; };
 		DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */; };
 		DA38A3492C759D14007C3FB4 /* DueDateFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */; };
 		DA38A34D2C76B78C007C3FB4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA38A34C2C76B78C007C3FB4 /* SettingsView.swift */; };
@@ -93,6 +95,8 @@
 /* Begin PBXFileReference section */
 		DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitRepresentables.swift; sourceTree = "<group>"; };
 		DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTagsFragmentView.swift; sourceTree = "<group>"; };
+		DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListFragmentView.swift; sourceTree = "<group>"; };
+		DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourTodosHeaderView.swift; sourceTree = "<group>"; };
 		DA38A3442C75890F007C3FB4 /* TodoViewHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewHelpers.swift; sourceTree = "<group>"; };
 		DA38A3482C759D14007C3FB4 /* DueDateFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateFragmentView.swift; sourceTree = "<group>"; };
 		DA38A34C2C76B78C007C3FB4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -218,6 +222,7 @@
 				DA9830B92C8BEFDC00368C0A /* TagCapsuleView.swift */,
 				DA883A8D2C8EB8F700FC2E79 /* SinglePropertyComponent.swift */,
 				DA883A8F2C8EC5A900FC2E79 /* NoFoundComponentView.swift */,
+				DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */,
 			);
 			path = ComponentViews;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 				DAF0635D2C7EC43D00ADE7E8 /* TagsForTodoView.swift */,
 				DAC755462C82967000112F40 /* TodoRowView.swift */,
 				DAC755482C829B7600112F40 /* TodoListView.swift */,
+				DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */,
 				DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */,
 				DA883A8B2C8EB88D00FC2E79 /* TagsCircleView.swift */,
 				DA883A912C8ECEF700FC2E79 /* ShareAndFAQFragmentView.swift */,
@@ -541,6 +547,7 @@
 				DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */,
 				DA69446B2C7C3DB80032437C /* AppearanceSettingsManaging.swift in Sources */,
 				DAC755492C829B7600112F40 /* TodoListView.swift in Sources */,
+				DA35249F2CA4956B0026E23B /* YourTodosHeaderView.swift in Sources */,
 				DAF659F62C730CFE004D8ACA /* AddTodoView.swift in Sources */,
 				DA4B197B2C79980400899303 /* PrivacyAndSecuritySettingsManager.swift in Sources */,
 				DA9830B42C8BD71900368C0A /* SettingsRowComponent.swift in Sources */,
@@ -567,6 +574,7 @@
 				DA9409E92C7877C4004D054E /* SettingsManager.swift in Sources */,
 				DAF659D52C72FE4D004D8ACA /* TaskyApp.swift in Sources */,
 				DA38A3522C76F30C007C3FB4 /* DataAndStorageView.swift in Sources */,
+				DA35249D2CA48EC00026E23B /* TodoListFragmentView.swift in Sources */,
 				DAF0635E2C7EC43D00ADE7E8 /* TagsForTodoView.swift in Sources */,
 				DA6944692C7C2D330032437C /* AppearanceSettingsView.swift in Sources */,
 				DAC7554D2C844ED600112F40 /* TextFieldComponent.swift in Sources */,

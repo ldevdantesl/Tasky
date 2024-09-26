@@ -42,10 +42,13 @@ struct TagSettingsView: View {
             .scrollIndicators(.hidden)
             .frame(height: 50)
             .padding(.vertical, 10)
-            SettingsRowComponent(title: "Add New Tag", image: "plus", color: .yellow, toggler: $isAddingTag)
+            
+            SettingsRowComponent(title: "Add New Tag", subtitle: "Add new tag to the tag list.",image: "plus", color: .yellow, toggler: $isAddingTag)
                 .padding(.horizontal, 10)
-            SettingsRowComponent(title: "Remove All Tags", image: "trash.fill", color: .red, toggler: $deleteAllAlert)
+            
+            SettingsRowComponent(title: "Remove All Tags", subtitle:"Remove all tags from the tag list.", image: "trash.fill", color: .red, toggler: $deleteAllAlert)
                 .padding(.horizontal, 10)
+            
             Spacer()
         }
         .scrollIndicators(.hidden)

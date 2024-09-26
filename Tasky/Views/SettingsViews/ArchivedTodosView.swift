@@ -20,29 +20,14 @@ struct ArchivedTodosView: View {
     
     var body: some View {
         ScrollView{
-            if !archivedTodos.isEmpty{
-                ForEach(archivedTodos){ todo in
-                    Menu {
-                        Button("Unarchive", systemImage: "archivebox.circle.fill"){
-                            withAnimation {
-                                todoVM.unArchive(todo)
-                            }
-                        }
-                    } label: {
-                        TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
-                            .padding(.horizontal, 10)
-                    }
-                }
-            } else {
-                NoFoundComponentView(image: "archivebox.fill", color: .green, title: "No archived Todos", subtitle: "You don't have archived Todos, archive any to see it here")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.top, Constants.screenHeight / 3)
-            }
+            TodoListFragmentView(todoVM: todoVM, todos: archivedTodos, noFoundImage: "archivebox.fill", noFoundColor: .green, noFoundTitle: "No archived Todos", noFoundSubtitle: "You don't have archived Todos, archive any to see it here", noFoundAction: nil)
         }
         .toolbar {
             if !archivedTodos.isEmpty{
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Archive", systemImage: "archivebox.fill", action: {alertToggle.toggle()})
+                    Button("Archive", systemImage: "archivebox.fill") {
+                        alertToggle.toggle()
+                    }
                 }
             }
         }

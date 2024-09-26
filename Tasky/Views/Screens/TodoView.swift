@@ -26,63 +26,20 @@ struct TodoView: View {
         NavigationStack(path: $path){
             ScrollView{
                 CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
+                
                 Divider()
                     .padding(.horizontal, 10)
-                if !showingWholeMonth{
+                
+                if !showingWholeMonth {
                     YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
-                        .padding(.horizontal, 10)
                 }
             }
             .toolbar{
                 ToolbarItem(placement: .topBarLeading) {
-                    if !showingWholeMonth{
-                        Text("\(calendar.currentDay.getWeekName.capitalized), \(calendar.currentDay.getDayDigit) \(String(calendar.currentDay.getDayMonthString.prefix(3)))")
-                            .font(.system(.title, design: .rounded, weight: .bold))
-                            
-                    } else {
-                        Menu{
-                            ForEach(Date.getEveryMonths(startingFrom: Date().getDayMonthInt, locale: settingsMgrVM.currentLanguage), id:\.self) { date in
-                                Button(action: {selectedMonth = date.getDayMonthString}){
-                                    Text("\(date.getDayMonthString) \(Date.now.getYear != date.getYear ? date.getYear : "")")
-                                }
-                            }
-                        } label: {
-                            HStack{
-                                Text("\(selectedMonth.capitalized)")
-                                    .font(.system(.title, design: .rounded, weight: .bold))
-                                Image(systemName: "chevron.up.chevron.down")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 15, height: 15)
-                            }
-                        }
-                    }
+                    topBarLeadingHeading()
                 }
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    if calendar.currentDay.getDayAndMonth != Date.now.getDayAndMonth && !showingWholeMonth{
-                        Image(systemName: "sun.max.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: 20)
-                            .foregroundStyle(colorTheme)
-                            .onTapGesture {
-                                withAnimation {
-                                    calendar.returnToToday()
-                                    selectedMonth = calendar.currentDay.getDayMonthString
-                                }
-                            }
-                            .padding(.trailing, 10)
-                    }
-                    Image(systemName: "calendar")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 20)
-                        .foregroundStyle(colorTheme)
-                        .onTapGesture {
-                            withAnimation(.bouncy) {
-                                showingWholeMonth.toggle()
-                            }
-                        }
+                    topBarTrailingButtons()
                 }
             }
             .safeAreaInset(edge: .bottom){
@@ -126,8 +83,64 @@ struct TodoView: View {
                             .toolbar(.hidden, for: .navigationBar)
                 }
             }
+            .navigationDestination(for: Todo.self) { todo in
+                TodoDetailView(observedTodo: todo, todoVM: todoVM, tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
+            }
             .scrollIndicators(.hidden)
         }
+    }
+    @ViewBuilder
+    func topBarLeadingHeading() -> some View {
+        if !showingWholeMonth {
+            Text("\(calendar.currentDay.getWeekName.capitalized), \(calendar.currentDay.getDayDigit) \(String(calendar.currentDay.getDayMonthString.prefix(3)))")
+                .font(.system(.title, design: .rounded, weight: .bold))
+                
+        } else {
+            Menu{
+                ForEach(Date.getEveryMonths(startingFrom: Date().getDayMonthInt, locale: settingsMgrVM.currentLanguage), id:\.self) { date in
+                    Button(action: {selectedMonth = date.getDayMonthString}){
+                        Text("\(date.getDayMonthString) \(Date.now.getYear != date.getYear ? date.getYear : "")")
+                    }
+                }
+            } label: {
+                HStack{
+                    Text("\(selectedMonth.capitalized)")
+                        .font(.system(.title, design: .rounded, weight: .bold))
+                    Image(systemName: "chevron.up.chevron.down")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 15, height: 15)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func topBarTrailingButtons() -> some View {
+        if calendar.currentDay.getDayAndMonth != Date.now.getDayAndMonth && !showingWholeMonth{
+            Image(systemName: "sun.max.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: 20)
+                .foregroundStyle(colorTheme)
+                .onTapGesture {
+                    withAnimation {
+                        calendar.returnToToday()
+                        selectedMonth = calendar.currentDay.getDayMonthString
+                    }
+                }
+                .padding(.trailing, 10)
+        }
+        Image(systemName: showingWholeMonth ? "xmark.circle.fill" : "calendar")
+            .resizable()
+            .scaledToFit()
+            .frame(maxWidth: 20)
+            .foregroundStyle(colorTheme)
+            .onTapGesture {
+                withAnimation(.bouncy) {
+                    showingWholeMonth.toggle()
+                }
+            }
     }
 }
 

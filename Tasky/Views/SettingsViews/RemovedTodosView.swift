@@ -15,7 +15,6 @@ struct RemovedTodosView: View {
     
     @State private var alertToggle: Bool = false
     @State private var deleteToggle = false
-    @State private var searchText: String = ""
     
     var removedTodos: [Todo] {
         todoVM.removedTodos
@@ -23,29 +22,7 @@ struct RemovedTodosView: View {
     
     var body: some View {
         ScrollView{
-            if !removedTodos.isEmpty{
-                ForEach(removedTodos) { todo in
-                    Menu{
-                        Button("Delete", systemImage: "trash.fill") {
-                            withAnimation {
-                                todoVM.deleteTodo(todo)
-                            }
-                        }
-                        Button("Unremove", systemImage: "trash.slash.fill") {
-                            withAnimation {
-                                todoVM.unRemoveTodo(todo)
-                            }
-                        }
-                    } label: {
-                        TodoRowView(todo: todo, settingsManagerVM: settingsMgrVM, todoVM: todoVM)
-                            .padding(.horizontal, 10)
-                    }
-                }
-            } else {
-                NoFoundComponentView(image: "trash.fill", color: .red, title: "No deleted todos", subtitle: "You don't have deleted Todos, delete any to see it here")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding(.top, Constants.screenHeight / 3)
-            }
+            TodoListFragmentView(todoVM: todoVM, todos: removedTodos, noFoundImage: "trash.fill", noFoundColor: .red, noFoundTitle: "No deleted todos", noFoundSubtitle: "You don't have deleted Todos, delete any to see it here")
         }
         .scrollIndicators(.hidden)
         .toolbar{

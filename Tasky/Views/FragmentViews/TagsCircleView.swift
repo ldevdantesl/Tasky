@@ -21,7 +21,7 @@ struct TagsCircleView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundStyle(.white)
-                                .frame(width: 25, height: 25)
+                                .frame(width: 20, height: 20)
                         }
                 }
             }

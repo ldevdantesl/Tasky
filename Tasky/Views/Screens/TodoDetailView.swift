@@ -39,10 +39,13 @@ struct TodoDetailView: View {
     
     var body: some View {
         ScrollView{
+            ///Title
             SinglePropertyComponent(title: "Title", property: todo.title, fontStyle: .title3, fontWeight: .bold)
             
+            ///Description
             SinglePropertyComponent(title: "Description", property: todo.desc, fontStyle: .headline)
             
+            // MARK: - TAGS
             HStack{
                 if let tags = todo.tags?.allObjects as? [Tag] {
                     TagsCircleView(tags: tags)
@@ -57,6 +60,7 @@ struct TodoDetailView: View {
                 .padding(.horizontal, 10)
                 .padding(.bottom, 15)
             
+            // MARK: - PRIORITY
             Capsule()
                 .fill(Color.textField)
                 .frame(width: Constants.screenWidth - 20, height: 40)
@@ -80,6 +84,7 @@ struct TodoDetailView: View {
                 }
                 .padding(.bottom, 15)
             
+            // MARK: - STATUS
             HStack{
                 Text("Double click to change")
                     .font(.system(.subheadline, design: .rounded, weight: .bold))
@@ -105,16 +110,15 @@ struct TodoDetailView: View {
                                     .foregroundStyle(.white)
                             }
                         }
-                        .onTapGesture(count: 2, perform: {doneOrUndoneTodo(makeDone: todo.isDone)})
+                        .onTapGesture(count: 2, perform: doneOrUndoneTodo)
                         .contextMenu {
-                            if todo.isDone {
-                                Button("Mark as undone", systemImage: "xmark.circle.fill", action:{doneOrUndoneTodo(makeDone: false)})
-                            } else {
+                            Button("Mark as \(todo.isDone ? "undone" : "done")", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill", action: doneOrUndoneTodo)
+                            if !todo.isDone {
                                 Button("Remind me", systemImage: "bell.circle.fill", action: {})
                                 Button("\(showHowManyDaysLeft ? "Hide" : "Show") days left", systemImage: "exclamationmark.circle.fill", action:{showHowManyDaysLeft.toggle()})
-                                Button("Mark as done", systemImage: "checkmark.circle.fill", action: { doneOrUndoneTodo() })
                             }
                         }
+                    
                     if showHowManyDaysLeft && !todo.isDone {
                         Text(calendarSet.showHowManyDaysLeft(for: todo.dueDate ?? .now))
                             .font(.system(.caption, design: .rounded, weight: .semibold))
@@ -157,7 +161,6 @@ struct TodoDetailView: View {
                 }
             }
         }
-        
         .alert("Remove Todo? ", isPresented: $showAlert) {
             Button("Remove", role:.destructive){
                 withAnimation {
@@ -252,16 +255,15 @@ struct TodoDetailView: View {
         }
     }
     
-    func doneOrUndoneTodo(makeDone: Bool = true) {
+    func doneOrUndoneTodo() {
         withAnimation {
-            if makeDone{
+            if todo.isDone{
                 todoVM.uncompleteTodo(todo)
                 settingsManagerVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: todo.dueDate ?? .now)
-            }  else {
+            } else {
                 todoVM.completeTodo(todo)
                 settingsManagerVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
             }
-            dismiss()
         }
     }
 }

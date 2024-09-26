@@ -10,25 +10,6 @@ import SwiftUI
 struct TodoRowView: View {
     @StateObject var todo: Todo
     
-    @ObservedObject var settingsManagerVM: SettingsManagerViewModel
-    @ObservedObject var todoVM: TodoViewModel
-    
-    private var isFullInitType: Bool
-    
-    init(todo: Todo, settingsManagerVM: SettingsManagerViewModel, todoVM: TodoViewModel, offsetY: CGFloat? = nil) {
-        self._todo = StateObject(wrappedValue: todo)
-        self.settingsManagerVM = settingsManagerVM
-        self.todoVM = todoVM
-        self.isFullInitType = true
-    }
-    
-    init(todo: Todo) {
-        self._todo = StateObject(wrappedValue: todo)
-        self.todoVM = TodoViewModel()
-        self.settingsManagerVM = MockPreviews.viewModel
-        self.isFullInitType = false
-    }
-    
     var body: some View {
         ZStack(alignment:.topLeading){
             RoundedRectangle(cornerRadius: 25)
@@ -55,7 +36,7 @@ struct TodoRowView: View {
                 
                 Spacer()
                 
-                HStack{
+                HStack {
                     if let tags = todo.tags?.allObjects as? [Tag]{
                         HStack(spacing: 5){
                             ForEach(tags, id:\.self) { tag in
@@ -75,68 +56,13 @@ struct TodoRowView: View {
             }
             .padding([.top,.horizontal])
             .foregroundStyle(.white)
-        
+            
         }
         .frame(width: Constants.screenWidth - 20)
         .frame(minHeight: 130, maxHeight: 130)
-        .contextMenu {
-            if isFullInitType{
-                if !todo.isRemoved && !todo.isArchived{
-                    Button(todo.isDone ? "Uncomplete" : "Complete", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill"){
-                        withAnimation {
-                            if todo.isDone {
-                                todoVM.uncompleteTodo(todo)
-                                settingsManagerVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: todo.dueDate ?? .now)
-                            } else {
-                                todoVM.completeTodo(todo)
-                                settingsManagerVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
-                            }
-                        }
-                    }
-                    Button("Remove", systemImage: "trash.fill"){
-                        withAnimation {
-                            todoVM.removeTodo(todo)
-                            settingsManagerVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
-                        }
-                    }
-                    Button("Archive", systemImage: "archivebox.fill"){
-                        withAnimation {
-                            todoVM.archive(todo)
-                        }
-                    }
-                }
-                if todo.isRemoved {
-                    Button("Unremove", systemImage: "trash.slash.fill"){
-                        withAnimation {
-                            todoVM.unRemoveTodo(todo)
-                        }
-                    }
-                    Button("Delete", systemImage: "trash.fill"){
-                        withAnimation {
-                            todoVM.deleteTodo(todo)
-                        }
-                    }
-                    .tint(.red)
-                }
-                if todo.isArchived{
-                    Button("Unarchive", systemImage: "archivebox"){
-                        withAnimation {
-                            todoVM.unArchive(todo)
-                        }
-                    }
-                }
-                if todo.isSaved{
-                    Button("Unsave", systemImage: "bookmark.circle.fill"){
-                        withAnimation {
-                            todoVM.unsaveTodo(todo)
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 
 #Preview {
-    TodoRowView(todo: TodoViewModel.mockToDo(), settingsManagerVM: MockPreviews.viewModel, todoVM: TodoViewModel())
+    TodoRowView(todo: TodoViewModel.mockToDo())
 }
