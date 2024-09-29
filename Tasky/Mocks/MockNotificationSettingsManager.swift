@@ -30,7 +30,7 @@ class MockNotificationSettingsManager: NotificationSettingsManaging {
         logger.log("Scheduled notification for tomorrow.")
     }
     
-    func scheduleNotificationFor(_ todo: Todo, at taskDate: Date) {
+    func scheduleNotificationFor(_ todo: Todo) {
         logger.log("Scheduled notification for todo: \(todo.title ?? "")")
     }
     

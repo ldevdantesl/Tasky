@@ -11,19 +11,26 @@ struct ArchivedTodosView: View {
     @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
     
+    @Binding var path: NavigationPath
+    
     @State private var alertToggle: Bool = false
     @State private var searchText: String = ""
     
-    var archivedTodos: [Todo] {
-        return todoVM.archivedTodos
+    var archivedFilteredResults: [Todo] {
+        if searchText.isEmpty{
+            return todoVM.archivedTodos
+        } else {
+            return todoVM.archivedTodos.filter { $0.title!.localizedStandardContains(searchText)}
+        }
     }
     
     var body: some View {
         ScrollView{
-            TodoListFragmentView(todoVM: todoVM, todos: archivedTodos, noFoundImage: "archivebox.fill", noFoundColor: .green, noFoundTitle: "No archived Todos", noFoundSubtitle: "You don't have archived Todos, archive any to see it here", noFoundAction: nil)
+            TodoListFragmentView(todoVM: todoVM, todos: archivedFilteredResults, tapAction: onTapAction, doubleTapAction: onDoubleTapAction, noFoundImage: "archivebox.fill", noFoundColor: .green, noFoundTitle: "No archived Todos", noFoundSubtitle: "You don't have archived Todos, archive any to see it here")
         }
+        .searchable(text: $searchText)
         .toolbar {
-            if !archivedTodos.isEmpty{
+            if !todoVM.archivedTodos.isEmpty{
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Archive", systemImage: "archivebox.fill") {
                         alertToggle.toggle()
@@ -41,10 +48,17 @@ struct ArchivedTodosView: View {
         .navigationTitle("Archived Todos")
         .navigationBarTitleDisplayMode(.inline)
     }
+    
+    func onTapAction(todo: Todo) {
+        path.append(todo)
+    }
+    func onDoubleTapAction(todo: Todo){
+        todoVM.unArchive(todo)
+    }
 }
 
 #Preview {
     NavigationStack{
-        ArchivedTodosView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel)
+        ArchivedTodosView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
     }
 }

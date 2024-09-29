@@ -61,7 +61,7 @@ struct TodoView: View {
                         DataAndStorageView(settingsManagerVM: settingsMgrVM, todoVM: todoVM, path: $path)
                             
                     case "ArchivedTodosView":
-                        ArchivedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM)
+                        ArchivedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
                             
                     case "RemovedTodosView":
                         RemovedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)

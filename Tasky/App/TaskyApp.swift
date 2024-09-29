@@ -10,14 +10,23 @@ import SwiftUI
 @main
 struct TaskyApp: App {
     @StateObject var todoVM = TodoViewModel()
+    @StateObject var tagVM: TagViewModel = TagViewModel()
+    @StateObject var settingsManagerVM: SettingsManagerViewModel = SettingsManagerViewModel (
+        settingsManager: SettingsManager(
+            notificationSettingsManager: NotificationSettingsManager(),
+            dataAndStorageManager: DataAndStorageManager(),
+            privacyAndSecurityManager: PrivacyAndSecuritySettingsManager(),
+            appearanceSettingsManager: AppearanceSettingsManager()
+        )
+    )
     
     var body: some Scene {
         WindowGroup {
-            MainView(todoVM: todoVM)
+            MainView(todoVM: todoVM, settingsManagerVM: settingsManagerVM, tagVM: tagVM)
                 .environment(\.managedObjectContext, PersistentController.shared.context)
-        }
-        .backgroundTask(.appRefresh("com.TaskyManage.everydayNotifcation")) { task in
-            
+                .onAppear {
+                    todoVM.configureSettings(settingsManagerVM)
+                }
         }
     }
 }

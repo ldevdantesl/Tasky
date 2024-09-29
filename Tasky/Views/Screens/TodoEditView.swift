@@ -142,9 +142,6 @@ struct TodoEditView: View {
             logger.log("Error editing todo")
         }
         
-        settingsMgrVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
-        settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? Date())
-        
         isLoading = false
         dismiss()
     }

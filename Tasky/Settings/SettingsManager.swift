@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SettingsManager: SettingsManaging{
+class SettingsManager: SettingsManaging {
     var notificationSettingsManager: NotificationSettingsManaging
     var dataAndStorageManager: DataStorageManaging
     var privacyAndSecurityManager: PrivacyAndSecurityManaging

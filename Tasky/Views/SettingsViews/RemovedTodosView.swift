@@ -15,18 +15,24 @@ struct RemovedTodosView: View {
     
     @State private var alertToggle: Bool = false
     @State private var deleteToggle = false
+    @State private var searchText: String = ""
     
-    var removedTodos: [Todo] {
-        todoVM.removedTodos
+    var removedFilteredTodos: [Todo] {
+        if searchText.isEmpty {
+            return todoVM.removedTodos
+        } else {
+            return todoVM.removedTodos.filter { $0.title!.localizedStandardContains(searchText) }
+        }
     }
     
     var body: some View {
         ScrollView{
-            TodoListFragmentView(todoVM: todoVM, todos: removedTodos, noFoundImage: "trash.fill", noFoundColor: .red, noFoundTitle: "No deleted todos", noFoundSubtitle: "You don't have deleted Todos, delete any to see it here")
+            TodoListFragmentView(todoVM: todoVM, todos: removedFilteredTodos, tapAction: onTapAction, doubleTapAction: onDoubleTapAction, noFoundImage: "trash.fill", noFoundColor: .red, noFoundTitle: "No deleted todos", noFoundSubtitle: "You don't have deleted Todos, delete any to see it here")
         }
+        .searchable(text: $searchText)
         .scrollIndicators(.hidden)
         .toolbar{
-            if !removedTodos.isEmpty{
+            if !todoVM.removedTodos.isEmpty {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack{
                         Button("Unremove All", systemImage: "trash.slash.fill", action: {alertToggle.toggle()})
@@ -49,6 +55,14 @@ struct RemovedTodosView: View {
         .background(Color.background)
         .navigationTitle("Removed Todos")
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    func onTapAction(todo: Todo) {
+        path.append(todo)
+    }
+    
+    func onDoubleTapAction(todo:Todo) {
+        todoVM.unRemoveTodo(todo)
     }
 }
 

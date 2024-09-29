@@ -15,23 +15,17 @@ struct MainView: View {
     
     @ObservedObject var todoVM: TodoViewModel
     
-    @StateObject var settingsManagerVM: SettingsManagerViewModel
-    @StateObject var tagVM: TagViewModel = TagViewModel()
+    @ObservedObject var settingsManagerVM: SettingsManagerViewModel
+    
+    @ObservedObject var tagVM: TagViewModel
     
     @State var showAutenticationView: Bool = false
     @State var showLaunchScreen: Bool = true
     
-    init(todoVM: TodoViewModel){
+    init(todoVM: TodoViewModel, settingsManagerVM: SettingsManagerViewModel, tagVM: TagViewModel){
         self.todoVM = todoVM
-        
-        let settingsManager = SettingsManager(
-            notificationSettingsManager: NotificationSettingsManager(),
-            dataAndStorageManager: DataAndStorageManager(),
-            privacyAndSecurityManager: PrivacyAndSecuritySettingsManager(),
-            appearanceSettingsManager: AppearanceSettingsManager()
-        )
-        
-        _settingsManagerVM = StateObject(wrappedValue: SettingsManagerViewModel(settingsManager: settingsManager))
+        self.settingsManagerVM = settingsManagerVM
+        self.tagVM = tagVM
     }
     
     var body: some View {
@@ -94,5 +88,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(todoVM: TodoViewModel())
+    MainView(todoVM: TodoViewModel(), settingsManagerVM: MockPreviews.viewModel, tagVM: TagViewModel())
 }

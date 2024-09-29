@@ -14,22 +14,21 @@ import Combine
 class TodoViewModel: ObservableObject {
     @AppStorage("isFirstEntry") var isFirstEntry = false
     
-    @Published var standardTodos: [Todo] = []
     @Published var todayTodos: [Todo] = []
     @Published var savedTodos: [Todo] = []
     @Published var removedTodos: [Todo] = []
     @Published var archivedTodos: [Todo] = []
     
-    @Published var sortDescriptor: NSSortDescriptor? {
-        didSet {
-            fetchAllTodos()
-        }
-    }
-    
-    private var cancellables = Set<AnyCancellable>()
     private let calendarSet = CalendarSet.instance
+    private var settingsManagerVM: SettingsManagerViewModel?
+    private var cancellables = Set<AnyCancellable>()
     
     let context = PersistentController.shared.context
+    
+    func configureSettings(_ settingsManagerVM: SettingsManagerViewModel) {
+        self.settingsManagerVM = settingsManagerVM
+        logger.log("Configured the settings")
+    }
     
     init() {
         fetchAllTodos()
@@ -62,8 +61,9 @@ class TodoViewModel: ObservableObject {
         if !tags.isEmpty{
             newTodo.tags = NSSet(array: tags)
         }
-    
+        
         try saveContext()
+        settingsManagerVM?.settingsManager.notificationSettingsManager.scheduleNotificationFor(newTodo)
         
         return newTodo
     }
@@ -208,7 +208,7 @@ class TodoViewModel: ObservableObject {
     // MARK: - ARCHIVE ACTIONS
     func archive(_ todo: Todo) {
         todo.isArchived = true
-        
+        settingsManagerVM?.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
         do {
             try saveContext()
         } catch {
@@ -218,6 +218,7 @@ class TodoViewModel: ObservableObject {
     
     func unArchive(_ todo: Todo) {
         todo.isArchived = false
+        settingsManagerVM?.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo)
         do {
             try saveContext()
         } catch {
@@ -258,7 +259,11 @@ class TodoViewModel: ObservableObject {
     }
     
     func unArchiveAll() {
-        archivedTodos.forEach { $0.isArchived = false}
+        archivedTodos.forEach {
+            $0.isArchived = false
+            settingsManagerVM?.settingsManager.notificationSettingsManager.scheduleNotificationFor($0)
+        }
+        
         do {
             try saveContext()
         } catch {
@@ -269,6 +274,7 @@ class TodoViewModel: ObservableObject {
     // MARK: - REMOVING
     func removeTodo(_ todo: Todo) {
         todo.isRemoved = true
+        settingsManagerVM?.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
         do {
             try saveContext()
         } catch {
@@ -278,6 +284,7 @@ class TodoViewModel: ObservableObject {
     
     func unRemoveTodo(_ todo: Todo) {
         todo.isRemoved = false
+        settingsManagerVM?.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo)
         do {
             try saveContext()
         } catch {
@@ -286,7 +293,10 @@ class TodoViewModel: ObservableObject {
     }
     
     func unRemoveAll() {
-        removedTodos.forEach { $0.isRemoved = false }
+        removedTodos.forEach {
+            $0.isRemoved = false
+            settingsManagerVM?.settingsManager.notificationSettingsManager.scheduleNotificationFor($0)
+        }
         
         do {
             try saveContext()
@@ -299,7 +309,8 @@ class TodoViewModel: ObservableObject {
     func completeTodo(_ todo: Todo) {
         todo.isDone = true
         todo.completionDate = Date()
-        
+    
+        settingsManagerVM?.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
         do {
             try saveContext()
         } catch {
@@ -310,6 +321,7 @@ class TodoViewModel: ObservableObject {
     func uncompleteTodo(_ todo: Todo) {
         todo.isDone = false
         todo.completionDate = nil
+        settingsManagerVM?.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo)
         do {
             try saveContext()
         } catch {

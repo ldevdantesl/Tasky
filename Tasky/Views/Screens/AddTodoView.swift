@@ -153,9 +153,7 @@ struct AddTodoView: View {
         showProgressView = true
         if title.count > 2 && !title.trimmingCharacters(in: .whitespaces).isEmpty && dueDate != nil {
             do {
-                let todo = try await todoVM.createTodo(title: title, description: desc.isEmpty ? nil : desc, priority: priority, dueDate: dueDate, tags:selectedTags)
-                
-                settingsMgrVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: dueDate ?? .now)
+                let _ = try await todoVM.createTodo(title: title, description: desc.isEmpty ? nil : desc, priority: priority, dueDate: dueDate, tags:selectedTags)
                 
                 withAnimation {
                     showProgressView = false
@@ -164,7 +162,6 @@ struct AddTodoView: View {
             } catch {
                 logger.log("Error creating todo: \(error.localizedDescription)")
             }
-            
         } else {
             logger.log("Something went wrong while creating the todo")
             withAnimation {

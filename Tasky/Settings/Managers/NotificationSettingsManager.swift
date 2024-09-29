@@ -44,7 +44,16 @@ class NotificationSettingsManager: NotificationSettingsManaging {
         
         let isTodoForTomorrow: (Todo) -> Bool = { todo in
             guard let todoDate = todo.dueDate else { return false }
-            return todoDate >= startOfTomorrow && todoDate < endOfTomorrow
+            
+            // Check if todo is due tomorrow
+            let isDueTomorrow = todoDate >= startOfTomorrow && todoDate < endOfTomorrow
+            
+            // Add additional conditions to ensure the todo is not archived or removed
+            let isNotArchived = !todo.isArchived // Assuming `isArchived` is a Bool property on Todo
+            let isNotRemoved = !todo.isRemoved   // Assuming `isRemoved` is a Bool property on Todo
+            
+            // Return true only if all conditions are met
+            return isDueTomorrow && isNotArchived && isNotRemoved
         }
         
         // Check if any inserted or updated todos are for tomorrow
@@ -140,8 +149,11 @@ class NotificationSettingsManager: NotificationSettingsManaging {
         let startOfTomorrow = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: Date())!)
         let endOfTomorrow = calendar.date(byAdding: .day, value: 1, to: startOfTomorrow)!
         
+        let predicate: NSPredicate = NSPredicate(format: "isArchived == %@", NSNumber(booleanLiteral: false))
+        let predicate2 = NSPredicate(format: "isRemoved == %@", NSNumber(booleanLiteral: false))
         // Set predicate for date range (inclusive of start, exclusive of end)
-        fetchRequest.predicate = NSPredicate(format: "dueDate >= %@ AND dueDate < %@", startOfTomorrow as NSDate, endOfTomorrow as NSDate)
+        let predicate3 = NSPredicate(format: "dueDate >= %@ AND dueDate < %@", startOfTomorrow as NSDate, endOfTomorrow as NSDate)
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, predicate2, predicate3])
         
         do {
             let tomorrowTodos = try context.fetch(fetchRequest)
@@ -155,7 +167,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
                 if !tomorrowTodos.isEmpty {
                     let content = UNMutableNotificationContent()
                     content.title = "Good Morning."
-                    content.subtitle = "You have \(tomorrowTodos.count) todos for tomorrow."
+                    content.subtitle = "You have \(tomorrowTodos.count) todos for today."
                     content.sound = .default
                     
                     // Set the time for 9 AM on the day before the task date
@@ -198,30 +210,21 @@ class NotificationSettingsManager: NotificationSettingsManaging {
         guard let id = todo.id?.uuidString else { return }
         print("Trying to remove notification with id: \(id)")
         
-        // Check delivered notifications
-        UNUserNotificationCenter.current().getDeliveredNotifications { notifications in
-            if notifications.contains(where: { $0.request.identifier == id }) {
-                print("Notification with id \(id) has already been delivered.")
-                UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id])
-                print("Removed delivered notification for \(todo.title ?? "Todo").")
+        
+        // Check pending notifications
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            let found = requests.contains { $0.identifier == id }
+            guard found else {
+                print("Notification with id \(id) not found in pending notifications.")
                 return
             }
             
-            // If not delivered, check pending notifications
-            UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-                let found = requests.contains { $0.identifier == id }
-                guard found else {
-                    print("Notification with id \(id) not found in pending notifications.")
-                    return
-                }
-                
-                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
-                print("Removed pending notification for \(todo.title ?? "Todo") with id: \(id).")
-            }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+            print("Removed pending notification for \(todo.title ?? "Todo") with id: \(id).")
         }
     }
     
-    func scheduleNotificationFor(_ todo: Todo, at taskDate: Date) {
+    func scheduleNotificationFor(_ todo: Todo) {
         // Ensure the task is not paused
         guard isAuthorized else {
             self.checkAuthorizationStatus()
@@ -233,7 +236,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
             return
         }
         
-        guard taskDate.getDayAndMonth != Date().getDayAndMonth else {
+        guard todo.dueDate?.getDayAndMonth != Date().getDayAndMonth else {
             print("Can't schedule notification for today \(todo.title ?? "Todo")")
             return
         }
@@ -249,7 +252,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
         content.sound = .default
         
         // Subtract one day from the taskDate to schedule the notification for the day before
-        guard let dayBeforeTaskDate = Calendar.current.date(byAdding: .day, value: -1, to: taskDate) else { return }
+        guard let dayBeforeTaskDate = Calendar.current.date(byAdding: .day, value: -1, to: todo.dueDate!) else { return }
         
         // Set the time for 9 PM on the day before the task date
         var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dayBeforeTaskDate)

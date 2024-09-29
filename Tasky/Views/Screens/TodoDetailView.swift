@@ -21,6 +21,7 @@ struct TodoDetailView: View {
     @State private var showAlert: Bool = false
     @State private var showHowManyDaysLeft: Bool = false
     @State private var showArchiveAlert: Bool = false
+    @State private var showDeleteAlert: Bool = false
     @State private var showRepeat: Bool = false
     @State private var showCustomDate: Bool = false
     @State private var settingCustomDate: Date = .now
@@ -64,7 +65,7 @@ struct TodoDetailView: View {
             Capsule()
                 .fill(Color.textField)
                 .frame(width: Constants.screenWidth - 20, height: 40)
-                .overlay{
+                .overlay {
                     HStack{
                         Text("Priority:")
                             .font(.system(.subheadline, design: .rounded, weight: .regular))
@@ -86,11 +87,12 @@ struct TodoDetailView: View {
             
             // MARK: - STATUS
             HStack{
-                Text("Double click to change")
-                    .font(.system(.subheadline, design: .rounded, weight: .bold))
-                    .foregroundStyle(.secondary)
-                    .padding(.leading, 5)
-                    
+                if !todo.isArchived && !todo.isRemoved{
+                    Text("Double click to change")
+                        .font(.system(.subheadline, design: .rounded, weight: .bold))
+                        .foregroundStyle(.secondary)
+                        .padding(.leading, 5)
+                }
                 Spacer()
                     
                 VStack{
@@ -112,10 +114,12 @@ struct TodoDetailView: View {
                         }
                         .onTapGesture(count: 2, perform: doneOrUndoneTodo)
                         .contextMenu {
-                            Button("Mark as \(todo.isDone ? "undone" : "done")", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill", action: doneOrUndoneTodo)
-                            if !todo.isDone {
-                                Button("Remind me", systemImage: "bell.circle.fill", action: {})
-                                Button("\(showHowManyDaysLeft ? "Hide" : "Show") days left", systemImage: "exclamationmark.circle.fill", action:{showHowManyDaysLeft.toggle()})
+                            if !todo.isRemoved && !todo.isArchived{
+                                Button("Mark as \(todo.isDone ? "undone" : "done")", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill", action: doneOrUndoneTodo)
+                                if !todo.isDone {
+                                    Button("Remind me", systemImage: "bell.circle.fill", action: {})
+                                    Button("\(showHowManyDaysLeft ? "Hide" : "Show") days left", systemImage: "exclamationmark.circle.fill", action:{showHowManyDaysLeft.toggle()})
+                                }
                             }
                         }
                     
@@ -130,7 +134,7 @@ struct TodoDetailView: View {
         }
         .safeAreaInset(edge: .bottom) {
             HStack(spacing: 20){
-                if todo.isDone {
+                if !todo.isArchived && !todo.isRemoved {
                     Menu{
                         Button("By Custom Date", systemImage: "calendar", action: {withAnimation{showCustomDate.toggle()}})
                         Button("By Tomorrow", systemImage: "sun.max.fill") {
@@ -145,21 +149,51 @@ struct TodoDetailView: View {
                             .frame(width: Constants.screenWidth / 2.5, height: 40)
                             .background(.green, in: .capsule)
                     }
-                } else {
-                    Text("Repeat")
-                        .font(.system(.headline, design: .rounded, weight: .regular))
-                        .foregroundStyle(.gray)
-                        .frame(width: Constants.screenWidth / 2.5, height: 40)
-                        .background(Color.textField, in: .capsule)
+                    .disabled(todo.isDone)
+                    Button(action: { withAnimation { isEditing.toggle() } } ){
+                        Text("Edit")
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                            .foregroundStyle(.white)
+                            .frame(width: Constants.screenWidth / 2.5, height: 40)
+                            .background(Color.blue.opacity(0.8), in:.capsule)
+                    }
                 }
-                Button(action: { withAnimation { isEditing.toggle() } } ){
-                    Text("Edit")
-                        .font(.system(.headline, design: .rounded, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(width: Constants.screenWidth / 2.5, height: 40)
-                        .background(Color.blue.opacity(0.8), in:.capsule)
+                else if todo.isArchived {
+                    Button(action: { withAnimation { todoVM.unArchive(todo); dismiss() } } ){
+                        Text("Unarchive")
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                            .foregroundStyle(.white)
+                            .frame(width: Constants.screenWidth - 40, height: 40)
+                            .background(Color.green.opacity(0.8), in:.capsule)
+                    }
+                } else if todo.isRemoved {
+                    Button(action: { withAnimation { todoVM.unRemoveTodo(todo); dismiss() } } ){
+                        Text("Unremove")
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                            .foregroundStyle(.white)
+                            .frame(width: Constants.screenWidth / 2.5, height: 40)
+                            .background(Color.blue.opacity(0.8), in:.capsule)
+                    }
+                    
+                    Button(action: { withAnimation { showDeleteAlert.toggle() } } ){
+                        Text("Delete")
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                            .foregroundStyle(.white)
+                            .frame(width: Constants.screenWidth / 2.5, height: 40)
+                            .background(Color.red.opacity(0.8), in:.capsule)
+                    }
                 }
             }
+        }
+        .alert("Delete?", isPresented: $showDeleteAlert){
+            Button("Delete", role:.destructive){
+                withAnimation {
+                    todoVM.deleteTodo(todo)
+                    dismiss()
+                }
+            }
+        } message: {
+            Text("Do you really want to delete this todo ?")
         }
         .alert("Remove Todo? ", isPresented: $showAlert) {
             Button("Remove", role:.destructive){
@@ -184,20 +218,22 @@ struct TodoDetailView: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                HStack(spacing: 5){
-                    Button("Save", systemImage: todo.isSaved ? "bookmark.fill" : "bookmark") {
-                        withAnimation {
-                            todo.isSaved ? todoVM.unsaveTodo(todo) : todoVM.saveTodo(todo)
+                if !todo.isArchived && !todo.isRemoved{
+                    HStack(spacing: 5){
+                        Button("Save", systemImage: todo.isSaved ? "bookmark.fill" : "bookmark") {
+                            withAnimation {
+                                todo.isSaved ? todoVM.unsaveTodo(todo) : todoVM.saveTodo(todo)
+                            }
                         }
-                    }
-                    .tint(.green)
-                    Button("Archive", systemImage: "archivebox.fill"){
-                        withAnimation {
-                            showArchiveAlert.toggle()
+                        .tint(.green)
+                        Button("Archive", systemImage: "archivebox.fill"){
+                            withAnimation {
+                                showArchiveAlert.toggle()
+                            }
                         }
+                        Button("Delete",systemImage: "trash.fill", action: {showAlert.toggle()})
+                            .tint(.red)
                     }
-                    Button("Delete",systemImage: "trash.fill", action: {showAlert.toggle()})
-                        .tint(.red)
                 }
             }
         }
@@ -205,7 +241,7 @@ struct TodoDetailView: View {
             if isLoading {
                 ProgressView()
                     .frame(width: 100, height: 100)
-                    .background(.ultraThinMaterial, in:.rect(cornerRadius: 15))
+                    .progressViewStyle(CircularProgressViewStyle())
             }
         }
         .sheet(isPresented: $showCustomDate) {
@@ -224,7 +260,6 @@ struct TodoDetailView: View {
                 Button("Repeat") {
                     Task{
                         await repeatByTomorrowOR(byCustomDate: settingCustomDate)
-                        settingsManagerVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: settingCustomDate)
                         withAnimation {
                             showCustomDate.toggle()
                         }
@@ -242,11 +277,11 @@ struct TodoDetailView: View {
     func repeatByTomorrowOR(byCustomDate: Date? = nil) async {
         isLoading = true
         do{
-            guard let byCustomDate else {
-                let _ = try await todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: todo.dueDate?.getTomorrowDay, tags: todo.tags?.allObjects as? [Tag] ?? [])
-                return
+            if let byCustomDate {
+                let _ = try await todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: byCustomDate, tags: todo.tags?.allObjects as? [Tag] ?? [])
+            } else {
+                let _ = try await todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: .now.getTomorrowDay, tags: todo.tags?.allObjects as? [Tag] ?? [])
             }
-            let _ = try await todoVM.createTodo(title: todo.title ?? "", description: todo.desc, priority: todo.priority, dueDate: byCustomDate, tags: todo.tags?.allObjects as? [Tag] ?? [])
             withAnimation {
                 isLoading = false
             }
@@ -256,14 +291,9 @@ struct TodoDetailView: View {
     }
     
     func doneOrUndoneTodo() {
+        guard !todo.isRemoved, !todo.isArchived else { return }
         withAnimation {
-            if todo.isDone{
-                todoVM.uncompleteTodo(todo)
-                settingsManagerVM.settingsManager.notificationSettingsManager.scheduleNotificationFor(todo, at: todo.dueDate ?? .now)
-            } else {
-                todoVM.completeTodo(todo)
-                settingsManagerVM.settingsManager.notificationSettingsManager.removeScheduledNotificationFor(todo)
-            }
+            todo.isDone ? todoVM.uncompleteTodo(todo) : todoVM.completeTodo(todo)
         }
     }
 }

@@ -456,6 +456,16 @@
         }
       }
     },
+    "Delete?" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить?"
+          }
+        }
+      }
+    },
     "Description" : {
       "localizations" : {
         "ru" : {
@@ -496,6 +506,16 @@
         }
       }
     },
+    "Do you really want to delete this todo ?" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы уверены что хотите удалить эту задачу?"
+          }
+        }
+      }
+    },
     "Do you really want to remove this Todo?" : {
       "localizations" : {
         "ru" : {
@@ -512,6 +532,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы уверены что хотите архивировать все текущие задачи?"
+          }
+        }
+      }
+    },
+    "Do you really want to unarchive this todo?" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы уверены что хотите разархивировать эту задачу?"
           }
         }
       }
@@ -731,7 +762,14 @@
       }
     },
     "Mark as %@" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пометить как %@"
+          }
+        }
+      }
     },
     "Mark as done" : {
       "extractionState" : "stale",
@@ -1557,7 +1595,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Отменить удаление"
+            "value" : "Восстановить "
           }
         }
       }
@@ -1567,7 +1605,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Отменить все удаление"
+            "value" : "Восстановить все"
           }
         }
       }

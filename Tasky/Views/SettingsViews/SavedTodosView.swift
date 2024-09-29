@@ -16,14 +16,15 @@ struct SavedTodosView: View {
     @State private var alertToggle: Bool = false
     @State private var searchText: String = ""
     
-    var savedTodos: [Todo] {
-        return todoVM.savedTodos
+    var savedFilteredTodos: [Todo] {
+        return todoVM.savedTodos.filter { $0.title!.localizedStandardContains(searchText) }
     }
     
     var body: some View {
         ScrollView{
-            TodoListFragmentView(todoVM: todoVM,todos: savedTodos, tapAction: tapAction, noFoundImage: "bookmark.fill", noFoundColor: .green, noFoundTitle: "No Saved Todos", noFoundSubtitle: "You don't have saved Todos, save any to see it here")
+            TodoListFragmentView(todoVM: todoVM,todos: savedFilteredTodos, tapAction: tapAction, noFoundImage: "bookmark.fill", noFoundColor: .green, noFoundTitle: "No Saved Todos", noFoundSubtitle: "You don't have saved Todos, save any to see it here")
         }
+        .searchable(text: $searchText)
         .background(Color.background)
         .scrollIndicators(.hidden)
         .navigationTitle("Saved Todos")

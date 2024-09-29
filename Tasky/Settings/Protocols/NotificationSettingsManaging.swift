@@ -15,7 +15,7 @@ protocol NotificationSettingsManaging {
     var isAuthorized: Bool { get set }
     
     func checkAuthorizationStatus()
-    func scheduleNotificationFor(_ todo: Todo, at taskDate: Date)
+    func scheduleNotificationFor(_ todo: Todo)
     func sendEverydayNotification()
     func removeScheduledNotificationFor(_ todo: Todo)
     func requestAuthorizationPermission()
