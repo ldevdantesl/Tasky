@@ -11,6 +11,9 @@
         }
       }
     },
+    " at %@" : {
+
+    },
     "#%@" : {
       "localizations" : {
         "ru" : {
@@ -98,6 +101,9 @@
           }
         }
       }
+    },
+    "%lld:00" : {
+
     },
     "%lld/%lld" : {
       "localizations" : {
@@ -884,6 +890,9 @@
         }
       }
     },
+    "No time" : {
+
+    },
     "No todos attached to this tag. Attach this tag to any to see it here" : {
       "localizations" : {
         "ru" : {
@@ -1246,6 +1255,9 @@
           }
         }
       }
+    },
+    "Select a Time" : {
+
     },
     "Send Reminder at: %lld:00" : {
       "localizations" : {

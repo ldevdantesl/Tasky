@@ -73,6 +73,28 @@ extension Date {
         return String(year)
     }
     
+    var getHourInt: Int {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour], from: self)
+        return components.hour ?? 0
+    }
+    
+    var getTime: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm" // Set the format to 24-hour time, e.g., "21:00"
+        return formatter.string(from: self)
+    }
+    
+    var asStartOfDay: Date {
+        return Calendar.current.startOfDay(for: self)
+    }
+    
+    var isStartOfDay: Bool {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.hour, .minute, .second], from: self)
+        return components.hour == 0 && components.minute == 0 && components.second == 0
+    }
+    
     var getDayAndMonth: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d MMMM" // Format: Day and full month (e.g., "1 September")

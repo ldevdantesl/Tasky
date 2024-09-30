@@ -14,7 +14,7 @@ struct YourTodosHeaderView: View {
     var body: some View {
         HStack{
             Text("\(String(localized: isShowingActive ? "Active" : "Done"))")
-                .font(.system(.title, design: .rounded, weight: .bold))
+                .font(.system(size: 25, weight: .bold, design: .rounded))
                 
             Spacer()
             Button{

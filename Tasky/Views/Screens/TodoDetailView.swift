@@ -41,10 +41,10 @@ struct TodoDetailView: View {
     var body: some View {
         ScrollView{
             ///Title
-            SinglePropertyComponent(title: "Title", property: todo.title, fontStyle: .title3, fontWeight: .bold)
+            SinglePropertyComponent(title: String(localized: "Title"), property: todo.title, fontStyle: .title3, fontWeight: .bold)
             
             ///Description
-            SinglePropertyComponent(title: "Description", property: todo.desc, fontStyle: .headline)
+            SinglePropertyComponent(title: String(localized: "Description"), property: todo.desc, fontStyle: .headline)
             
             // MARK: - TAGS
             HStack{
@@ -52,8 +52,14 @@ struct TodoDetailView: View {
                     TagsCircleView(tags: tags)
                 }
                 Spacer()
-                Text("\(todo.dueDate?.getDayDigit ?? 0) of \(todo.dueDate?.getDayMonthString ?? "")")
-                    .font(.system(.callout, design: .rounded, weight: .regular))
+                VStack{
+                    Text("\(TodoViewHelpers(todo:todo).formatDate)")
+                        .font(.system(.callout, design: .rounded, weight: .regular))
+                    if !todo.dueDate!.isStartOfDay{
+                        Text("\(todo.dueDate!.getTime)")
+                            .font(.system(.callout, design: .rounded, weight: .bold))
+                    }
+                }
             }
             .padding([.horizontal, .bottom], 15)
             
@@ -76,9 +82,11 @@ struct TodoDetailView: View {
                             .frame(minWidth: 90, maxWidth: 120)
                             .frame(height: 30)
                             .foregroundStyle(TodoViewHelpers(todo: todo).priorityColor)
+                            .shadow(color: .primary.opacity(0.2), radius: 10, x: 0, y: 5)
                             .overlay {
                                 Text(TodoViewHelpers(todo: todo).priorityName)
                                     .foregroundStyle(.white)
+                                    .font(.system(.subheadline, design: .rounded, weight: .bold))
                             }
                     }
                     .padding(.horizontal, 15)

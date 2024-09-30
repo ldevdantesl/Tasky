@@ -93,19 +93,19 @@ struct TodoView: View {
     func topBarLeadingHeading() -> some View {
         if !showingWholeMonth {
             Text("\(calendar.currentDay.getWeekName.capitalized), \(calendar.currentDay.getDayDigit) \(String(calendar.currentDay.getDayMonthString.prefix(3)))")
-                .font(.system(.title, design: .rounded, weight: .bold))
-                
+                .font(.system(size: 25, weight: .bold, design: .rounded))
+
         } else {
             Menu{
                 ForEach(Date.getEveryMonths(startingFrom: Date().getDayMonthInt, locale: settingsMgrVM.currentLanguage), id:\.self) { date in
-                    Button(action: {selectedMonth = date.getDayMonthString}){
+                    Button(action: { selectedMonth = date.getDayMonthString }){
                         Text("\(date.getDayMonthString) \(Date.now.getYear != date.getYear ? date.getYear : "")")
                     }
                 }
             } label: {
                 HStack{
                     Text("\(selectedMonth.capitalized)")
-                        .font(.system(.title, design: .rounded, weight: .bold))
+                        .font(.system(size: 25, weight: .bold, design: .rounded))
                     Image(systemName: "chevron.up.chevron.down")
                         .resizable()
                         .scaledToFill()

@@ -52,7 +52,7 @@ struct TodoViewHelpers {
     
     var formatDate: String {
         if let date = todo.dueDate {
-            return "\(date.getDayDigit) of \(date.getDayMonthString)"
+            return String(localized: "\(date.getDayDigit) of \(date.getDayMonthString)")
         } else {
             return "No due date"
         }

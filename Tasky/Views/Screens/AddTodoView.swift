@@ -103,7 +103,6 @@ struct AddTodoView: View {
             
             // MARK: - DUE DATE
             DueDateFragmentView(settingsMgrVM: settingsMgrVM, dueDate: $dueDate, dateErrorMessage: $dateErrorMessage)
-                .padding(.horizontal, 20)
                 .padding(.bottom, 15)
             
             // MARK: - PRIORITY

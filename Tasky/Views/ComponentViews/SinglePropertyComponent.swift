@@ -26,7 +26,7 @@ struct SinglePropertyComponent: View {
                 .font(.system(.subheadline, design: .rounded, weight: .bold))
                 .foregroundStyle(.customSecondary)
             
-            Text(property ?? "No description")
+            Text(property ?? String(localized: "No Description"))
                 .font(.system(fontStyle, design: .rounded, weight: fontWeight ?? .medium))
                 .frame(maxWidth: Constants.screenWidth - 20, alignment:.leading)
         }

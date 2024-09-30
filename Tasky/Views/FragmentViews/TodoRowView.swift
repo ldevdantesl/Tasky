@@ -29,7 +29,7 @@ struct TodoRowView: View {
                             .foregroundStyle(.white)
                     }
                 }
-                Text(todo.desc ?? "No description")
+                Text(todo.desc ?? String(localized: "No Description"))
                     .font(.system(.subheadline, design: .rounded, weight: .regular))
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
@@ -49,8 +49,14 @@ struct TodoRowView: View {
                         }
                     }
                     Spacer()
-                    Text(TodoViewHelpers(todo: todo).formatDate)
-                        .font(.system(.caption, design: .rounded, weight: .light))
+                    HStack(spacing: 0){
+                        Text(TodoViewHelpers(todo: todo).formatDate)
+                            .font(.system(.caption, design: .rounded, weight: .light))
+                        if !todo.dueDate!.isStartOfDay{
+                            Text(" at \(todo.dueDate!.getTime)")
+                                .font(.system(.caption, design: .rounded, weight: .light))
+                        }
+                    }
                 }
                 .padding(.bottom, 10)
             }

@@ -17,11 +17,11 @@ struct PriorityCapsuleView: View {
                 
             HStack{
                 filterButton(text: "trivial_key")
-                    .shadow(color: .black.opacity(selectedPriority == 1 ? 0.2 : 0), radius: 10, x: 0, y: 5)
+                    .shadow(color: .primary.opacity(selectedPriority == 1 ? 0.2 : 0), radius: 10, x: 0, y: 5)
                 filterButton(text: "fair_key")
-                    .shadow(color: .black.opacity(selectedPriority == 2 ? 0.2 : 0), radius: 10, x: 0, y: 5)
+                    .shadow(color: .primary.opacity(selectedPriority == 2 ? 0.2 : 0), radius: 10, x: 0, y: 5)
                 filterButton(text: "principal_key")
-                    .shadow(color: .black.opacity(selectedPriority == 3 ? 0.2 : 0), radius: 10, x: 0, y: 5)
+                    .shadow(color: .primary.opacity(selectedPriority == 3 ? 0.2 : 0), radius: 10, x: 0, y: 5)
             }
         }
     }

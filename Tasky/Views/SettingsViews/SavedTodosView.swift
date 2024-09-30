@@ -17,7 +17,11 @@ struct SavedTodosView: View {
     @State private var searchText: String = ""
     
     var savedFilteredTodos: [Todo] {
-        return todoVM.savedTodos.filter { $0.title!.localizedStandardContains(searchText) }
+        if searchText.isEmpty{
+            return todoVM.savedTodos
+        } else {
+            return todoVM.savedTodos.filter { $0.title!.localizedStandardContains(searchText) }
+        }
     }
     
     var body: some View {

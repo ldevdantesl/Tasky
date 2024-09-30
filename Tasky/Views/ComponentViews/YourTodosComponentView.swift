@@ -21,6 +21,7 @@ struct YourTodosComponentView: View {
     var body: some View {
         VStack{
             YourTodosHeaderView(isShowingActive: $isShowingActive, colorTheme: colorTheme)
+                .padding(.horizontal, 5)
             TodoListView(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM: tagVM, path: $path, isShowingActive: $isShowingActive)
         }
         .padding(.horizontal, 10)

@@ -51,9 +51,9 @@ class NotificationSettingsManager: NotificationSettingsManaging {
             // Add additional conditions to ensure the todo is not archived or removed
             let isNotArchived = !todo.isArchived // Assuming `isArchived` is a Bool property on Todo
             let isNotRemoved = !todo.isRemoved   // Assuming `isRemoved` is a Bool property on Todo
-            
+            let isNotDone = !todo.isDone
             // Return true only if all conditions are met
-            return isDueTomorrow && isNotArchived && isNotRemoved
+            return isDueTomorrow && isNotArchived && isNotRemoved && isNotDone
         }
         
         // Check if any inserted or updated todos are for tomorrow

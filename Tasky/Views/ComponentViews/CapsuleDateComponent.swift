@@ -25,7 +25,7 @@ struct CapsuleDateComponent: View {
     var body: some View {
         VStack{
             Capsule()
-                .stroke(Color.gray, lineWidth: 1)
+                .stroke(Color.gray, lineWidth: isItCurrentDay ? 0 : 1)
                 .background(isItCurrentDay ? colorTheme : Color.background, in:.capsule)
                 .frame(width: 50, height: isSmall ? 70 : 90)
                 .foregroundStyle(.clear)
