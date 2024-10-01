@@ -172,7 +172,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
                     
                     // Set the time for 9 AM on the day before the task date
                     var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: startOfTomorrow)
-                    dateComponents.hour = 9 // Set to 9 AM
+                    dateComponents.hour = 9
                     dateComponents.minute = 0
                     
                     // Create a notification trigger for tomorrow at 9 AM
@@ -210,7 +210,6 @@ class NotificationSettingsManager: NotificationSettingsManaging {
         guard let id = todo.id?.uuidString else { return }
         print("Trying to remove notification with id: \(id)")
         
-        
         // Check pending notifications
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             let found = requests.contains { $0.identifier == id }
@@ -225,45 +224,59 @@ class NotificationSettingsManager: NotificationSettingsManaging {
     }
     
     func scheduleNotificationFor(_ todo: Todo) {
-        // Ensure the task is not paused
+        // Ensure the user has granted notification permissions
         guard isAuthorized else {
             self.checkAuthorizationStatus()
             return
         }
         
+        // Ensure notifications are not paused
         guard self.isPaused == false else {
             print("Notifications are paused.")
             return
         }
         
-        guard todo.dueDate?.getDayAndMonth != Date().getDayAndMonth else {
-            print("Can't schedule notification for today \(todo.title ?? "Todo")")
+        // Ensure that the dueDate is valid and has a time component
+        guard let dueDate = todo.dueDate else {
+            print("Invalid due date for todo: \(todo.title ?? "Todo")")
             return
         }
         
-        guard let identifier = todo.id?.uuidString else {
-            print("Cant get id of todo: \(todo.title ?? "Todo")")
+        guard !Calendar.current.isDateInToday(dueDate) || dueDate > Date() else {
+            print("Cannot schedule notification because the due date is today and the time has already passed.")
             return
         }
+        
+        // Ensure we have a valid identifier for the todo
+        guard let identifier = todo.id?.uuidString else {
+            print("Cannot get ID of todo: \(todo.title ?? "Todo")")
+            return
+        }
+        
+        // Create the content for the notification
+        var title = todo.title ?? "Todo"
+        title.append(" -> \(TodoViewHelpers(todo: todo).priorityName)")
         
         let content = UNMutableNotificationContent()
-        content.title = todo.title ?? "Todo"
-        content.subtitle = String(localized: "notification_subtitle")
+        content.title = title
+        content.subtitle = todo.desc ?? "Reminder for your todo."
         content.sound = .default
         
-        // Subtract one day from the taskDate to schedule the notification for the day before
-        guard let dayBeforeTaskDate = Calendar.current.date(byAdding: .day, value: -1, to: todo.dueDate!) else { return }
+        // Extract date components (year, month, day, hour, and minute) from dueDate
+        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dueDate)
+        if dueDate.isStartOfDay {
+            dateComponents.hour = 9
+            dateComponents.minute = 0
+            dateComponents.second = 0
+        }
         
-        // Set the time for 9 PM on the day before the task date
-        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dayBeforeTaskDate)
-        dateComponents.hour = remindedHoursBefore // Set to 9 PM
-        dateComponents.minute = 0
-        
-        // Create a notification trigger for the day before
+        // Create a notification trigger that matches the dueDate exactly
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        // Create the notification request
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
-        // Add the notification request
+        // Add the notification request to the notification center
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("Error scheduling notification: \(error.localizedDescription)")

@@ -954,6 +954,7 @@
       }
     },
     "notification_subtitle" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

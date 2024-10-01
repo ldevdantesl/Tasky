@@ -37,7 +37,7 @@ struct DueDateFragmentView: View {
     
     var timeVariations: [Int] {
         var variations: [Int] = []
-        var range = 0...23
+        var range = 1...23
         if dueDate != nil, isItToday() {
             range = Date().getHourInt+1...23
         }
