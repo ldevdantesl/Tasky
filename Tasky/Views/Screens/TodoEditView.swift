@@ -85,10 +85,10 @@ struct TodoEditView: View {
                 PriorityCapsuleView(selectedPriority: $priority)
                     .padding(.bottom, 15)
                 
-                DueDateFragmentView(settingsMgrVM: settingsMgrVM, dueDate: $dueDate, dateErrorMessage: .constant(nil))
+                DueDateFragmentView(dueDate: $dueDate, dateErrorMessage: .constant(nil))
                     .padding(.bottom, 15)
                 
-                TagLazyFragmentView(todoVM: todoVM,tagVM: tagVM, settingsMgrVM: settingsMgrVM, selectedTags: $tags)
+                TagLazyFragmentView(selectedTags: $tags)
             }
             .background(Color.background)
             .onTapGesture {

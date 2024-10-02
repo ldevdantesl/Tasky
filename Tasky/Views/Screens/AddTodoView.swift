@@ -102,7 +102,7 @@ struct AddTodoView: View {
             .padding(.horizontal)
             
             // MARK: - DUE DATE
-            DueDateFragmentView(settingsMgrVM: settingsMgrVM, dueDate: $dueDate, dateErrorMessage: $dateErrorMessage)
+            DueDateFragmentView(dueDate: $dueDate, dateErrorMessage: $dateErrorMessage)
                 .padding(.bottom, 15)
             
             // MARK: - PRIORITY
@@ -110,7 +110,7 @@ struct AddTodoView: View {
                 .padding(.bottom,15)
             
             // MARK: - TAGS
-            TagLazyFragmentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM ,selectedTags: $selectedTags)
+            TagLazyFragmentView(selectedTags: $selectedTags)
                         
         }
         .scrollDismissesKeyboard(.immediately)

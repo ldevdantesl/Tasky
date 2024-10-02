@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DA0D710E2CAD028C0065EE90 /* NavPathManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D710D2CAD028C0065EE90 /* NavPathManager.swift */; };
-		DA176CE02C8D88E600E15357 /* UIKitRepresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */; };
 		DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */; };
 		DA35249D2CA48EC00026E23B /* TodoListFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */; };
 		DA35249F2CA4956B0026E23B /* YourTodosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */; };
@@ -46,7 +45,6 @@
 		DA883A902C8EC5A900FC2E79 /* NoFoundComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA883A8F2C8EC5A900FC2E79 /* NoFoundComponentView.swift */; };
 		DA883A922C8ECEF700FC2E79 /* ShareAndFAQFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA883A912C8ECEF700FC2E79 /* ShareAndFAQFragmentView.swift */; };
 		DA883A952C92524E00FC2E79 /* AppIntroScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA883A942C92524E00FC2E79 /* AppIntroScreen.swift */; };
-		DA883A972C925E8A00FC2E79 /* TodosForTagFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA883A962C925E8A00FC2E79 /* TodosForTagFragmentView.swift */; };
 		DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409DB2C78471C004D054E /* TagViewModel.swift */; };
 		DA9409E32C7872E5004D054E /* NotificationSettingsManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */; };
 		DA9409E52C78748A004D054E /* NotificationSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */; };
@@ -81,6 +79,7 @@
 		DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659F72C730DFF004D8ACA /* Constants.swift */; };
 		DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659FA2C731878004D8ACA /* PriorityCapsuleView.swift */; };
 		DAF65A002C732950004D8ACA /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF659FF2C732950004D8ACA /* TodoDetailView.swift */; };
+		DAFC97122CAD1003004334F0 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFC97112CAD1003004334F0 /* TagView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +94,6 @@
 
 /* Begin PBXFileReference section */
 		DA0D710D2CAD028C0065EE90 /* NavPathManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPathManager.swift; sourceTree = "<group>"; };
-		DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitRepresentables.swift; sourceTree = "<group>"; };
 		DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTagsFragmentView.swift; sourceTree = "<group>"; };
 		DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListFragmentView.swift; sourceTree = "<group>"; };
 		DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourTodosHeaderView.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 		DA883A8F2C8EC5A900FC2E79 /* NoFoundComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoFoundComponentView.swift; sourceTree = "<group>"; };
 		DA883A912C8ECEF700FC2E79 /* ShareAndFAQFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAndFAQFragmentView.swift; sourceTree = "<group>"; };
 		DA883A942C92524E00FC2E79 /* AppIntroScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntroScreen.swift; sourceTree = "<group>"; };
-		DA883A962C925E8A00FC2E79 /* TodosForTagFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodosForTagFragmentView.swift; sourceTree = "<group>"; };
 		DA9409DB2C78471C004D054E /* TagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewModel.swift; sourceTree = "<group>"; };
 		DA9409E22C7872E5004D054E /* NotificationSettingsManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsManaging.swift; sourceTree = "<group>"; };
 		DA9409E42C78748A004D054E /* NotificationSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsManager.swift; sourceTree = "<group>"; };
@@ -171,6 +168,7 @@
 		DAF659F72C730DFF004D8ACA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DAF659FA2C731878004D8ACA /* PriorityCapsuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityCapsuleView.swift; sourceTree = "<group>"; };
 		DAF659FF2C732950004D8ACA /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
+		DAFC97112CAD1003004334F0 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -393,7 +391,6 @@
 				DA9830B12C8ADA7900368C0A /* TodoHeaderView.swift */,
 				DA883A8B2C8EB88D00FC2E79 /* TagsCircleView.swift */,
 				DA883A912C8ECEF700FC2E79 /* ShareAndFAQFragmentView.swift */,
-				DA883A962C925E8A00FC2E79 /* TodosForTagFragmentView.swift */,
 			);
 			path = FragmentViews;
 			sourceTree = "<group>";
@@ -410,7 +407,7 @@
 				DA883A892C8EB2A000FC2E79 /* TodoEditView.swift */,
 				DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */,
 				DA883A942C92524E00FC2E79 /* AppIntroScreen.swift */,
-				DA0D70FE2CACF2FA0065EE90 /* TagView.swift */,
+				DAFC97112CAD1003004334F0 /* TagView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -542,10 +539,10 @@
 				DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */,
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
 				DA69C9AB2C858C1C00B3C511 /* CapsuleDateComponent.swift in Sources */,
-				DA0D70FF2CACF2FA0065EE90 /* TagView.swift in Sources */,
 				DA69CA032C8997A000B3C511 /* TagImagesModel.swift in Sources */,
 				DA4B197D2C7999F900899303 /* ArchivedTodosView.swift in Sources */,
 				DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */,
+				DAFC97122CAD1003004334F0 /* TagView.swift in Sources */,
 				DA883A922C8ECEF700FC2E79 /* ShareAndFAQFragmentView.swift in Sources */,
 				DA883A902C8EC5A900FC2E79 /* NoFoundComponentView.swift in Sources */,
 				DA4B19862C7ABED300899303 /* PrivacySecuritySettingsView.swift in Sources */,
@@ -573,7 +570,6 @@
 				DA38A34D2C76B78C007C3FB4 /* SettingsView.swift in Sources */,
 				DA9830BA2C8BEFDC00368C0A /* TagCapsuleView.swift in Sources */,
 				DA69C9FF2C89292500B3C511 /* CustomExtensions.swift in Sources */,
-				DA883A972C925E8A00FC2E79 /* TodosForTagFragmentView.swift in Sources */,
 				DAF659F02C7302F8004D8ACA /* TodoView.swift in Sources */,
 				DA38A3452C75890F007C3FB4 /* TodoViewHelpers.swift in Sources */,
 				DA9409E92C7877C4004D054E /* SettingsManager.swift in Sources */,

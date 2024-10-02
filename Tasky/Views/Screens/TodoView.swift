@@ -85,9 +85,6 @@ struct TodoView: View {
             .navigationDestination(for: Todo.self){ todo in
                 TodoDetailView(observedTodo: todo)
             }
-            .navigationDestination(for: Tag.self){ tag in
-                TagView(tag: tag, tagVM: tagVM, todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
-            }
             .scrollIndicators(.hidden)
         }
     }

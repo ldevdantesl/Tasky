@@ -52,19 +52,6 @@ struct TagCapsuleView: View {
         }
         .padding(10)
         .background(Tag.getColor(from: tag) ?? .gray.opacity(0.3), in:.capsule)
-        .contextMenu{
-            if !showsSelection{
-                Button("See All todos", systemImage: "checklist", action: {showTodoForTag.toggle()})
-            }
-            Button("Delete tag", systemImage: "trash.fill"){
-                withAnimation {
-                    tagVM.deleteTag(tag: tag)
-                }
-            }
-        }
-        .sheet(isPresented: $showTodoForTag){
-        
-        }
     }
     
     func isSelected(tag: Tag) -> Bool{
@@ -74,4 +61,5 @@ struct TagCapsuleView: View {
 
 #Preview {
     TagCapsuleView(tag: TagViewModel.mockTags()[0])
+        .environmentObject(TagViewModel())
 }

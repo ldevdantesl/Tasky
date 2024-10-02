@@ -40,7 +40,7 @@ struct NotificationSettingsManagerTests {
     }
     
     @Test func scheduleNotificationForTodo() async throws {
-        await mockNotificationManager.scheduleNotificationFor(TodoViewModel.mockToDo(), at: TodoViewModel.mockToDo().dueDate ?? .now)
+        await mockNotificationManager.scheduleNotificationFor(TodoViewModel.mockToDo())
         #expect(true)
     }
     

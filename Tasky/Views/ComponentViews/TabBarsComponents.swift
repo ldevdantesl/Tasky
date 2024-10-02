@@ -72,8 +72,10 @@ struct TabBarsComponent: View {
             }
             
             Button{
-                withAnimation {
-                    navpath.path.append("SettingsView")
+                if navpath.path.isEmpty{
+                    withAnimation {
+                        navpath.path.append("SettingsView")
+                    }
                 }
             } label: {
                 Capsule()

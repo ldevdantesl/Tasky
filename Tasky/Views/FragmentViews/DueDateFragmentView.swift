@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DueDateFragmentView: View {
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
     
     @Binding var dueDate: Date?
     @Binding var dateErrorMessage: String?
@@ -310,5 +310,5 @@ struct DueDateFragmentView: View {
 }
 
 #Preview {
-    DueDateFragmentView(settingsMgrVM: MockPreviews.viewModel, dueDate: .constant(.now.getTomorrowDay), dateErrorMessage: .constant(nil))
+    DueDateFragmentView(dueDate: .constant(.now.getTomorrowDay), dateErrorMessage: .constant(nil))
 }

@@ -16,7 +16,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "в %@"
+            "value" : " в %@"
           }
         }
       }
@@ -305,16 +305,6 @@
         }
       }
     },
-    "Cancel" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отменить"
-          }
-        }
-      }
-    },
     "Check this App..." : {
       "localizations" : {
         "ru" : {
@@ -461,16 +451,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Удалить все"
-          }
-        }
-      }
-    },
-    "Delete tag" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удалить тэг"
           }
         }
       }
@@ -653,21 +633,7 @@
       }
     },
     "fair_key" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fair"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Средний"
-          }
-        }
-      }
+
     },
     "FAQ" : {
       "localizations" : {
@@ -881,15 +847,11 @@
       }
     },
     "No todos attached to this tag.\nAttach this tag to any to see it here" : {
-
-    },
-    "No todos attached to this tag. Attach this tag to any to see it here" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нет задач связанных с этим тэгом. Добавьте этот тэг в задачу чтоб увидеть ее тут"
+            "value" : "Нет задач связанных с этим тэгом.\nДобавьте этот тэг в задачу чтоб увидеть ее тут"
           }
         }
       }
@@ -1217,16 +1179,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сохраненные задачи"
-          }
-        }
-      }
-    },
-    "See All todos" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Взглянуть на задачи"
           }
         }
       }

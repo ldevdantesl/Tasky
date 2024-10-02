@@ -16,7 +16,7 @@ struct TagSettingsView: View {
     @State private var deleteAllAlert: Bool = false
     @State private var isAddingTag: Bool = false
     
-    @State private var showTagView: Bool = false
+    @State private var selectedTag: Tag?
     
     var colorTheme: Color {
         settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
@@ -27,7 +27,16 @@ struct TagSettingsView: View {
             ScrollView(.horizontal){
                 LazyHStack(spacing: 15){
                     ForEach(tagVM.tags, id: \.self) { tag in
-                        TagCapsuleView(tag: tag)
+                        Button(action: {selectedTag = tag}){
+                            TagCapsuleView(tag: tag)
+                                .contextMenu {
+                                    Button("Delete"){
+                                        withAnimation {
+                                            tagVM.deleteTag(tag: tag)
+                                        }
+                                    }
+                                }
+                        }
                     }
                     
                     Button(action: {isAddingTag.toggle()}){
@@ -63,6 +72,9 @@ struct TagSettingsView: View {
                 .presentationDetents([.large])
                 .interactiveDismissDisabled()
         }
+        .fullScreenCover(item: $selectedTag){ tag in
+            TagView(tag: tag)
+        }
         .alert("Delete All", isPresented: $deleteAllAlert){
             Button("Delete", role:.destructive, action: tagVM.deleteAllTags)
         } message: {
@@ -74,5 +86,9 @@ struct TagSettingsView: View {
 #Preview {
     NavigationStack{
         TagSettingsView()
+            .environmentObject(TodoViewModel())
+            .environmentObject(TagViewModel())
+            .environmentObject(NavPathManager())
+            .environmentObject(MockPreviews.viewModel)
     }
 }

@@ -2,25 +2,19 @@
 //  TagView.swift
 //  Tasky
 //
-//  Created by Buzurg Rakhimzoda on 1.10.2024.
+//  Created by Buzurg Rakhimzoda on 2.10.2024.
 //
 
 import SwiftUI
 
 struct TagView: View {
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var navPath: NavPathManager
+    
     @ObservedObject var tag: Tag
-    @ObservedObject var tagVM: TagViewModel
-    @ObservedObject var todoVM: TodoViewModel
     
-    @State private var showEditing: Bool = false
-    
-    @Binding var path: NavigationPath
-    
-    init(tag: Tag, tagVM: TagViewModel, todoVM: TodoViewModel, settingsMgrVM: SettingsManagerViewModel, path: Binding<NavigationPath>) {
+    init(tag: Tag) {
         self._tag = ObservedObject(wrappedValue: tag)
-        self.tagVM = tagVM
-        self.todoVM = todoVM
-        self._path = path
     }
     
     var todos: [Todo]{
@@ -29,7 +23,7 @@ struct TagView: View {
     
     var body: some View {
         ScrollView{
-            TodoListFragmentView(todoVM: todoVM, todos: todos, tapAction: onTapAction, noFoundImage: "number.square.fill", noFoundColor: .blue, noFoundTitle: "No todos found", noFoundSubtitle: "No todos attached to this tag.\nAttach this tag to any to see it here")
+            TodoListFragmentView(todos: todos, tapAction: onTapAction, noFoundImage: "number.square.fill", noFoundColor: Tag.getColor(from: tag) ?? .blue, noFoundTitle: "No todos found", noFoundSubtitle: "No todos attached to this tag.\nAttach this tag to any to see it here")
         }
         .scrollIndicators(.hidden)
         .safeAreaInset(edge: .top) {
@@ -41,32 +35,30 @@ struct TagView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 25, height: 25)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Tag.foregroundForTagColor(tag: tag))
                 Spacer()
                 
-                Button(action:{}){
-                    Image(systemName: "trash.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                        .foregroundStyle(.white)
-                }
+                Image(systemName: "xmark.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 25, height: 25)
+                    .foregroundStyle(.white)
+                    .onTapGesture {
+                        dismiss()
+                    }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 30)
-            .padding(.bottom, 10)
+            .frame(height: 40)
             .padding(.horizontal, 15)
+            .padding(.bottom, 5)
             .background(Tag.getColor(from: tag) ?? .blue)
         }
     }
-    
-    func onTapAction(todo: Todo) {
-        path.append(todo)
+    func onTapAction(todo: Todo){
+        navPath.path.append(todo)
     }
 }
 
 #Preview {
-    NavigationStack{
-        TagView(tag: TagViewModel.mockTags()[0], tagVM: TagViewModel(), todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
-    }
+    TagView(tag: TagViewModel.mockTags()[0])
 }

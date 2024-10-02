@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct TagLazyFragmentView: View {
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var tagVM: TagViewModel
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
     
     @Binding var selectedTags: [Tag]
     
@@ -89,5 +89,5 @@ struct TagLazyFragmentView: View {
 }
 
 #Preview {
-    TagLazyFragmentView(todoVM: TodoViewModel(),tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel, selectedTags: .constant(TagViewModel.mockTags()))
+    TagLazyFragmentView(selectedTags: .constant(TagViewModel.mockTags()))
 }
