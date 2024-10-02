@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TagCapsuleView: View {
-    @ObservedObject var tagVM: TagViewModel
+    @EnvironmentObject var tagVM: TagViewModel
     
     @Binding var selectedTags: [Tag]
     
@@ -17,18 +17,16 @@ struct TagCapsuleView: View {
     let tag: Tag
     let showsSelection: Bool
     
-    init(tag: Tag, showsSelection: Bool = true, selectedTags: Binding<[Tag]>, tagVM: TagViewModel) {
+    init(tag: Tag, showsSelection: Bool = true, selectedTags: Binding<[Tag]>) {
         self.tag = tag
         self.showsSelection = showsSelection
         self._selectedTags = selectedTags
-        self.tagVM = tagVM
     }
     
-    init(tag: Tag, tagVM: TagViewModel) {
+    init(tag: Tag) {
         self.tag = tag
         self.showsSelection = false
         self._selectedTags = .constant([])
-        self.tagVM = tagVM
     }
     
     var body: some View {
@@ -65,7 +63,7 @@ struct TagCapsuleView: View {
             }
         }
         .sheet(isPresented: $showTodoForTag){
-            TodosForTagFragmentView(tag: tag)
+        
         }
     }
     
@@ -75,5 +73,5 @@ struct TagCapsuleView: View {
 }
 
 #Preview {
-    TagCapsuleView(tag: TagViewModel.mockTags()[0], showsSelection: true, selectedTags: .constant([]),tagVM: TagViewModel())
+    TagCapsuleView(tag: TagViewModel.mockTags()[0])
 }

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CapsuleWeekStackComponent: View {
-    @ObservedObject var settingsManagerVM: SettingsManagerViewModel
+    @EnvironmentObject var settingsManagerVM: SettingsManagerViewModel
+    
     @ObservedObject var calendar = CalendarSet.instance
     @Binding var showingWholeMonth: Bool
     @Binding var selectedMonth: String
@@ -32,7 +33,7 @@ struct CapsuleWeekStackComponent: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing:0){
                     ForEach(currentWeek, id: \.self) { day in
-                        CapsuleDateComponent(settingsMangerVM: settingsManagerVM, isSmall: false, day: day)
+                        CapsuleDateComponent(isSmall: false, day: day)
                             .padding(.horizontal,10)
                             .onTapGesture {
                                 withAnimation(.bouncy) {
@@ -47,7 +48,7 @@ struct CapsuleWeekStackComponent: View {
         } else {
             LazyVGrid(columns: columns){
                 ForEach(currentMonth, id: \.self){ day in
-                    CapsuleDateComponent(settingsMangerVM: settingsManagerVM, isSmall: true, day: day)
+                    CapsuleDateComponent(isSmall: true, day: day)
                         .onTapGesture {
                             withAnimation(.bouncy) {
                                 calendar.currentDay = day
@@ -86,5 +87,5 @@ struct CapsuleWeekStackComponent: View {
 }
 
 #Preview {
-    CapsuleWeekStackComponent(settingsManagerVM: MockPreviews.viewModel, showingWholeMonth: .constant(false), selectedMonth: .constant("January"))
+    CapsuleWeekStackComponent(showingWholeMonth: .constant(false), selectedMonth: .constant("January"))
 }

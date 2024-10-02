@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct TabBarsComponent: View {
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var tagVM: TagViewModel
-    @Binding var path: NavigationPath
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var navpath: NavPathManager
     
     var isSelectedHome: Bool {
-        path.isEmpty
+        navpath.path.isEmpty
     }
     
     var colorTheme: Color {
@@ -25,7 +25,7 @@ struct TabBarsComponent: View {
         HStack(spacing:0){
             Button{
                 withAnimation {
-                    path.removeLast(path.count)
+                    navpath.path.removeLast(navpath.path.count)
                 }
             } label: {
                 Capsule()
@@ -55,7 +55,7 @@ struct TabBarsComponent: View {
             .buttonStyle(.plain)
             Button{
                 withAnimation {
-                    path.append("AddTodoView")
+                    navpath.path.append("AddTodoView")
                 }
             } label: {
                 Circle()
@@ -72,7 +72,7 @@ struct TabBarsComponent: View {
             
             Button{
                 withAnimation {
-                    path.append("SettingsView")
+                    navpath.path.append("SettingsView")
                 }
             } label: {
                 Capsule()
@@ -100,12 +100,12 @@ struct TabBarsComponent: View {
                     }
             }
             .buttonStyle(.plain)
-            .disabled(path.count > 0)
+            .disabled(navpath.path.count > 0)
         }
         .padding(.horizontal,10)
     }
 }
 
 #Preview {
-    TabBarsComponent(settingsMgrVM: MockPreviews.viewModel, todoVM: TodoViewModel(), tagVM: TagViewModel(), path: .constant(NavigationPath()))
+    TabBarsComponent()
 }

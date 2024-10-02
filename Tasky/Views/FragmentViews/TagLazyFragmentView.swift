@@ -38,7 +38,7 @@ struct TagLazyFragmentView: View {
                 LazyHStack {
                     ForEach(tagVM.tags, id: \.self) { tag in
                         Button(action: {addToSelection(tag: tag)}){
-                            TagCapsuleView(tag: tag, showsSelection: true, selectedTags: $selectedTags, tagVM: tagVM)
+                            TagCapsuleView(tag: tag, showsSelection: true, selectedTags: $selectedTags)
                         }
                         .contextMenu {
                             if selectedTags.contains(where: { $0 == tag }) {
@@ -68,7 +68,7 @@ struct TagLazyFragmentView: View {
             .scrollIndicators(.hidden)
         }
         .sheet(isPresented: $isAddingTag) {
-            AddingTagView(tagVM: tagVM, settingsMgrVm: settingsMgrVM)
+            AddingTagView()
                 .presentationDetents([.large])
                 .interactiveDismissDisabled()
         }

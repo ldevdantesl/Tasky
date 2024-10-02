@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PrivacySecuritySettingsView: View {
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
-    @Binding var path: NavigationPath
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+    
     @State private var resetAlert: Bool = false
     
     var colorTheme: Color {
@@ -40,6 +40,6 @@ struct PrivacySecuritySettingsView: View {
 
 #Preview {
     NavigationStack{
-        PrivacySecuritySettingsView(settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        PrivacySecuritySettingsView()
     }
 }

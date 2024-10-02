@@ -8,30 +8,30 @@
 import SwiftUI
 
 struct TodoView: View {
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var tagVM: TagViewModel
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var navpath: NavPathManager
+    
     @ObservedObject var calendar = CalendarSet.instance
     
     @State private var showingWholeMonth: Bool = false
     @State private var selectedMonth: String = CalendarSet.instance.currentDay.getDayMonthString
-    
-    @State private var path: NavigationPath = NavigationPath()
     
     var colorTheme: Color {
         settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
     
     var body: some View {
-        NavigationStack(path: $path){
+        NavigationStack(path: $navpath.path){
             ScrollView{
-                CapsuleWeekStackComponent(settingsManagerVM: settingsMgrVM, showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
+                CapsuleWeekStackComponent(showingWholeMonth: $showingWholeMonth, selectedMonth: $selectedMonth)
                 
                 Divider()
                     .padding(.horizontal, 10)
                 
                 if !showingWholeMonth {
-                    YourTodosComponentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                    YourTodosComponentView()
                 }
             }
             .toolbar{
@@ -43,7 +43,7 @@ struct TodoView: View {
                 }
             }
             .safeAreaInset(edge: .bottom){
-                TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
+                TabBarsComponent()
                     .frame(height: 60)
                     .padding(.top, 10)
                     .background(Color.background.opacity(0.9))
@@ -52,39 +52,39 @@ struct TodoView: View {
             .navigationDestination(for: String.self) { view in
                 switch view{
                     case "SettingsView":
-                        SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                        SettingsView()
                     
                     case "TagSettingsView":
-                        TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
+                        TagSettingsView()
                             
                     case "DataStorageSettingsView":
-                        DataAndStorageView(settingsManagerVM: settingsMgrVM, todoVM: todoVM, path: $path)
+                        DataAndStorageView()
                             
                     case "ArchivedTodosView":
-                        ArchivedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
+                        ArchivedTodosView()
                             
                     case "RemovedTodosView":
-                        RemovedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
+                        RemovedTodosView()
                     
                     case "SavedTodosView":
-                        SavedTodosView(todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
+                        SavedTodosView()
                             
                     case "NotificationSoundSettingsView":
-                        NotificationAndSoundsView(settingsMgrVM: settingsMgrVM, path: $path)
+                        NotificationAndSoundsView()
                             
                     case "PrivacySecuritySettingsView":
-                        PrivacySecuritySettingsView(settingsMgrVM: settingsMgrVM, path: $path)
+                        PrivacySecuritySettingsView()
                             
                     case "AppearanceSettingsView":
-                        AppearanceSettingsView(settingsManagerVM: settingsMgrVM, path:$path)
+                        AppearanceSettingsView()
                             
                     default:
-                        AddTodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
+                        AddTodoView()
                             .toolbar(.hidden, for: .navigationBar)
                 }
             }
-            .navigationDestination(for: Todo.self) { todo in
-                TodoDetailView(observedTodo: todo, todoVM: todoVM, tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
+            .navigationDestination(for: Todo.self){ todo in
+                TodoDetailView(observedTodo: todo)
             }
             .scrollIndicators(.hidden)
         }
@@ -146,6 +146,6 @@ struct TodoView: View {
 
 #Preview {
     NavigationStack{
-        TodoView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel)
+        TodoView()
     }
 }

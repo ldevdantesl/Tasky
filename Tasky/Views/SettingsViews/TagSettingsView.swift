@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct TagSettingsView: View {
-    @ObservedObject var tagVM: TagViewModel
-    @ObservedObject var settingsManagerVM: SettingsManagerViewModel
-    
-    @Binding var path: NavigationPath
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var navpath: NavPathManager
     
     @State private var deleteAllAlert: Bool = false
     @State private var isAddingTag: Bool = false
     
     var colorTheme: Color {
-        settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme
+        settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
     
     var body: some View {
@@ -25,7 +25,7 @@ struct TagSettingsView: View {
             ScrollView(.horizontal){
                 LazyHStack(spacing: 15){
                     ForEach(tagVM.tags, id: \.self) { tag in
-                        TagCapsuleView(tag: tag, tagVM: tagVM)
+                        TagCapsuleView(tag: tag)
                     }
                     Button(action: {isAddingTag.toggle()}){
                         Image(systemName: "plus")
@@ -56,7 +56,7 @@ struct TagSettingsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Constants.backgroundColor)
         .sheet(isPresented: $isAddingTag){
-            AddingTagView(tagVM: tagVM, settingsMgrVm: settingsManagerVM)
+            AddingTagView()
                 .presentationDetents([.large])
                 .interactiveDismissDisabled()
         }
@@ -70,6 +70,6 @@ struct TagSettingsView: View {
 
 #Preview {
     NavigationStack{
-        TagSettingsView(tagVM: TagViewModel(), settingsManagerVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        TagSettingsView()
     }
 }

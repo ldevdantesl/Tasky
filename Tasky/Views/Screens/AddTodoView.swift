@@ -14,10 +14,10 @@ struct AddTodoView: View {
         case description
     }
     
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var tagVM: TagViewModel
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
-    @Binding var path: NavigationPath
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var navpath: NavPathManager
     @FocusState var focusedField: FocusedFields?
     
     @State private var title: String = ""
@@ -42,7 +42,7 @@ struct AddTodoView: View {
                     .font(.system(.title, design: .rounded, weight: .semibold))
                     .foregroundStyle(Constants.textColor)
                 Spacer()
-                Button(action: {path = NavigationPath()}){
+                Button(action: {navpath.path = NavigationPath()}){
                     Image(systemName: "xmark.circle.fill")
                         .resizable()
                         .scaledToFit()
@@ -156,7 +156,7 @@ struct AddTodoView: View {
                 
                 withAnimation {
                     showProgressView = false
-                    path.removeLast()
+                    navpath.path.removeLast()
                 }
             } catch {
                 logger.log("Error creating todo: \(error.localizedDescription)")
@@ -180,6 +180,6 @@ struct AddTodoView: View {
 
 #Preview {
     NavigationStack{
-        AddTodoView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        AddTodoView()
     }
 }

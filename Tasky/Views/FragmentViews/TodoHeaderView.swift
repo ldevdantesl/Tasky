@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct TodoHeaderView: View {
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+   
     @ObservedObject var calendar = CalendarSet.instance
     
     @Binding var showingWholeMonth: Bool
@@ -76,5 +77,5 @@ struct TodoHeaderView: View {
 }
 
 #Preview {
-    TodoView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel)
+    TodoView()
 }

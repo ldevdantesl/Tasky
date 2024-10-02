@@ -11,7 +11,7 @@ import SwiftUI
 struct TaskyApp: App {
     @StateObject var todoVM = TodoViewModel()
     @StateObject var tagVM: TagViewModel = TagViewModel()
-    @StateObject var settingsManagerVM: SettingsManagerViewModel = SettingsManagerViewModel (
+    @StateObject var settingsMgrVM: SettingsManagerViewModel = SettingsManagerViewModel (
         settingsManager: SettingsManager(
             notificationSettingsManager: NotificationSettingsManager(),
             dataAndStorageManager: DataAndStorageManager(),
@@ -19,13 +19,18 @@ struct TaskyApp: App {
             appearanceSettingsManager: AppearanceSettingsManager()
         )
     )
+    @StateObject var navpath: NavPathManager = NavPathManager()
     
     var body: some Scene {
         WindowGroup {
-            MainView(todoVM: todoVM, settingsManagerVM: settingsManagerVM, tagVM: tagVM)
+            MainView()
                 .environment(\.managedObjectContext, PersistentController.shared.context)
+                .environmentObject(todoVM)
+                .environmentObject(tagVM)
+                .environmentObject(settingsMgrVM)
+                .environmentObject(navpath)
                 .onAppear {
-                    todoVM.configureSettings(settingsManagerVM)
+                    todoVM.configureSettings(settingsMgrVM)
                 }
         }
     }
