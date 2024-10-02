@@ -89,6 +89,7 @@ struct TodoView: View {
             .scrollIndicators(.hidden)
         }
     }
+    
     @ViewBuilder
     func topBarLeadingHeading() -> some View {
         if !showingWholeMonth {
