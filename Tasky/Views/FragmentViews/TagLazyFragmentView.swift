@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TagLazyFragmentView: View {
+    @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsMgrVM: SettingsManagerViewModel
     
@@ -38,7 +39,7 @@ struct TagLazyFragmentView: View {
                 LazyHStack {
                     ForEach(tagVM.tags, id: \.self) { tag in
                         Button(action: {addToSelection(tag: tag)}){
-                            TagCapsuleView(tag: tag, showsSelection: true, selectedTags: $selectedTags, tagVM: tagVM)
+                            TagCapsuleView(todoVM: todoVM,tag: tag, showsSelection: true, selectedTags: $selectedTags, tagVM: tagVM)
                         }
                         .contextMenu {
                             if selectedTags.contains(where: { $0 == tag }) {
@@ -88,5 +89,5 @@ struct TagLazyFragmentView: View {
 }
 
 #Preview {
-    TagLazyFragmentView(tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel, selectedTags: .constant(TagViewModel.mockTags()))
+    TagLazyFragmentView(todoVM: TodoViewModel(),tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel, selectedTags: .constant(TagViewModel.mockTags()))
 }

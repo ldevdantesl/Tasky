@@ -18,6 +18,7 @@ protocol NotificationSettingsManaging {
     func scheduleNotificationFor(_ todo: Todo)
     func sendEverydayNotification()
     func removeScheduledNotificationFor(_ todo: Todo)
+    func rescheduleNotificationFor(_ todo: Todo)
     func requestAuthorizationPermission()
     func resetAllSettings()
 }

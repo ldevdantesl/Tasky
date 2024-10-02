@@ -44,9 +44,7 @@ struct TodoView: View {
             }
             .safeAreaInset(edge: .bottom){
                 TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
-                    .frame(height: 60)
                     .padding(.top, 10)
-                    .background(Color.background.opacity(0.9))
             }
             .background(Constants.backgroundColor)
             .navigationDestination(for: String.self) { view in
@@ -55,7 +53,7 @@ struct TodoView: View {
                         SettingsView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM, path: $path)
                     
                     case "TagSettingsView":
-                        TagSettingsView(tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
+                        TagSettingsView(todoVM: todoVM, tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
                             
                     case "DataStorageSettingsView":
                         DataAndStorageView(settingsManagerVM: settingsMgrVM, todoVM: todoVM, path: $path)
@@ -85,6 +83,9 @@ struct TodoView: View {
             }
             .navigationDestination(for: Todo.self) { todo in
                 TodoDetailView(observedTodo: todo, todoVM: todoVM, tagVM: tagVM, settingsManagerVM: settingsMgrVM, path: $path)
+            }
+            .navigationDestination(for: Tag.self){ tag in
+                TagView(tag: tag, tagVM: tagVM, todoVM: todoVM, settingsMgrVM: settingsMgrVM, path: $path)
             }
             .scrollIndicators(.hidden)
         }

@@ -53,6 +53,7 @@ struct TabBarsComponent: View {
                     }
             }
             .buttonStyle(.plain)
+            
             Button{
                 withAnimation {
                     path.append("AddTodoView")
@@ -71,8 +72,10 @@ struct TabBarsComponent: View {
             }
             
             Button{
-                withAnimation {
-                    path.append("SettingsView")
+                if path.isEmpty {
+                    withAnimation {
+                        path.append("SettingsView")
+                    }
                 }
             } label: {
                 Capsule()
@@ -99,8 +102,7 @@ struct TabBarsComponent: View {
                         }
                     }
             }
-            .buttonStyle(.plain)
-            .disabled(path.count > 0)
+            .buttonStyle(PlainButtonStyle())
         }
         .padding(.horizontal,10)
     }

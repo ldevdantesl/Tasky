@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TagSettingsView: View {
+    @ObservedObject var todoVM: TodoViewModel
     @ObservedObject var tagVM: TagViewModel
     @ObservedObject var settingsManagerVM: SettingsManagerViewModel
     
@@ -15,6 +16,8 @@ struct TagSettingsView: View {
     
     @State private var deleteAllAlert: Bool = false
     @State private var isAddingTag: Bool = false
+    
+    @State private var showTagView: Bool = false
     
     var colorTheme: Color {
         settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme
@@ -25,8 +28,9 @@ struct TagSettingsView: View {
             ScrollView(.horizontal){
                 LazyHStack(spacing: 15){
                     ForEach(tagVM.tags, id: \.self) { tag in
-                        TagCapsuleView(tag: tag, tagVM: tagVM)
+                        TagCapsuleView(todoVM: todoVM, tag: tag, tagVM: tagVM)
                     }
+                    
                     Button(action: {isAddingTag.toggle()}){
                         Image(systemName: "plus")
                             .resizable()
@@ -34,7 +38,7 @@ struct TagSettingsView: View {
                             .frame(maxWidth: 25)
                             .foregroundStyle(.white)
                             .padding(10)
-                            .background(colorTheme, in:.circle)
+                            .background(Color.yellow.gradient, in:.circle)
                     }
                 }
                 .padding(.horizontal, 25)
@@ -70,6 +74,6 @@ struct TagSettingsView: View {
 
 #Preview {
     NavigationStack{
-        TagSettingsView(tagVM: TagViewModel(), settingsManagerVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        TagSettingsView(todoVM: TodoViewModel(),tagVM: TagViewModel(), settingsManagerVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
     }
 }

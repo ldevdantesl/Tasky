@@ -12,13 +12,20 @@
       }
     },
     " at %@" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "в %@"
+          }
+        }
+      }
     },
     "#%@" : {
       "localizations" : {
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "#%@"
           }
         }
@@ -103,7 +110,14 @@
       }
     },
     "%lld:00" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld:00"
+          }
+        }
+      }
     },
     "%lld/%lld" : {
       "localizations" : {
@@ -241,6 +255,16 @@
         }
       }
     },
+    "at %@" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "в %@"
+          }
+        }
+      }
+    },
     "Auto-Archive After: %lld" : {
       "localizations" : {
         "ru" : {
@@ -357,17 +381,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Цвет Тэга"
-          }
-        }
-      }
-    },
-    "Complete" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Выполнить"
           }
         }
       }
@@ -538,17 +551,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы уверены что хотите архивировать все текущие задачи?"
-          }
-        }
-      }
-    },
-    "Do you really want to unarchive this todo?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вы уверены что хотите разархивировать эту задачу?"
           }
         }
       }
@@ -777,28 +779,6 @@
         }
       }
     },
-    "Mark as done" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Выполнить"
-          }
-        }
-      }
-    },
-    "Mark as undone" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не выполнить"
-          }
-        }
-      }
-    },
     "Max 5" : {
       "localizations" : {
         "ru" : {
@@ -891,9 +871,20 @@
       }
     },
     "No time" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Без времени"
+          }
+        }
+      }
+    },
+    "No todos attached to this tag.\nAttach this tag to any to see it here" : {
 
     },
     "No todos attached to this tag. Attach this tag to any to see it here" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -949,23 +940,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Уведомления & звуки"
-          }
-        }
-      }
-    },
-    "notification_subtitle" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You have this todo scheduled for tomorrow."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Эта задача расписана на завтра"
           }
         }
       }
@@ -1073,6 +1047,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Напомнить о всех задачах в 9 утра"
+          }
+        }
+      }
+    },
+    "Reminder for your todo." : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминание о вашей задаче"
           }
         }
       }
@@ -1258,7 +1242,14 @@
       }
     },
     "Select a Time" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите Время"
+          }
+        }
+      }
     },
     "Send Reminder at: %lld:00" : {
       "localizations" : {
@@ -1499,16 +1490,6 @@
         }
       }
     },
-    "Title should be more than 3 characters" : {
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Название должно быть больше 3 знаков"
-          }
-        }
-      }
-    },
     "Today" : {
       "localizations" : {
         "ru" : {
@@ -1619,17 +1600,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Восстановить все"
-          }
-        }
-      }
-    },
-    "Unsave" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Убрать из сохраненных"
           }
         }
       }

@@ -25,7 +25,7 @@ struct DueDateFragmentView: View {
             returningDate += String("\(dueDate.getDayDigit) ")
             returningDate += "\(dueDate.getDayMonthString) "
             if !dueDate.isStartOfDay{
-                returningDate += "at \(dueDate.getTime)"
+                returningDate += String(localized: "at \(dueDate.getTime)")
             }
         }
         return returningDate
@@ -193,7 +193,7 @@ struct DueDateFragmentView: View {
                                 Text("No time")
                                     .font(.system(.headline, design: .rounded, weight: .bold))
                                     .foregroundStyle(.white)
-                                    .frame(width: 80, height: 40)
+                                    .frame(width: 120, height: 40)
                                     .background(themeColor, in:.capsule)
                             }
                         }
@@ -202,7 +202,7 @@ struct DueDateFragmentView: View {
                             Text("Custom")
                                 .font(.system(.headline, design: .rounded, weight: .bold))
                                 .foregroundStyle(.white)
-                                .frame(width: 80, height: 40)
+                                .frame(width: 100, height: 40)
                                 .background(themeColor, in:.capsule)
                         }
                         

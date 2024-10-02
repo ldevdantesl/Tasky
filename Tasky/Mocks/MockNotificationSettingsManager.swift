@@ -30,8 +30,12 @@ class MockNotificationSettingsManager: NotificationSettingsManaging {
         logger.log("Scheduled notification for tomorrow.")
     }
     
+    func rescheduleNotificationFor(_ todo: Todo) {
+        logger.log("Rescheduled notification for todo: \(todo.title ?? "Test Todo")")
+    }
+    
     func scheduleNotificationFor(_ todo: Todo) {
-        logger.log("Scheduled notification for todo: \(todo.title ?? "")")
+        logger.log("Scheduled notification for todo: \(todo.title ?? "Test Todo")")
     }
     
     func checkAuthorizationStatus() {

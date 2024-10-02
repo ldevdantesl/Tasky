@@ -93,7 +93,7 @@ struct TodoEditView: View {
                 DueDateFragmentView(settingsMgrVM: settingsMgrVM, dueDate: $dueDate, dateErrorMessage: .constant(nil))
                     .padding(.bottom, 15)
                 
-                TagLazyFragmentView(tagVM: tagVM, settingsMgrVM: settingsMgrVM, selectedTags: $tags)
+                TagLazyFragmentView(todoVM: todoVM,tagVM: tagVM, settingsMgrVM: settingsMgrVM, selectedTags: $tags)
             }
             .background(Color.background)
             .onTapGesture {
@@ -127,10 +127,16 @@ struct TodoEditView: View {
         }
     }
     
-    func isTitleValid() -> Bool{
-        titleErrorMessage = title.count < 3 ? String(localized:"Title should be more than 3 characters") : nil
-        titleErrorMessage = title.trimmingCharacters(in: .whitespaces).isEmpty ? String(localized: "Title can't be only the spaces") : nil
-        return title.count > 2 || !title.trimmingCharacters(in: .whitespaces).isEmpty
+    func isTitleValid() -> Bool {
+        if title.count <= 2 {
+            titleErrorMessage = String(localized:"Title should be more than 2 characters")
+            return false
+        } else if title.trimmingCharacters(in: .whitespaces).isEmpty {
+            titleErrorMessage = String(localized: "Title can't be only the spaces")
+            return false
+        } else {
+            return true
+        }
     }
     
     func save() {

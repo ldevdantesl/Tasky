@@ -65,7 +65,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
             sendEverydayNotification()
             logger.log("Updated everyday notifications. Total: \(todosForTomorrow.count)")
         } else {
-            logger.log("No changes in tomorrow's todos. Notification not updated.")
+            logger.warning("No changes in tomorrow's todos. Notification not updated.")
         }
     }
     
@@ -120,19 +120,19 @@ class NotificationSettingsManager: NotificationSettingsManaging {
                 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
                     if granted {
                         self.isAuthorized = true
-                        print("Authorization is granted.")
+                        logger.log("Authorization is granted.")
                     } else if let error{
-                        print("Error requesting permission: \(error.localizedDescription)")
+                        logger.error("Error requesting permission: \(error.localizedDescription)")
                     } else {
                         self.isAuthorized = false
-                        print("Permission denied.")
+                        logger.warning("Permission denied.")
                     }
                 }
             } else if settings.authorizationStatus == .denied {
-                print("Notifications are denied by the user. Guide them to settings.")
+                logger.warning("Notifications are denied by the user. Guide them to settings.")
                 self.checkAuthorizationStatus()
             } else {
-                print("Notifications are already authorized.")
+                logger.info("Notifications are already authorized.")
             }
         }
     }
@@ -182,9 +182,9 @@ class NotificationSettingsManager: NotificationSettingsManaging {
                     // Add the new notification request
                     UNUserNotificationCenter.current().add(request) { error in
                         if let error = error {
-                            print("Error scheduling notification: \(error.localizedDescription)")
+                            logger.error("Error scheduling notification: \(error.localizedDescription)")
                         } else {
-                            print("Notification scheduled for tomorrow reminder.")
+                            logger.log("Notification scheduled for tomorrow reminder.")
                             self.previouslyScheduledTodosCount = tomorrowTodos.count // Update the scheduled count
                         }
                     }
@@ -193,33 +193,33 @@ class NotificationSettingsManager: NotificationSettingsManaging {
                     previouslyScheduledTodosCount = 0
                 }
             } else {
-                print("No changes in tomorrow's todos. Notification not rescheduled.")
+                logger.warning("No changes in tomorrow's todos. Notification not rescheduled.")
             }
         } catch {
-            print("Error fetching tomorrow todos: \(error.localizedDescription)")
+            logger.error("Error fetching tomorrow todos: \(error.localizedDescription)")
         }
     }
     
     func removeScheduledNotificationFor(_ todo: Todo) {
         guard isAuthorized else {
-            print("Can't remove the notification because the app is not authorized for the notifications")
+            logger.warning("Can't remove the notification because the app is not authorized for the notifications")
             self.checkAuthorizationStatus()
             return
         }
         
         guard let id = todo.id?.uuidString else { return }
-        print("Trying to remove notification with id: \(id)")
+        logger.info("Trying to remove notification with id: \(id)")
         
         // Check pending notifications
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             let found = requests.contains { $0.identifier == id }
             guard found else {
-                print("Notification with id \(id) not found in pending notifications.")
+                logger.warning("Notification with id: \(id) not found in pending notifications.")
                 return
             }
             
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
-            print("Removed pending notification for \(todo.title ?? "Todo") with id: \(id).")
+            logger.log("Removed pending notification for \(todo.title ?? "Todo") with id: \(id).")
         }
     }
     
@@ -243,7 +243,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
         }
         
         guard !Calendar.current.isDateInToday(dueDate) || dueDate > Date() else {
-            print("Cannot schedule notification because the due date is today and the time has already passed.")
+            logger.warning("Cannot schedule notification because the due date is today and the time has already passed.")
             return
         }
         
@@ -259,7 +259,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
         
         let content = UNMutableNotificationContent()
         content.title = title
-        content.subtitle = todo.desc ?? "Reminder for your todo."
+        content.subtitle = todo.desc ?? String(localized: "Reminder for your todo.")
         content.sound = .default
         
         // Extract date components (year, month, day, hour, and minute) from dueDate
@@ -279,11 +279,16 @@ class NotificationSettingsManager: NotificationSettingsManaging {
         // Add the notification request to the notification center
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
-                print("Error scheduling notification: \(error.localizedDescription)")
+                logger.error("Error scheduling notification: \(error.localizedDescription)")
             } else {
-                print("Notification scheduled for \(todo.title ?? "Todo") at \(dateComponents), with id: \(identifier)")
+                logger.log("Notification scheduled for \(todo.title ?? "Todo") at \(dateComponents), with id: \(identifier)")
             }
         }
+    }
+    
+    func rescheduleNotificationFor(_ todo: Todo) {
+        removeScheduledNotificationFor(todo)
+        scheduleNotificationFor(todo)
     }
     
     func resetAllSettings() {

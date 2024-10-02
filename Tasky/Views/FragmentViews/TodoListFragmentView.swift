@@ -46,10 +46,12 @@ struct TodoListFragmentView: View {
                         }
                 }
             }
+            .padding(.top, 5)
         } else {
             NoFoundComponentView(image: noFoundImage, color: noFoundColor, title: noFoundTitle, subtitle: noFoundSubtitle, action: noFoundAction)
                 .frame(maxWidth: .infinity)
                 .padding(.top, Constants.screenHeight / 6)
+                .padding(.horizontal, 15)
         }
     }
 }

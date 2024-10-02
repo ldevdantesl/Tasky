@@ -92,6 +92,9 @@ class TodoViewModel: ObservableObject {
         if let newTags{
             todo.tags = NSSet(array: newTags)
         }
+        
+        settingsManagerVM?.settingsManager.notificationSettingsManager.rescheduleNotificationFor(todo)
+        
         try saveContext()
     }
     

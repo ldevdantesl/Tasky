@@ -110,7 +110,7 @@ struct AddTodoView: View {
                 .padding(.bottom,15)
             
             // MARK: - TAGS
-            TagLazyFragmentView(tagVM: tagVM, settingsMgrVM: settingsMgrVM ,selectedTags: $selectedTags)
+            TagLazyFragmentView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsMgrVM ,selectedTags: $selectedTags)
                         
         }
         .scrollDismissesKeyboard(.immediately)
@@ -164,7 +164,7 @@ struct AddTodoView: View {
         } else {
             logger.log("Something went wrong while creating the todo")
             withAnimation {
-                if title.count < 2{
+                if title.count <= 2{
                     titleErrorMessage = String(localized: "Title should be more than 2 characters")
                 } else if title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     titleErrorMessage = String(localized: "Title can't only be the spaces")

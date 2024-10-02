@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TodosForTagFragmentView: View {
+    @ObservedObject var todoVM: TodoViewModel
     @Environment(\.dismiss) var dismiss
     
     let tag: Tag
@@ -19,16 +20,9 @@ struct TodosForTagFragmentView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
-                if todos.isEmpty{
-                    NoFoundComponentView(image: "number.square.fill", color: .blue, title: "No todos found", subtitle: "No todos attached to this tag. Attach this tag to any to see it here")
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, Constants.screenHeight / 4)
-                } else {
-                    ForEach(todos, id: \.self){ todo in
-                        TodoRowView(todo: todo)
-                    }
-                }
+                TodoListFragmentView(todoVM: todoVM, todos: todos, noFoundImage: "number.square.fill", noFoundColor: .blue, noFoundTitle: "No todos found", noFoundSubtitle: "No todos attached to this tag.\nAttach this tag to any to see it here")
             }
+            .scrollIndicators(.hidden)
             .navigationTitle(tag.name ?? "Tag")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar{
@@ -44,5 +38,5 @@ struct TodosForTagFragmentView: View {
 }
 
 #Preview {
-    TodosForTagFragmentView(tag: TagViewModel.mockTags()[0])
+    TodosForTagFragmentView(todoVM: TodoViewModel(), tag: TagViewModel.mockTags()[0])
 }

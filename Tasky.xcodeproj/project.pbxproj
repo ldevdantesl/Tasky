@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA176CE02C8D88E600E15357 /* UIKitRepresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */; };
+		DA0D70FF2CACF2FA0065EE90 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D70FE2CACF2FA0065EE90 /* TagView.swift */; };
 		DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */; };
 		DA35249D2CA48EC00026E23B /* TodoListFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */; };
 		DA35249F2CA4956B0026E23B /* YourTodosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */; };
@@ -93,7 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitRepresentables.swift; sourceTree = "<group>"; };
+		DA0D70FE2CACF2FA0065EE90 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTagsFragmentView.swift; sourceTree = "<group>"; };
 		DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListFragmentView.swift; sourceTree = "<group>"; };
 		DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourTodosHeaderView.swift; sourceTree = "<group>"; };
@@ -353,7 +353,6 @@
 				DA69CA002C8994AF00B3C511 /* TagImages.json */,
 				DA69CA022C8997A000B3C511 /* TagImagesModel.swift */,
 				DA9830B72C8BEAC900368C0A /* ButtonItem.swift */,
-				DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -408,6 +407,7 @@
 				DA883A892C8EB2A000FC2E79 /* TodoEditView.swift */,
 				DA38A3572C771E8E007C3FB4 /* AddingTagView.swift */,
 				DA883A942C92524E00FC2E79 /* AppIntroScreen.swift */,
+				DA0D70FE2CACF2FA0065EE90 /* TagView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -539,6 +539,7 @@
 				DAF659FB2C731878004D8ACA /* PriorityCapsuleView.swift in Sources */,
 				DAF659D72C72FE4D004D8ACA /* MainView.swift in Sources */,
 				DA69C9AB2C858C1C00B3C511 /* CapsuleDateComponent.swift in Sources */,
+				DA0D70FF2CACF2FA0065EE90 /* TagView.swift in Sources */,
 				DA69CA032C8997A000B3C511 /* TagImagesModel.swift in Sources */,
 				DA4B197D2C7999F900899303 /* ArchivedTodosView.swift in Sources */,
 				DA9409F62C787D9A004D054E /* DataAndStorageManager.swift in Sources */,
@@ -593,7 +594,6 @@
 				DA6D38432C92840D00F3AD51 /* SavedTodosView.swift in Sources */,
 				DAF659F82C730DFF004D8ACA /* Constants.swift in Sources */,
 				DA69446D2C7C3E760032437C /* AppearanceSettingsManager.swift in Sources */,
-				DA176CE02C8D88E600E15357 /* UIKitRepresentables.swift in Sources */,
 				DA9830B82C8BEAC900368C0A /* ButtonItem.swift in Sources */,
 				DA9409DC2C78471C004D054E /* TagViewModel.swift in Sources */,
 				DAC755472C82967000112F40 /* TodoRowView.swift in Sources */,
