@@ -10,14 +10,14 @@ import SwiftUI
 struct TodoEditView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
-    @ObservedObject var todo: Todo
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var tagVM: TagViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var todo: Todo
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var tagVM: TagViewModel
     
     @FocusState private var isFocused: Bool
     
-    @Binding var path: NavigationPath
+    @EnvironmentObject var navpath: NavPathManager
     
     @State private var isLoading: Bool = false
     
@@ -34,18 +34,13 @@ struct TodoEditView: View {
         settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
     
-    init(todo: Todo, settingsMgrVM: SettingsManagerViewModel, todoVM: TodoViewModel, tagVM: TagViewModel, path: Binding<NavigationPath>) {
-        self.todo = todo
-        self.settingsMgrVM = settingsMgrVM
-        self.todoVM = todoVM
-        self.tagVM = tagVM
+    init(todo: Todo) {
         self._title = State(wrappedValue: todo.title ?? "")
         self._description = State(wrappedValue: todo.desc ?? "")
         self._priority = State(wrappedValue: todo.priority)
         self._dueDate = State(wrappedValue: todo.dueDate)
         self._status = State(wrappedValue: todo.isDone)
         self._tags = State(wrappedValue: todo.tags?.allObjects as? [Tag] ?? [])
-        self._path = path
     }
     
     var body: some View {
@@ -154,5 +149,5 @@ struct TodoEditView: View {
 }
 
 #Preview {
-    TodoEditView(todo: TodoViewModel.mockToDo(), settingsMgrVM: MockPreviews.viewModel, todoVM: TodoViewModel(), tagVM: TagViewModel(), path: .constant(NavigationPath()))
+    TodoEditView(todo: TodoViewModel.mockToDo())
 }

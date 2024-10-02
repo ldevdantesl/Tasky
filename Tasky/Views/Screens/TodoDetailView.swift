@@ -10,13 +10,13 @@ import SwiftUI
 struct TodoDetailView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedObject private var todoVM: TodoViewModel
-    @ObservedObject private var tagVM: TagViewModel
-    @ObservedObject private var settingsManagerVM: SettingsManagerViewModel
-    @ObservedObject var todo: Todo
-    @ObservedObject var calendarSet: CalendarSet
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var settingsManagerVM: SettingsManagerViewModel
+    @EnvironmentObject var navpath: NavPathManager
     
-    @Binding var path: NavigationPath
+    @ObservedObject var todo: Todo
+    @ObservedObject var calendarSet: CalendarSet = CalendarSet.instance
     
     @State private var showAlert: Bool = false
     @State private var showHowManyDaysLeft: Bool = false
@@ -29,13 +29,8 @@ struct TodoDetailView: View {
     
     @State private var isLoading: Bool = false
     
-    init(observedTodo: Todo, todoVM: TodoViewModel, tagVM: TagViewModel, settingsManagerVM: SettingsManagerViewModel, path: Binding<NavigationPath>){
-        _todo = ObservedObject(wrappedValue: observedTodo)
-        self.todoVM = todoVM
-        self.tagVM = tagVM
-        self.settingsManagerVM = settingsManagerVM
-        self._path = path
-        self._calendarSet = ObservedObject(wrappedValue: CalendarSet.instance)
+    init(observedTodo: Todo){
+        self._todo = ObservedObject(wrappedValue: observedTodo)
     }
     
     var body: some View {
@@ -278,7 +273,7 @@ struct TodoDetailView: View {
             .presentationDetents([.medium])
         }
         .fullScreenCover(isPresented: $isEditing) {
-            TodoEditView(todo: todo, settingsMgrVM: settingsManagerVM, todoVM: todoVM, tagVM: tagVM, path: $path)
+            TodoEditView(todo: todo)
         }
     }
     
@@ -308,6 +303,6 @@ struct TodoDetailView: View {
 
 #Preview {
     NavigationStack{
-        TodoDetailView(observedTodo: TodoViewModel.mockToDo(), todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsManagerVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        TodoDetailView(observedTodo: TodoViewModel.mockToDo())
     }
 }

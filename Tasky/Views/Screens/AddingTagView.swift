@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddingTagView: View {
-    @ObservedObject var tagVM: TagViewModel
-    @ObservedObject var settingsMgrVm: SettingsManagerViewModel
+    @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var settingsMgrVm: SettingsManagerViewModel
     @Environment(\.dismiss) var dismiss
     
     @State var name: String = ""
@@ -183,5 +183,5 @@ struct AddingTagView: View {
 }
 
 #Preview {
-    AddingTagView(tagVM: TagViewModel(), settingsMgrVm: MockPreviews.viewModel)
+    AddingTagView()
 }

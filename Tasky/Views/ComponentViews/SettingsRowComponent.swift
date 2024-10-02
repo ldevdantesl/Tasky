@@ -16,6 +16,8 @@ struct SettingsRowComponent: View {
     let action: (() -> ())?
     let rightSideText: String?
     
+    @EnvironmentObject var navPath: NavPathManager
+    
     @State private var showingDropDown: Bool = false
     @State private var showingColorDropDown: Bool = false
     @State private var showingToggleState: Bool
@@ -23,7 +25,6 @@ struct SettingsRowComponent: View {
     @Binding var isDropDown: Int
     @Binding var toggler: Bool
     @Binding var selectedColor: Color
-    @Binding var path: NavigationPath
     
     let dropDownVariations: [Int]
     
@@ -38,21 +39,19 @@ struct SettingsRowComponent: View {
         self.action = nil
         self.link = nil
         self._toggler = toggler
-        self._path = .constant(NavigationPath())
         self._isDropDown = .constant(0)
         self._showingToggleState = State(wrappedValue: showingToggleState)
         self._selectedColor = .constant(.secondary)
         self.rightSideText = nil
     }
     
-    init(title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, image: String, color: Color, link: String, path: Binding<NavigationPath>) {
+    init(title: LocalizedStringKey, subtitle: LocalizedStringKey? = nil, image: String, color: Color, link: String) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
         self.color = color
         self.link = link
         self.dropDownVariations = []
-        self._path = path
         self.action = nil
         self._toggler = .constant(false)
         self._isDropDown = .constant(0)
@@ -70,7 +69,6 @@ struct SettingsRowComponent: View {
         self.dropDownVariations = []
         self.link = nil
         self._toggler = .constant(false)
-        self._path = .constant(NavigationPath())
         self._isDropDown = .constant(0)
         self._showingToggleState = State(wrappedValue: false)
         self._selectedColor = .constant(.secondary)
@@ -85,7 +83,6 @@ struct SettingsRowComponent: View {
         self._isDropDown = isDropDown
         self.dropDownVariations = dropDownVariations
         self._toggler = .constant(false)
-        self._path = .constant(NavigationPath())
         self.link = nil
         self.action = nil
         self._showingToggleState = State(wrappedValue: false)
@@ -101,7 +98,6 @@ struct SettingsRowComponent: View {
         self._isDropDown = .constant(0)
         self.dropDownVariations = []
         self._toggler = .constant(false)
-        self._path = .constant(NavigationPath())
         self.link = nil
         self.action = nil
         self._showingToggleState = State(wrappedValue: false)
@@ -114,7 +110,7 @@ struct SettingsRowComponent: View {
             Button{
                 withAnimation(.bouncy){
                     if let link{
-                        path.append(link)
+                        navPath.path.append(link)
                     } else if let action {
                         action()
                     } else if isDropDown != 0 {

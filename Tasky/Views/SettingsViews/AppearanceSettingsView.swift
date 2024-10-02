@@ -8,27 +8,26 @@
 import SwiftUI
 
 struct AppearanceSettingsView: View {
-    @ObservedObject var settingsManagerVM: SettingsManagerViewModel
-    @Binding var path: NavigationPath
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
     
     @State private var resetAlert: Bool = false
     
     var colorTheme: Color {
-        settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme
+        settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme
     }
     
     var body: some View {
         ScrollView{
-            SettingsRowComponent(title: "Appearance", subtitle: "Choose  a theme for the app", image: "paintpalette.fill", color: colorTheme, selectedColor: $settingsManagerVM.settingsManager.appearanceSettingsManager.colorTheme)
+            SettingsRowComponent(title: "Appearance", subtitle: "Choose  a theme for the app", image: "paintpalette.fill", color: colorTheme, selectedColor: $settingsMgrVM.settingsManager.appearanceSettingsManager.colorTheme)
                 .padding(.top, 10)
             
-            SettingsRowComponent(title: "Language", subtitle: "Language of the app", image: "globe", color: .blue.opacity(0.8), rightSideText: Locale(identifier: settingsManagerVM.currentLanguage).localizedString(forIdentifier: settingsManagerVM.currentLanguage)?.capitalized, action: openSettings)
+            SettingsRowComponent(title: "Language", subtitle: "Language of the app", image: "globe", color: .blue.opacity(0.8), rightSideText: Locale(identifier: settingsMgrVM.currentLanguage).localizedString(forIdentifier: settingsMgrVM.currentLanguage)?.capitalized, action: openSettings)
             
             SettingsRowComponent(title: "Reset", subtitle: "Reset all the custom Settings", image: "arrow.triangle.2.circlepath", color: .red, toggler: $resetAlert)
             
         }
         .alert("Reset Settings", isPresented: $resetAlert) {
-            Button("Reset", role:.destructive, action:settingsManagerVM.settingsManager.appearanceSettingsManager.reset)
+            Button("Reset", role:.destructive, action:settingsMgrVM.settingsManager.appearanceSettingsManager.reset)
         } message: {
             Text("Reset all the custom Settings?")
         }
@@ -47,6 +46,6 @@ struct AppearanceSettingsView: View {
 
 #Preview {
     NavigationStack{
-        AppearanceSettingsView(settingsManagerVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        AppearanceSettingsView()
     }
 }

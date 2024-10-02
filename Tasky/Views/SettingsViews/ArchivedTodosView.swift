@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ArchivedTodosView: View {
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
-    
-    @Binding var path: NavigationPath
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var navpath: NavPathManager
     
     @State private var alertToggle: Bool = false
     @State private var searchText: String = ""
@@ -26,7 +25,7 @@ struct ArchivedTodosView: View {
     
     var body: some View {
         ScrollView{
-            TodoListFragmentView(todoVM: todoVM, todos: archivedFilteredResults, tapAction: onTapAction, doubleTapAction: onDoubleTapAction, noFoundImage: "archivebox.fill", noFoundColor: .green, noFoundTitle: "No archived Todos", noFoundSubtitle: "You don't have archived Todos, archive any to see it here")
+            TodoListFragmentView(todos: archivedFilteredResults, tapAction: onTapAction, doubleTapAction: onDoubleTapAction, noFoundImage: "archivebox.fill", noFoundColor: .green, noFoundTitle: "No archived Todos", noFoundSubtitle: "You don't have archived Todos, archive any to see it here")
         }
         .searchable(text: $searchText)
         .toolbar {
@@ -50,7 +49,7 @@ struct ArchivedTodosView: View {
     }
     
     func onTapAction(todo: Todo) {
-        path.append(todo)
+        navpath.path.append(todo)
     }
     func onDoubleTapAction(todo: Todo){
         todoVM.unArchive(todo)
@@ -59,6 +58,6 @@ struct ArchivedTodosView: View {
 
 #Preview {
     NavigationStack{
-        ArchivedTodosView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        ArchivedTodosView()
     }
 }

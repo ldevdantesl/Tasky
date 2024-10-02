@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var tagVM: TagViewModel
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
-    
-    @Binding var path: NavigationPath
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
     
     @State private var showAlert: Bool = false
     
@@ -22,15 +20,15 @@ struct SettingsView: View {
     
     var body: some View {
         ScrollView{
-            SettingsRowComponent(title: "Tags", image: "number", color: .teal, link: "TagSettingsView", path: $path)
+            SettingsRowComponent(title: "Tags", image: "number", color: .teal, link: "TagSettingsView")
             
-            SettingsRowComponent(title: "Data & Storage", image: "folder.fill", color: .yellow, link: "DataStorageSettingsView", path: $path)
+            SettingsRowComponent(title: "Data & Storage", image: "folder.fill", color: .yellow, link: "DataStorageSettingsView")
             
-            SettingsRowComponent(title: "Notification & Sound", image: "bell.fill", color: .blue.opacity(0.8), link: "NotificationSoundSettingsView", path: $path)
+            SettingsRowComponent(title: "Notification & Sound", image: "bell.fill", color: .blue.opacity(0.8), link: "NotificationSoundSettingsView")
             
-            SettingsRowComponent(title: "Privacy & Security", image: "checkerboard.shield", color: .red.opacity(0.8), link: "PrivacySecuritySettingsView", path: $path)
+            SettingsRowComponent(title: "Privacy & Security", image: "checkerboard.shield", color: .red.opacity(0.8), link: "PrivacySecuritySettingsView")
             
-            SettingsRowComponent(title: "Appearance", image: "drop.degreesign.fill", color: .purple, link: "AppearanceSettingsView", path: $path)
+            SettingsRowComponent(title: "Appearance", image: "drop.degreesign.fill", color: .purple, link: "AppearanceSettingsView")
             
             ShareAndFAQFragmentView()
         }
@@ -63,7 +61,7 @@ struct SettingsView: View {
         }
         .background(Color.background)
         .safeAreaInset(edge: .bottom) {
-            TabBarsComponent(settingsMgrVM: settingsMgrVM, todoVM: todoVM, tagVM:tagVM, path: $path)
+            TabBarsComponent()
         }
         .onAppear(perform: settingsMgrVM.settingsManager.notificationSettingsManager.checkAuthorizationStatus)
     }
@@ -71,6 +69,6 @@ struct SettingsView: View {
 
 #Preview {
     NavigationStack{
-        SettingsView(todoVM: TodoViewModel(), tagVM: TagViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        SettingsView()
     }
 }

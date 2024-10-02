@@ -9,9 +9,7 @@ import SwiftUI
 import UserNotifications
 
 struct NotificationAndSoundsView: View {
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
-    
-    @Binding var path: NavigationPath
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
     
     @State private var resetAlert: Bool = false
     
@@ -67,6 +65,6 @@ struct NotificationAndSoundsView: View {
 
 #Preview {
     NavigationStack{
-        NotificationAndSoundsView(settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        NotificationAndSoundsView()
     }
 }

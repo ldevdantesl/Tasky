@@ -13,20 +13,13 @@ struct MainView: View {
     
     @Environment(\.scenePhase) var scenePhase
     
-    @ObservedObject var todoVM: TodoViewModel
-    
-    @ObservedObject var settingsManagerVM: SettingsManagerViewModel
-    
-    @ObservedObject var tagVM: TagViewModel
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var settingsManagerVM: SettingsManagerViewModel
+    @EnvironmentObject var tagVM: TagViewModel
     
     @State var showAutenticationView: Bool = false
     @State var showLaunchScreen: Bool = true
     
-    init(todoVM: TodoViewModel, settingsManagerVM: SettingsManagerViewModel, tagVM: TagViewModel){
-        self.todoVM = todoVM
-        self.settingsManagerVM = settingsManagerVM
-        self.tagVM = tagVM
-    }
     
     var body: some View {
         if showLaunchScreen{
@@ -58,7 +51,7 @@ struct MainView: View {
                 }
             
         } else {
-            TodoView(todoVM: todoVM, tagVM: tagVM, settingsMgrVM: settingsManagerVM)
+            TodoView()
                 .blur(radius: blurView() ? 10 : 0)
                 .blur(radius: showAutenticationView ? 20 : 0)
                 .preferredColorScheme(settingsManagerVM.settingsManager.appearanceSettingsManager.colorScheme)
@@ -88,5 +81,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(todoVM: TodoViewModel(), settingsManagerVM: MockPreviews.viewModel, tagVM: TagViewModel())
+    MainView()
 }

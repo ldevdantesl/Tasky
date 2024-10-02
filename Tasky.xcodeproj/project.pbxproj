@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA0D70FF2CACF2FA0065EE90 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D70FE2CACF2FA0065EE90 /* TagView.swift */; };
+		DA0D710E2CAD028C0065EE90 /* NavPathManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D710D2CAD028C0065EE90 /* NavPathManager.swift */; };
+		DA176CE02C8D88E600E15357 /* UIKitRepresentables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */; };
 		DA2B1CE92C78134800C265B2 /* AllTagsFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */; };
 		DA35249D2CA48EC00026E23B /* TodoListFragmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */; };
 		DA35249F2CA4956B0026E23B /* YourTodosHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */; };
@@ -93,7 +94,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DA0D70FE2CACF2FA0065EE90 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		DA0D710D2CAD028C0065EE90 /* NavPathManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPathManager.swift; sourceTree = "<group>"; };
+		DA176CDF2C8D88E600E15357 /* UIKitRepresentables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitRepresentables.swift; sourceTree = "<group>"; };
 		DA2B1CE82C78134700C265B2 /* AllTagsFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTagsFragmentView.swift; sourceTree = "<group>"; };
 		DA35249C2CA48EC00026E23B /* TodoListFragmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListFragmentView.swift; sourceTree = "<group>"; };
 		DA35249E2CA4956B0026E23B /* YourTodosHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourTodosHeaderView.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				DA69C9A82C858BF600B3C511 /* CalendarSet.swift */,
 				DAF659F32C730707004D8ACA /* TodoViewModel.swift */,
 				DA9409DB2C78471C004D054E /* TagViewModel.swift */,
+				DA0D710D2CAD028C0065EE90 /* NavPathManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				DA9409E72C78772F004D054E /* SettingsManaging.swift in Sources */,
 				DA883A952C92524E00FC2E79 /* AppIntroScreen.swift in Sources */,
 				DA4B19792C79975C00899303 /* PrivacyAndSecurityManaging.swift in Sources */,
+				DA0D710E2CAD028C0065EE90 /* NavPathManager.swift in Sources */,
 				DA38A3562C770C16007C3FB4 /* TagLazyFragmentView.swift in Sources */,
 				DA883A8C2C8EB88D00FC2E79 /* TagsCircleView.swift in Sources */,
 				DA9409EB2C787810004D054E /* SettingsManagerViewModel.swift in Sources */,

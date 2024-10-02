@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TodoListFragmentView: View {
-    @ObservedObject var todoVM: TodoViewModel
+    @EnvironmentObject var todoVM: TodoViewModel
     
     let todos: [Todo]
     let tapAction: ((Todo) -> ())?
@@ -19,8 +19,7 @@ struct TodoListFragmentView: View {
     let noFoundSubtitle: LocalizedStringKey
     let noFoundAction: (() -> ())?
     
-    init(todoVM: TodoViewModel, todos: [Todo], tapAction: ((Todo) -> ())? = nil, doubleTapAction: ((Todo) -> ())? = nil, noFoundImage: String, noFoundColor: Color, noFoundTitle: LocalizedStringKey, noFoundSubtitle: LocalizedStringKey, noFoundAction: (() -> Void)? = nil) {
-        self.todoVM = todoVM
+    init(todos: [Todo], tapAction: ((Todo) -> ())? = nil, doubleTapAction: ((Todo) -> ())? = nil, noFoundImage: String, noFoundColor: Color, noFoundTitle: LocalizedStringKey, noFoundSubtitle: LocalizedStringKey, noFoundAction: (() -> Void)? = nil) {
         self.todos = todos
         self.tapAction = tapAction
         self.doubleTapAction = doubleTapAction
@@ -57,5 +56,5 @@ struct TodoListFragmentView: View {
 }
 
 #Preview {
-    TodoListFragmentView(todoVM: TodoViewModel(),todos: [], noFoundImage: "archivebox", noFoundColor: .blue, noFoundTitle: "No archive todos", noFoundSubtitle: "Add archived todos for archiving.", noFoundAction: nil)
+    TodoListFragmentView(todos: [], noFoundImage: "archivebox", noFoundColor: .blue, noFoundTitle: "No archive todos", noFoundSubtitle: "Add archived todos for archiving.", noFoundAction: nil)
 }

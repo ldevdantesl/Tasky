@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct RemovedTodosView: View {
-    @ObservedObject var todoVM: TodoViewModel
-    @ObservedObject var settingsMgrVM: SettingsManagerViewModel
-    
-    @Binding var path: NavigationPath
+    @EnvironmentObject var todoVM: TodoViewModel
+    @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
+    @EnvironmentObject var navpath: NavPathManager
     
     @State private var alertToggle: Bool = false
     @State private var deleteToggle = false
@@ -27,7 +26,7 @@ struct RemovedTodosView: View {
     
     var body: some View {
         ScrollView{
-            TodoListFragmentView(todoVM: todoVM, todos: removedFilteredTodos, tapAction: onTapAction, doubleTapAction: onDoubleTapAction, noFoundImage: "trash.fill", noFoundColor: .red, noFoundTitle: "No deleted todos", noFoundSubtitle: "You don't have deleted Todos, delete any to see it here")
+            TodoListFragmentView(todos: removedFilteredTodos, tapAction: onTapAction, doubleTapAction: onDoubleTapAction, noFoundImage: "trash.fill", noFoundColor: .red, noFoundTitle: "No deleted todos", noFoundSubtitle: "You don't have deleted Todos, delete any to see it here")
         }
         .searchable(text: $searchText)
         .scrollIndicators(.hidden)
@@ -58,7 +57,7 @@ struct RemovedTodosView: View {
     }
     
     func onTapAction(todo: Todo) {
-        path.append(todo)
+        navpath.path.append(todo)
     }
     
     func onDoubleTapAction(todo:Todo) {
@@ -68,7 +67,7 @@ struct RemovedTodosView: View {
 
 #Preview {
     NavigationStack{
-        RemovedTodosView(todoVM: TodoViewModel(), settingsMgrVM: MockPreviews.viewModel, path: .constant(NavigationPath()))
+        RemovedTodosView()
     }
 }
 

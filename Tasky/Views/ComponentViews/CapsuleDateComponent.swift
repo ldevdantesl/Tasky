@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct CapsuleDateComponent: View {
-    @ObservedObject var settingsMangerVM: SettingsManagerViewModel
+    @EnvironmentObject var settingsMangerVM: SettingsManagerViewModel
+    
     @ObservedObject var calendarSet = CalendarSet.instance
     
     let isSmall: Bool
@@ -42,5 +43,5 @@ struct CapsuleDateComponent: View {
 }
 
 #Preview {
-    CapsuleDateComponent(settingsMangerVM: MockPreviews.viewModel, isSmall: true, day: .now)
+    CapsuleDateComponent(isSmall: true, day: .now)
 }
