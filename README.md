@@ -23,12 +23,12 @@ Tasky is a task management app built using a combination of **SwiftUI**, **UIKit
 
 ## Architecture
 
-The app follows the **MVVM** (Model-View-ViewModel) pattern for separation of concerns:
+### The app follows the **MVVM** (Model-View-ViewModel) pattern for separation of concerns:
 - **Model**: Handles data and business logic.
 - **ViewModel**: Mediates between the Model and the View, ensuring that the UI layer only focuses on presenting data.
 - **View**: SwiftUI views combined with UIKit components where necessary, focusing on rendering UI.
 
-Additionally, the app is structured according to **Clean Architecture** principles, which ensures:
+### Additionally, the app is structured according to **Clean Architecture** principles, which ensures:
 - Independence of frameworks and libraries.
 - Easily testable and maintainable code.
 - Separation of concerns between layers.
@@ -54,7 +54,8 @@ Additionally, the app is structured according to **Clean Architecture** principl
 
 <img src="https://github.com/user-attachments/assets/94e48f24-9128-4bcf-a35e-d98ecacd4439" alt="Tag View" width=200 />
 <img src="https://github.com/user-attachments/assets/82b2d0d5-9744-40c8-8c22-7b7343506b8b" alt="Add Tag" width=200 />
-<img src="https://github.com/user-attachments/assets/b672e39e-26a5-4cd9-b8a8-4fd73b7000ee" alt="New Todo" width=200 />
-<img src="https://github.com/user-attachments/assets/9c0205a3-7ef8-4816-8626-419878363dcc" alt="Todo Details" width=200 />
+<img src="https://github.com/user-attachments/assets/b672e39e-26a5-4cd9-b8a8-4fd73b7000ee" alt="New Todo" width=200 />   
+<img src="https://github.com/user-attachments/assets/a9e77653-9b44-4762-9c61-5e2e009a5f34" alt="New Todo" width=200 />
+<img src="https://github.com/user-attachments/assets/9c0205a3-7ef8-4816-8626-419878363dcc" alt="Todo Details" width=200 />  
 <img src="https://github.com/user-attachments/assets/35f29244-da1f-4aa1-8f87-03ba087766c2" alt="Main Screen" width=200 />
 <img src="https://github.com/user-attachments/assets/070bca6c-63f1-4ac3-9204-572cd5806e59" alt="App Intro" width=200 />
