@@ -242,7 +242,7 @@ class NotificationSettingsManager: NotificationSettingsManaging {
             return
         }
         
-        guard !Calendar.current.isDateInToday(dueDate) || dueDate > Date() else {
+        guard dueDate > Date.now else {
             logger.warning("Cannot schedule notification because the due date is today and the time has already passed.")
             return
         }

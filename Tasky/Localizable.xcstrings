@@ -632,8 +632,24 @@
         }
       }
     },
-    "fair_key" : {
+    "Fair" : {
 
+    },
+    "fair_key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fair"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Средний"
+          }
+        }
+      }
     },
     "FAQ" : {
       "localizations" : {
@@ -945,6 +961,9 @@
           }
         }
       }
+    },
+    "Principal" : {
+
     },
     "principal_key" : {
       "extractionState" : "manual",
@@ -1461,6 +1480,9 @@
           }
         }
       }
+    },
+    "Trivial" : {
+
     },
     "trivial_key" : {
       "extractionState" : "manual",

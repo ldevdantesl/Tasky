@@ -68,7 +68,7 @@ struct DueDateFragmentView: View {
             .padding(.horizontal, 20)
             
             HStack{
-                
+                // MARK: - DATE
                 HStack{
                     Image(systemName: "calendar")
                         .resizable()
@@ -98,10 +98,10 @@ struct DueDateFragmentView: View {
                             .frame(width: 20, height: 20)
                             .foregroundStyle(isItToday() ? .white : .secondary)
                         Text("Today")
-                            .font(.system(.subheadline, design: .rounded, weight: isItToday() ? .semibold : .regular))
+                            .font(.system(.caption, design: .rounded, weight: isItToday() ? .semibold : .regular))
                             .foregroundColor(isItToday() ? .white : .text)
                     }
-                    .frame(width: 85, height: 45)
+                    .frame(width: Constants.screenWidth / 5, height: 45)
                     .background(isItToday() ? themeColor : .textField, in: .capsule)
                     .onTapGesture {
                         withAnimation(.bouncy) {
@@ -109,7 +109,6 @@ struct DueDateFragmentView: View {
                             guard let today = Calendar.current.date(from: todayComponents) else { return }
                             dueDate = today
                             isAddingDate = false
-                            logger.log("\(dueDate!), Today: \(isItToday()), Tomorrow: \(isItTomorrow())")
                         }
                     }
                     
@@ -120,10 +119,10 @@ struct DueDateFragmentView: View {
                             .frame(width: 15, height: 20)
                             .foregroundStyle(isItTomorrow() ? .white : .secondary)
                         Text("Tomorrow")
-                            .font(.system(.subheadline, design: .rounded, weight: isItTomorrow() ? .semibold : .regular))
+                            .font(.system(.caption, design: .rounded, weight: isItTomorrow() ? .semibold : .regular))
                             .foregroundColor(isItTomorrow() ? .white : .text)
                     }
-                    .frame(width: 90, height: 45)
+                    .frame(width: Constants.screenWidth / 5, height: 45)
                     .background(isItTomorrow() ? themeColor : .textField, in:.capsule)
                     .onTapGesture {
                         withAnimation(.bouncy) {
@@ -142,10 +141,10 @@ struct DueDateFragmentView: View {
                             .foregroundStyle(isItNotTomorrowAndNotToday() ? .white : .customSecondary)
                             .padding(.leading, 3)
                         Text("Custom")
-                            .font(.system(.subheadline, design: .rounded, weight: isItNotTomorrowAndNotToday() ? .semibold : .regular))
+                            .font(.system(.caption, design: .rounded, weight: isItNotTomorrowAndNotToday() ? .semibold : .regular))
                             .foregroundColor(isItNotTomorrowAndNotToday() ? .white : .text)
                     }
-                    .frame(width: 90, height: 45)
+                    .frame(width: Constants.screenWidth / 5, height: 45)
                     .background(isItNotTomorrowAndNotToday() ? themeColor : .textField, in: .capsule)
                     .onTapGesture {
                         withAnimation(.bouncy) {
@@ -176,9 +175,11 @@ struct DueDateFragmentView: View {
                         }
                     }
                 }
+                
                 Spacer()
             }
-            .frame(width: Constants.screenWidth - 40, height: 50)
+            .frame(maxWidth: .infinity)
+            .frame(height: 50)
             .padding(.horizontal, 20)
             
             if isAddingTime{
@@ -258,27 +259,26 @@ struct DueDateFragmentView: View {
             .presentationDetents([.medium])
         }
         .sheet(isPresented: $isPickingCustomTime) {
-            VStack {
-                var todayStart: Date {
-                    if dueDate?.asStartOfDay != Date.now.asStartOfDay{
-                        return Calendar.current.startOfDay(for: dueDate!)
-                    } else {
-                        let dateComponents = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: dueDate!)
-                        return Calendar.current.date(from: dateComponents) ?? dueDate!
-                    }
-                }
-                    
-                let todayEnd: Date = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: todayStart) ?? Date()
+            var validTimeRange: ClosedRange<Date> {
+                let calendar = Calendar.current
+                // Set start time to 00:01 of today
+                let startOfDay = calendar.startOfDay(for: Date())
+                let startTime = calendar.date(byAdding: .minute, value: 1, to: startOfDay) ?? startOfDay
                 
-                // DatePicker inside a sheet
+                // Set end time to 23:59 of today
+                let endTime = calendar.date(bySettingHour: 23, minute: 59, second: 0, of: startOfDay) ?? startOfDay
+                return startTime...endTime
+            }
+            
+            VStack {
                 DatePicker(
                     "Select a Time",
                     selection: $settingTime,
-                    in: todayStart...todayEnd,
+                    in: validTimeRange,
                     displayedComponents: .hourAndMinute
                 )
-                .datePickerStyle(.wheel) // Or use another style like .wheel, .compact, etc.
-                .labelsHidden() // Hide the default label
+                .datePickerStyle(.wheel)
+                .labelsHidden()
                 .padding()
                 
                 Button("Done") {
@@ -311,4 +311,5 @@ struct DueDateFragmentView: View {
 
 #Preview {
     DueDateFragmentView(dueDate: .constant(.now.getTomorrowDay), dateErrorMessage: .constant(nil))
+        .environmentObject(MockPreviews.viewModel)
 }

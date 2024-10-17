@@ -11,13 +11,13 @@ struct TodoEditView: View {
     @Environment(\.dismiss) var dismiss
     
     @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
-    @EnvironmentObject var todo: Todo
     @EnvironmentObject var todoVM: TodoViewModel
     @EnvironmentObject var tagVM: TagViewModel
+    @EnvironmentObject var navpath: NavPathManager
     
     @FocusState private var isFocused: Bool
     
-    @EnvironmentObject var navpath: NavPathManager
+    @ObservedObject var todo: Todo
     
     @State private var isLoading: Bool = false
     
@@ -35,6 +35,7 @@ struct TodoEditView: View {
     }
     
     init(todo: Todo) {
+        self._todo = ObservedObject(wrappedValue: todo)
         self._title = State(wrappedValue: todo.title ?? "")
         self._description = State(wrappedValue: todo.desc ?? "")
         self._priority = State(wrappedValue: todo.priority)
@@ -46,19 +47,6 @@ struct TodoEditView: View {
     var body: some View {
         NavigationStack{
             ScrollView{
-                HStack{
-                    Text("Edit Todo")
-                        .font(.system(.title, design: .rounded, weight: .bold))
-                    Spacer()
-                    Image(systemName: "xmark.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                        .foregroundStyle(.gray)
-                        .onTapGesture(perform: { dismiss() })
-                }
-                .padding([.horizontal, .bottom], 15)
-                
                 VStack(alignment:.leading){
                     TextFieldComponent(text: $title, placeholder: "Title", maxChars: 25)
                         .padding(.vertical, 10)
@@ -73,6 +61,7 @@ struct TodoEditView: View {
                     }
                 }
                 .padding([.horizontal, .bottom], 15)
+                
                 TextField("Description", text: $description, axis:.vertical)
                     .focused($isFocused)
                     .padding(10)
@@ -89,6 +78,32 @@ struct TodoEditView: View {
                     .padding(.bottom, 15)
                 
                 TagLazyFragmentView(selectedTags: $tags)
+            }
+            .safeAreaInset(edge: .top, spacing: 25) {
+                UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 25, bottomTrailing: 25))
+                    .fill(colorTheme.gradient)
+                    .overlay(alignment:.bottom) {
+                        HStack{
+                            Text("Edit Todo")
+                                .font(.system(.title, design: .rounded, weight: .bold))
+                                .foregroundStyle(.white)
+                            Spacer()
+                            Image(systemName: "xmark.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                                .foregroundStyle(.white)
+                                .onTapGesture {
+                                    dismiss()
+                                }
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 10)
+                    }
+                    .shadow(color: .primary.opacity(0.2), radius: 10, x: 0, y: 5)
+                    .ignoresSafeArea()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 40)
             }
             .background(Color.background)
             .onTapGesture {
@@ -136,6 +151,7 @@ struct TodoEditView: View {
     
     func save() {
         isLoading = true
+        
         do {
             guard isTitleValid() else { isLoading = false; return }
             try todoVM.editTodos(todo, newTitle: title, newDesc: description, newPriority: priority, newDueDate: dueDate, newTags: tags)
@@ -150,4 +166,8 @@ struct TodoEditView: View {
 
 #Preview {
     TodoEditView(todo: TodoViewModel.mockToDo())
+        .environmentObject(TodoViewModel())
+        .environmentObject(TagViewModel())
+        .environmentObject(MockPreviews.viewModel)
+        .environmentObject(NavPathManager())
 }

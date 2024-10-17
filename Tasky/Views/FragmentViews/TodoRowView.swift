@@ -52,9 +52,11 @@ struct TodoRowView: View {
                     HStack(spacing: 0){
                         Text(TodoViewHelpers(todo: todo).formatDate)
                             .font(.system(.caption, design: .rounded, weight: .light))
-                        if !todo.dueDate!.isStartOfDay{
-                            Text(" at \(todo.dueDate!.getTime)")
-                                .font(.system(.caption, design: .rounded, weight: .light))
+                        if let dueDate = todo.dueDate {
+                            if dueDate.isStartOfDay{
+                                Text(" at \(dueDate.getTime)")
+                                    .font(.system(.caption, design: .rounded, weight: .light))
+                            }
                         }
                     }
                 }

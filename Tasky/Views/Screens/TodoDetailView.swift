@@ -28,9 +28,12 @@ struct TodoDetailView: View {
     @State private var isEditing: Bool = false
     
     @State private var isLoading: Bool = false
+    @State private var isShowingBottomButtons: Bool
     
-    init(observedTodo: Todo){
+    
+    init(observedTodo: Todo, isShowingBottomButtons: Bool = true){
         self._todo = ObservedObject(wrappedValue: observedTodo)
+        self.isShowingBottomButtons = isShowingBottomButtons
     }
     
     var body: some View {
@@ -50,9 +53,11 @@ struct TodoDetailView: View {
                 VStack{
                     Text("\(TodoViewHelpers(todo:todo).formatDate)")
                         .font(.system(.callout, design: .rounded, weight: .regular))
-                    if !todo.dueDate!.isStartOfDay{
-                        Text("\(todo.dueDate!.getTime)")
-                            .font(.system(.callout, design: .rounded, weight: .bold))
+                    if let dueDate = todo.dueDate {
+                        if dueDate.isStartOfDay{
+                            Text("\(dueDate.getTime)")
+                                .font(.system(.callout, design: .rounded, weight: .bold))
+                        }
                     }
                 }
             }
@@ -63,30 +68,28 @@ struct TodoDetailView: View {
                 .padding(.bottom, 15)
             
             // MARK: - PRIORITY
-            Capsule()
-                .fill(Color.textField)
-                .frame(width: Constants.screenWidth - 20, height: 40)
-                .overlay {
-                    HStack{
-                        Text("Priority:")
-                            .font(.system(.subheadline, design: .rounded, weight: .regular))
-                        
-                        Spacer()
-                        
-                        Capsule()
-                            .frame(minWidth: 90, maxWidth: 120)
-                            .frame(height: 30)
-                            .foregroundStyle(TodoViewHelpers(todo: todo).priorityColor)
-                            .shadow(color: .primary.opacity(0.2), radius: 10, x: 0, y: 5)
-                            .overlay {
-                                Text(TodoViewHelpers(todo: todo).priorityName)
-                                    .foregroundStyle(.white)
-                                    .font(.system(.subheadline, design: .rounded, weight: .bold))
-                            }
-                    }
-                    .padding(.horizontal, 15)
-                }
-                .padding(.bottom, 15)
+            
+            HStack{
+                Text("Priority:")
+                    .font(.system(.subheadline, design: .rounded, weight: .regular))
+                
+                Spacer()
+                
+                Text(TodoViewHelpers(todo: todo).priorityName)
+                    .foregroundStyle(.white)
+                    .font(.system(.subheadline, design: .rounded, weight: .bold))
+                    .frame(minWidth: 90, maxWidth: 120)
+                    .frame(height: 30)
+                    .background(TodoViewHelpers(todo: todo).priorityColor, in:.capsule)
+                    .shadow(color: .primary.opacity(0.2), radius: 10, x: 0, y: 5)
+                    
+            }
+            .padding(.horizontal)
+            .frame(maxWidth: .infinity)
+            .frame(height: 40)
+            .background(Color.textField, in:.capsule)
+            .padding(.bottom, 15)
+            .padding(.horizontal, 15)
             
             // MARK: - STATUS
             HStack{
@@ -99,32 +102,29 @@ struct TodoDetailView: View {
                 Spacer()
                     
                 VStack{
-                    Capsule()
-                        .fill(todo.isDone ? Color.green.gradient : Color.gray.gradient)
-                        .frame(minWidth: 120, maxWidth: 150)
-                        .frame(height: 35)
-                        .overlay {
-                            HStack(spacing: 5){
-                                Text(todo.isDone ? "Done" : "Undone")
-                                    .font(.system(.headline, design: .rounded, weight: .bold))
-                                    .foregroundStyle(.white)
-                                Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill" )
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.white)
+                    HStack(spacing: 5){
+                        Text(todo.isDone ? "Done" : "Undone")
+                            .font(.system(.headline, design: .rounded, weight: .bold))
+                            .foregroundStyle(.white)
+                        Image(systemName: todo.isDone ? "checkmark.circle.fill" : "xmark.circle.fill" )
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .foregroundStyle(.white)
+                    }
+                    .frame(minWidth: 120, maxWidth: 150)
+                    .frame(height: 35)
+                    .background(todo.isDone ? Color.green.gradient : Color.gray.gradient, in:.capsule)
+                    .onTapGesture(count: 2, perform: doneOrUndoneTodo)
+                    .contextMenu {
+                        if !todo.isRemoved && !todo.isArchived{
+                            Button("Mark as \(todo.isDone ? "undone" : "done")", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill", action: doneOrUndoneTodo)
+                            if !todo.isDone {
+                                Button("Remind me", systemImage: "bell.circle.fill", action: {})
+                                Button("\(showHowManyDaysLeft ? "Hide" : "Show") days left", systemImage: "exclamationmark.circle.fill", action:{showHowManyDaysLeft.toggle()})
                             }
                         }
-                        .onTapGesture(count: 2, perform: doneOrUndoneTodo)
-                        .contextMenu {
-                            if !todo.isRemoved && !todo.isArchived{
-                                Button("Mark as \(todo.isDone ? "undone" : "done")", systemImage: todo.isDone ? "xmark.circle.fill" : "checkmark.circle.fill", action: doneOrUndoneTodo)
-                                if !todo.isDone {
-                                    Button("Remind me", systemImage: "bell.circle.fill", action: {})
-                                    Button("\(showHowManyDaysLeft ? "Hide" : "Show") days left", systemImage: "exclamationmark.circle.fill", action:{showHowManyDaysLeft.toggle()})
-                                }
-                            }
-                        }
+                    }
                     
                     if showHowManyDaysLeft && !todo.isDone {
                         Text(calendarSet.showHowManyDaysLeft(for: todo.dueDate ?? .now))
@@ -137,53 +137,55 @@ struct TodoDetailView: View {
         }
         .safeAreaInset(edge: .bottom) {
             HStack(spacing: 20){
-                if !todo.isArchived && !todo.isRemoved {
-                    Menu{
-                        Button("By Custom Date", systemImage: "calendar", action: {withAnimation{showCustomDate.toggle()}})
-                        Button("By Tomorrow", systemImage: "sun.max.fill") {
-                            Task {
-                                await repeatByTomorrowOR()
+                if isShowingBottomButtons {
+                    if !todo.isArchived && !todo.isRemoved {
+                        Menu{
+                            Button("By Custom Date", systemImage: "calendar", action: {withAnimation{showCustomDate.toggle()}})
+                            Button("By Tomorrow", systemImage: "sun.max.fill") {
+                                Task {
+                                    await repeatByTomorrowOR()
+                                }
                             }
+                        } label: {
+                            Text("Repeat")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .foregroundStyle(.white)
+                                .frame(width: Constants.screenWidth / 2.5, height: 40)
+                                .background(.green, in: .capsule)
                         }
-                    } label: {
-                        Text("Repeat")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .foregroundStyle(.white)
-                            .frame(width: Constants.screenWidth / 2.5, height: 40)
-                            .background(.green, in: .capsule)
+                        .disabled(todo.isDone)
+                        Button(action: { withAnimation { isEditing.toggle() } } ){
+                            Text("Edit")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .foregroundStyle(.white)
+                                .frame(width: Constants.screenWidth / 2.5, height: 40)
+                                .background(Color.blue.opacity(0.8), in:.capsule)
+                        }
                     }
-                    .disabled(todo.isDone)
-                    Button(action: { withAnimation { isEditing.toggle() } } ){
-                        Text("Edit")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .foregroundStyle(.white)
-                            .frame(width: Constants.screenWidth / 2.5, height: 40)
-                            .background(Color.blue.opacity(0.8), in:.capsule)
-                    }
-                }
-                else if todo.isArchived {
-                    Button(action: { withAnimation { todoVM.unArchive(todo); dismiss() } } ){
-                        Text("Unarchive")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .foregroundStyle(.white)
-                            .frame(width: Constants.screenWidth - 40, height: 40)
-                            .background(Color.green.opacity(0.8), in:.capsule)
-                    }
-                } else if todo.isRemoved {
-                    Button(action: { withAnimation { todoVM.unRemoveTodo(todo); dismiss() } } ){
-                        Text("Unremove")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .foregroundStyle(.white)
-                            .frame(width: Constants.screenWidth / 2.5, height: 40)
-                            .background(Color.blue.opacity(0.8), in:.capsule)
-                    }
-                    
-                    Button(action: { withAnimation { showDeleteAlert.toggle() } } ){
-                        Text("Delete")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .foregroundStyle(.white)
-                            .frame(width: Constants.screenWidth / 2.5, height: 40)
-                            .background(Color.red.opacity(0.8), in:.capsule)
+                    else if todo.isArchived {
+                        Button(action: { withAnimation { todoVM.unArchive(todo); dismiss() } } ){
+                            Text("Unarchive")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .foregroundStyle(.white)
+                                .frame(width: Constants.screenWidth - 40, height: 40)
+                                .background(Color.green.opacity(0.8), in:.capsule)
+                        }
+                    } else if todo.isRemoved {
+                        Button(action: { withAnimation { todoVM.unRemoveTodo(todo); dismiss() } } ){
+                            Text("Unremove")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .foregroundStyle(.white)
+                                .frame(width: Constants.screenWidth / 2.5, height: 40)
+                                .background(Color.blue.opacity(0.8), in:.capsule)
+                        }
+                        
+                        Button(action: { withAnimation { showDeleteAlert.toggle() } } ){
+                            Text("Delete")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .foregroundStyle(.white)
+                                .frame(width: Constants.screenWidth / 2.5, height: 40)
+                                .background(Color.red.opacity(0.8), in:.capsule)
+                        }
                     }
                 }
             }
@@ -191,8 +193,8 @@ struct TodoDetailView: View {
         .alert("Delete?", isPresented: $showDeleteAlert){
             Button("Delete", role:.destructive){
                 withAnimation {
-                    todoVM.deleteTodo(todo)
                     dismiss()
+                    todoVM.deleteTodo(todo)
                 }
             }
         } message: {

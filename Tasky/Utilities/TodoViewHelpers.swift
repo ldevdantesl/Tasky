@@ -34,11 +34,11 @@ struct TodoViewHelpers {
     var priorityName: String {
         switch todo.priority {
         case 1:
-            return String(localized: "trivial_key")
+            return String(localized: "Trivial")
         case 2:
-            return String(localized: "fair_key")
+            return String(localized: "Fair")
         default:
-            return String(localized: "principal_key")
+            return String(localized: "Principal")
         }
     }
     

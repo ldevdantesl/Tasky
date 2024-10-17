@@ -14,6 +14,7 @@ struct AddTodoView: View {
         case description
     }
     
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var todoVM: TodoViewModel
     @EnvironmentObject var tagVM: TagViewModel
     @EnvironmentObject var settingsMgrVM: SettingsManagerViewModel
@@ -36,25 +37,6 @@ struct AddTodoView: View {
     
     var body: some View {
         ScrollView{
-            // MARK: - TITLE
-            HStack{
-                Text("New Todo")
-                    .font(.system(.title, design: .rounded, weight: .semibold))
-                    .foregroundStyle(Constants.textColor)
-                Spacer()
-                Button(action: {navpath.path = NavigationPath()}){
-                    Image(systemName: "xmark.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 25)
-                        .frame(maxHeight: 25)
-                }
-                .padding(.trailing, 5)
-                .tint(Constants.secondaryColor)
-            }
-            .padding(.bottom, 15)
-            .padding(.horizontal)
-            
             // MARK: - TODO TITLE
             VStack(alignment:.leading){
                 Text("Title")
@@ -112,6 +94,32 @@ struct AddTodoView: View {
             // MARK: - TAGS
             TagLazyFragmentView(selectedTags: $selectedTags)
                         
+        }
+        .safeAreaInset(edge: .top, spacing: 15) {
+            UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(bottomLeading: 25, bottomTrailing: 25))
+                .fill(colorTheme.gradient)
+                .overlay(alignment:.bottom) {
+                    HStack{
+                        Text("New Todo")
+                            .font(.system(.title, design: .rounded, weight: .bold))
+                            .foregroundStyle(.white)
+                        Spacer()
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                            .foregroundStyle(.white)
+                            .onTapGesture {
+                                dismiss()
+                            }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 10)
+                }
+                .shadow(color: .primary.opacity(0.2), radius: 10, x: 0, y: 5)
+                .ignoresSafeArea()
+                .frame(maxWidth: .infinity)
+                .frame(height: 40)
         }
         .scrollDismissesKeyboard(.immediately)
         .background(Constants.backgroundColor)
@@ -181,5 +189,9 @@ struct AddTodoView: View {
 #Preview {
     NavigationStack{
         AddTodoView()
+            .environmentObject(TodoViewModel())
+            .environmentObject(TagViewModel())
+            .environmentObject(MockPreviews.viewModel)
+            .environmentObject(NavPathManager())
     }
 }
